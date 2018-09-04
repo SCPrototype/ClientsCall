@@ -37,11 +37,11 @@ public class EventManager : MonoBehaviour {
     {
         currentEvent = allEvents.events[Random.Range(0, allEvents.events.Length)];
         eventText.text = currentEvent.description;
-        choiceText1.text = currentEvent.choices[0].description;
+        choiceText1.text = currentEvent.choices[0].description + "\tCost: " + currentEvent.choices[0].cost;
         choiceText1.text += string.Format("\n\nPollution: {0}, Entertainment: {1}, Health: {2}, Population: {3}, Education: {4}", currentEvent.choices[0].pollutionValue, currentEvent.choices[0].entertainmentValue, currentEvent.choices[0].healthValue, currentEvent.choices[0].populationValue, currentEvent.choices[0].educationValue);
-        choiceText2.text = currentEvent.choices[1].description;
+        choiceText2.text = currentEvent.choices[1].description + "\tCost: " + currentEvent.choices[1].cost;
         choiceText2.text += string.Format("\n\nPollution: {0}, Entertainment: {1}, Health: {2}, Population: {3}, Education: {4}", currentEvent.choices[1].pollutionValue, currentEvent.choices[1].entertainmentValue, currentEvent.choices[1].healthValue, currentEvent.choices[1].populationValue, currentEvent.choices[1].educationValue);
-        choiceText3.text = currentEvent.choices[2].description;
+        choiceText3.text = currentEvent.choices[2].description + "\tCost: " + currentEvent.choices[2].cost;
         choiceText3.text += string.Format("\n\nPollution: {0}, Entertainment: {1}, Health: {2}, Population: {3}, Education: {4}", currentEvent.choices[2].pollutionValue, currentEvent.choices[2].entertainmentValue, currentEvent.choices[2].healthValue, currentEvent.choices[2].populationValue, currentEvent.choices[2].educationValue);
         effectBox.SetActive(false);
     }

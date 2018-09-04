@@ -11,6 +11,7 @@ using UnityEngine;
       Choice[ ]
          Description
          Values
+         Cost
          Repercussion[ ]*
             Description
             Values
@@ -66,6 +67,9 @@ public class Choice
     [XmlAttribute("description")]
     public string description;
 
+    [XmlAttribute("cost")]
+    public int cost;
+
     [XmlAttribute("pollutionValue")]
     public int pollutionValue;
 
@@ -86,7 +90,7 @@ public class Choice
 
     public override string ToString()
     {
-        string output = "\tChoice: " + string.Format("\tDescription: {0}\n\t\tPollution: {1}, Entertainment: {2}, Health: {3}, Population: {4}, Education: {5}\n", description, pollutionValue, entertainmentValue, healthValue, populationValue, educationValue);
+        string output = "\tChoice: " + string.Format("\tDescription: {0}\t Cost: {1}\n\t\tPollution: {2}, Entertainment: {3}, Health: {4}, Population: {5}, Education: {6}\n", description, cost, pollutionValue, entertainmentValue, healthValue, populationValue, educationValue);
         output += "\n";
         foreach (Repercussion repercussion in repercussions)
         {
