@@ -15,6 +15,14 @@ public class CustomTile : MonoBehaviour {
 		
 	}
 
+    public void Reset()
+    {
+        if(_meshRenderer.enabled == false)
+        {
+            _meshRenderer.enabled = true;
+        }
+    }
+
     public void InvertColor()
     {
         if(_meshRenderer.enabled == true)
