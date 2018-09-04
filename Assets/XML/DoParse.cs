@@ -16,6 +16,7 @@ public class DoParse : MonoBehaviour {
             TMX_Parser parser = new TMX_Parser();
             AllEvents allEvents;
             parser.Parse("Assets/XML/RandomEvents.txt", out allEvents);
+            Debug.Log(allEvents);
         }
 	}
 }

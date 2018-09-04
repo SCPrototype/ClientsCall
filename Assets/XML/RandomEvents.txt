@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <allEvents>
  <randomEvent type="0" description="I spilled baked beans all over myself watching Cars 2 in theaters and a black teenager shouted 'this nigga eating beans' and everyone laughed.">
-  <choice description="Yell back at him." pollutionValue="1" entertainmentValue="0" healthValue="-2" populationValue="-1" educationValue="2"></choice>
+  <choice description="Yell back at him." pollutionValue="1" entertainmentValue="0" healthValue="-2" populationValue="-1" educationValue="2">
    <repercussion description="He got angry and beat you up." pollutionValue="1" entertainmentValue="0" healthValue="-2" populationValue="-1" educationValue="2"></repercussion>
    <repercussion description="He started crying." pollutionValue="2" entertainmentValue="2" healthValue="-2" populationValue="0" educationValue="-2"></repercussion>
    <repercussion description="He didn't repond and you looked like an idiot." pollutionValue="-1" entertainmentValue="0" healthValue="-1" populationValue="0" educationValue="0"></repercussion>
-  <choice description="Cry on twitter." pollutionValue="2" entertainmentValue="2" healthValue="-2" populationValue="0" educationValue="-2"></choice>
+  </choice>
+  <choice description="Cry on twitter." pollutionValue="2" entertainmentValue="2" healthValue="-2" populationValue="0" educationValue="-2">
    <repercussion description="The internet loved your post and you are now a meme." pollutionValue="1" entertainmentValue="0" healthValue="-2" populationValue="-1" educationValue="2"></repercussion>
    <repercussion description="The internet hated your post, and everyone hates you." pollutionValue="2" entertainmentValue="2" healthValue="-2" populationValue="0" educationValue="-2"></repercussion>
    <repercussion description="Nobody saw your post." pollutionValue="-1" entertainmentValue="0" healthValue="-1" populationValue="0" educationValue="0"></repercussion>
-  <choice description="Do nothing." pollutionValue="-1" entertainmentValue="0" healthValue="-1" populationValue="0" educationValue="0"></choice>
+  </choice>
+  <choice description="Do nothing." pollutionValue="-1" entertainmentValue="0" healthValue="-1" populationValue="0" educationValue="0">
    <repercussion description="The mental abuse got to you, and you need a psychiatrist for the rest of your life." pollutionValue="-2" entertainmentValue="0" healthValue="-4" populationValue="-1" educationValue="0"></repercussion>
    <repercussion description="You cried that night, feeling sad and lonely." pollutionValue="0" entertainmentValue="0" healthValue="-2" populationValue="0" educationValue="0"></repercussion>
    <repercussion description="Nothing happened." pollutionValue="0" entertainmentValue="0" healthValue="0" populationValue="0" educationValue="0"></repercussion> 
+  </choice> 
  </randomEvent>
  <randomEvent type="0" description="I opened up te instant regret playlist, and am already on video 1629.">
-  <choice description="Continue watching." pollutionValue="-1" entertainmentValue="6" healthValue="-4" populationValue="-1" educationValue="-1"></choice>
+  <choice description="Continue watching." pollutionValue="-1" entertainmentValue="6" healthValue="-4" populationValue="-1" educationValue="-1">
    <repercussion description="You have become enlightened, and can now shitpost like the best." pollutionValue="3" entertainmentValue="3" healthValue="0" populationValue="-1" educationValue="0"></repercussion>
    <repercussion description="Your friends have forgot about you." pollutionValue="0" entertainmentValue="-1" healthValue="0" populationValue="0" educationValue="0"></repercussion>
    <repercussion description="Your eyes have become square." pollutionValue="0" entertainmentValue="1" healthValue="-1" populationValue="0" educationValue="0"></repercussion> 
-  <choice description="Stop watching." pollutionValue="0" entertainmentValue="-3" healthValue="3" populationValue="1" educationValue="0"></choice>
+  </choice>  
+  <choice description="Stop watching." pollutionValue="0" entertainmentValue="-3" healthValue="3" populationValue="1" educationValue="0">
    <repercussion description="You have become blind by the sudden exposure to sunlight." pollutionValue="0" entertainmentValue="0" healthValue="-2" populationValue="0" educationValue="0"></repercussion>
    <repercussion description="Everyone has moved to mars, and you have been left behind." pollutionValue="-15" entertainmentValue="0" healthValue="0" populationValue="-15" educationValue="0"></repercussion>
    <repercussion description="You realize the beauty of the world around you, and swear to never look at memes again." pollutionValue="-1" entertainmentValue="0" healthValue="1" populationValue="0" educationValue="0"></repercussion> 
-  <choice description="Skip through videos that don't seem interesting." pollutionValue="0" entertainmentValue="2" healthValue="0" populationValue="0" educationValue="-1"></choice>
+  </choice>
+  <choice description="Skip through videos that don't seem interesting." pollutionValue="0" entertainmentValue="2" healthValue="0" populationValue="0" educationValue="-1">
    <repercussion description="You missed out on some topkek memes." pollutionValue="0" entertainmentValue="-2" healthValue="0" populationValue="0" educationValue="0"></repercussion>
-   <repercussion description="You saved time, and was just in time to catch the last shuttle to mars, preventing you from behind left behind on earth alone." pollutionValue="2" entertainmentValue="0" healthValue="0" populationValue="0" educationValue="1"></repercussion>
-   <repercussion description="Nothing interesting, youre just smart." pollutionValue="0" entertainmentValue="0" healthValue="0" populationValue="0" educationValue="2"></repercussion> 
- </randomEvent>
+   <repercussion description="You saved time, and was just in time to catch the last shuttle to mars, preventing you from being left behind on earth alone." pollutionValue="2" entertainmentValue="0" healthValue="0" populationValue="0" educationValue="1"></repercussion>
+   <repercussion description="Nothing interesting, you're just smart." pollutionValue="0" entertainmentValue="0" healthValue="0" populationValue="0" educationValue="2"></repercussion> 
+  </choice> 
+</randomEvent>
 </allEvents>
