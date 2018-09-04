@@ -94,32 +94,32 @@ public class Choice
         }
         return output;
     }
+}
 
-    [XmlRootAttribute("repercussion")]
-    public class Repercussion
+[XmlRootAttribute("repercussion")]
+public class Repercussion
+{
+    [XmlAttribute("description")]
+    public string description;
+
+    [XmlAttribute("pollutionValue")]
+    public int pollutionValue;
+
+    [XmlAttribute("entertainmentValue")]
+    public int entertainmentValue;
+
+    [XmlAttribute("healthValue")]
+    public int healthValue;
+
+    [XmlAttribute("populationValue")]
+    public int populationValue;
+
+    [XmlAttribute("educationValue")]
+    public int educationValue;
+
+    public override string ToString()
     {
-        [XmlAttribute("description")]
-        public string description;
-
-        [XmlAttribute("pollutionValue")]
-        public int pollutionValue;
-
-        [XmlAttribute("entertainmentValue")]
-        public int entertainmentValue;
-
-        [XmlAttribute("healthValue")]
-        public int healthValue;
-
-        [XmlAttribute("populationValue")]
-        public int populationValue;
-
-        [XmlAttribute("educationValue")]
-        public int educationValue;
-
-        public override string ToString()
-        {
-            string output = "\t\tEffect: " + string.Format("\tDescription: {0}\n\t\t\tPollution: {1}, Entertainment: {2}, Health: {3}, Population: {4}, Education: {5}\n", description, pollutionValue, entertainmentValue, healthValue, populationValue, educationValue);
-            return output;
-        }
+        string output = "\t\tEffect: " + string.Format("\tDescription: {0}\n\t\t\tPollution: {1}, Entertainment: {2}, Health: {3}, Population: {4}, Education: {5}\n", description, pollutionValue, entertainmentValue, healthValue, populationValue, educationValue);
+        return output;
     }
 }
