@@ -98,6 +98,11 @@ public class Choice
         }
         return output;
     }
+
+    public int GetHappiness()
+    {
+        return -pollutionValue + entertainmentValue + healthValue + populationValue + educationValue;
+    }
 }
 
 [XmlRootAttribute("repercussion")]
@@ -105,6 +110,9 @@ public class Repercussion
 {
     [XmlAttribute("description")]
     public string description;
+
+    [XmlAttribute("cost")]
+    public int cost;
 
     [XmlAttribute("pollutionValue")]
     public int pollutionValue;
@@ -123,7 +131,12 @@ public class Repercussion
 
     public override string ToString()
     {
-        string output = "\t\tEffect: " + string.Format("\tDescription: {0}\n\t\t\tPollution: {1}, Entertainment: {2}, Health: {3}, Population: {4}, Education: {5}\n", description, pollutionValue, entertainmentValue, healthValue, populationValue, educationValue);
+        string output = "\t\tEffect: " + string.Format("\tDescription: {0}\t Cost: {1}\n\t\t\tPollution: {2}, Entertainment: {3}, Health: {4}, Population: {5}, Education: {6}\n", description, cost, pollutionValue, entertainmentValue, healthValue, populationValue, educationValue);
         return output;
+    }
+
+    public int GetHappiness()
+    {
+        return -pollutionValue + entertainmentValue + healthValue + populationValue + educationValue;
     }
 }
