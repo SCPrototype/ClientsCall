@@ -41,13 +41,15 @@ public class SelectedTileHandler : MonoBehaviour
         //Assuming the list starts at 0, need a better way to keep track of the index.
         //Bigger than 0 and lower than max length.
         if (xIndexOfList >= 0 && xIndexOfList < _tileList.GetLength(0) && yIndexOfList >= 0 && yIndexOfList < _tileList.GetLength(1))
-        {
+        {            
             xIndexOfList += x;
             if (xIndexOfList < 0)
-            { xIndexOfList = 0; }
+            { xIndexOfList = 0; } if (xIndexOfList >= _tileList.GetLength(0))
+            { xIndexOfList = _tileList.GetLength(0) -1; }
             yIndexOfList += y;
             if (yIndexOfList < 0)
-            { yIndexOfList = 0; }
+            { yIndexOfList = 0; } if (yIndexOfList >= _tileList.GetLength(1))
+            { yIndexOfList = _tileList.GetLength(1) -1; }
 
             _selectedTile.Reset();
             _selectedTile = _tileList[xIndexOfList, yIndexOfList];
