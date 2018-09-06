@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-
     public enum BuildingPhase { PLACEMENT, INPROGRESS, DONE };
     private BuildingPhase _currentBuildingPhase;
 

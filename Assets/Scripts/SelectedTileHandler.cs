@@ -54,6 +54,8 @@ public class SelectedTileHandler : MonoBehaviour
             _selectedTile.Reset();
             _selectedTile = _tileList[xIndexOfList, yIndexOfList];
         }
+        //int[] tilePosition = TileCreater.GetTilePosition(_selectedTile);
+        //Debug.Log("Current selected tile is: " + tilePosition[0] + ", " + tilePosition[1]);
 
     }
 

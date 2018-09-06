@@ -14,9 +14,10 @@ public class BuildingHandler : MonoBehaviour {
 		
 	}
 
-    public void StartBuilding(Building pBuilding)
+    public void StartBuilding(Building pBuilding, CustomTile pCustomTile)
     {
         pBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
+        pCustomTile.SetBuilding(pBuilding);
     }
 
     public Building PlaceBuilding(CustomTile pCustomTile, Building pBuilding)

@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class CustomTile : MonoBehaviour
 {
-
     private Renderer _meshRenderer;
 
     private Renderer _renderer;
     private Material _materialClone;
     private Material _material;
+
+    private Building _building;
+
+    public enum TileState { HASBUILDING, DONTHAVEBUILDING };
+    private TileState _tileState;
+
     // Use this for initialization
     void Start()
     {
@@ -44,5 +49,25 @@ public class CustomTile : MonoBehaviour
         }
         _renderer.material = _materialClone;
 
+    }
+
+    public void SetState(TileState pTileState)
+    {
+        _tileState = pTileState;
+    }
+
+    public TileState GetState()
+    {
+        return _tileState;
+    }
+
+    public void SetBuilding(Building pBuilding)
+    {
+        _building = pBuilding;
+    }
+
+    public Building GetBuildingOnTile()
+    {
+        return _building;
     }
 }

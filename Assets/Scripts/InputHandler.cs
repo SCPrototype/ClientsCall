@@ -39,6 +39,10 @@ public class InputHandler : MonoBehaviour
 
     public void HandleInput()
     {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            TileCreater.GetBuildingsAroundTile(1, SelectedTileHandler.GetSelectedTile());
+        }
         if (currentMode == CurrentMode.SELECTINGTILE)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -91,14 +95,14 @@ public class InputHandler : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
+                    _buildingHandler.StartBuilding(placementBuilding, SelectedTileHandler.GetSelectedTile());
                     DestroyPlacementBuilding();
                     currentMode = CurrentMode.SELECTINGTILE;
                     BuildingPanel.SetActive(false);
                     placementBuilding = null;
                 }
 
-                if(Input.GetKeyDown(KeyCode.G))
+                if (Input.GetKeyDown(KeyCode.G))
                 {
                     DestroyPlacementBuilding();
                     currentMode = CurrentMode.SELECTINGTILE;
@@ -106,12 +110,13 @@ public class InputHandler : MonoBehaviour
                     placementBuilding = null;
                 }
 
-            } else
+            }
+            else
             {
                 placementBuilding = _buildingHandler.PlaceBuilding(SelectedTileHandler.GetSelectedTile(), SmallHouse);
             }
         }
-        if(Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             UIHandler.ShowNotification("Turn has ended");
         }
@@ -121,9 +126,9 @@ public class InputHandler : MonoBehaviour
     {
         Building[] buildings = FindObjectsOfType<Building>();
 
-        foreach(Building pBuilding in buildings)
+        foreach (Building pBuilding in buildings)
         {
-            if(pBuilding.GetBuildingPhase() == Building.BuildingPhase.PLACEMENT)
+            if (pBuilding.GetBuildingPhase() == Building.BuildingPhase.PLACEMENT)
             {
                 Destroy(pBuilding.gameObject);
             }
