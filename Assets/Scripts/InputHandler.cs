@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class InputHandler : MonoBehaviour
 {
 
-    private SelectedTileHandler _selectedTileHandler;
+    private GridManager _gridManager;
     private BuildingHandler _buildingHandler;
 
     public GameObject BuildingPanel;
+    public enum DirectionKey { LEFT, RIGHT, UP, DOWN };
+
+    //This one belongs in the game handler.
     public enum CurrentMode { SELECTINGTILE, BUILDINGTILE };
     public static CurrentMode currentMode;
 
@@ -23,7 +26,7 @@ public class InputHandler : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _selectedTileHandler = GetComponent<SelectedTileHandler>();
+        _gridManager = GetComponent<GridManager>();
         _buildingHandler = GetComponent<BuildingHandler>();
         currentMode = CurrentMode.SELECTINGTILE;
     }
@@ -41,30 +44,30 @@ public class InputHandler : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.T))
         {
-            TileCreater.GetBuildingsAroundTile(1, SelectedTileHandler.GetSelectedTile());
+            GridManager.GetBuildingsAroundTile(1, GridManager.GetSelectedTile());
         }
         if (currentMode == CurrentMode.SELECTINGTILE)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                _selectedTileHandler.ChangeSelectedTile(1, 0);
+                _gridManager.ChangeSelectedTile(DirectionKey.RIGHT);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                _selectedTileHandler.ChangeSelectedTile(-1, 0);
+                _gridManager.ChangeSelectedTile(DirectionKey.LEFT);
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                _selectedTileHandler.ChangeSelectedTile(0, 1);
+                _gridManager.ChangeSelectedTile(DirectionKey.UP);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                _selectedTileHandler.ChangeSelectedTile(0, -1);
+                _gridManager.ChangeSelectedTile(DirectionKey.DOWN);
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
                 currentMode = CurrentMode.BUILDINGTILE;
-                _selectedTileHandler.ResetSelectedTile();
+                //_selectedTileHandler.ResetSelectedTile();
                 BuildingPanel.SetActive(true);
             }
         }
@@ -80,7 +83,7 @@ public class InputHandler : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     DestroyPlacementBuilding();
-                    placementBuilding = _buildingHandler.PlaceBuilding(SelectedTileHandler.GetSelectedTile(), BigHouse);
+                    placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), BigHouse);
                     images[0].color = new Color(1, 1, 1, 0.5f);
                     images[1].color = new Color(1, 1, 1, 1);
                 }
@@ -88,14 +91,14 @@ public class InputHandler : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     DestroyPlacementBuilding();
-                    placementBuilding = _buildingHandler.PlaceBuilding(SelectedTileHandler.GetSelectedTile(), SmallHouse);
+                    placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), SmallHouse);
                     images[0].color = new Color(1, 1, 1, 1);
                     images[1].color = new Color(1, 1, 1, 0.5f);
                 }
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    _buildingHandler.StartBuilding(placementBuilding, SelectedTileHandler.GetSelectedTile());
+                    _buildingHandler.StartBuilding(placementBuilding, GridManager.GetSelectedTile());
                     DestroyPlacementBuilding();
                     currentMode = CurrentMode.SELECTINGTILE;
                     BuildingPanel.SetActive(false);
@@ -113,7 +116,7 @@ public class InputHandler : MonoBehaviour
             }
             else
             {
-                placementBuilding = _buildingHandler.PlaceBuilding(SelectedTileHandler.GetSelectedTile(), SmallHouse);
+                placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), SmallHouse);
             }
         }
         if (Input.GetKeyDown(KeyCode.Return))

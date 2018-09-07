@@ -13,6 +13,11 @@ public class Building : MonoBehaviour
     private Material _materialClone;
     private Material _material;
 
+    private int BuildingCost;
+    private int BuildingHappiness;
+    private int BuildingIncome;
+    private int TileAffectRange;
+
     // Use this for initialization
     void Start()
     {

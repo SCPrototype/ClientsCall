@@ -3,17 +3,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileCreater : MonoBehaviour
+public class GridManager : MonoBehaviour
 {
-
     public CustomTile TilePrefab;
     public int Rows;
     public int Columns;
     public float OffSetBetweenTiles;
+
     private static CustomTile[,] _tileMap;
+    private static CustomTile _selectedTile;
+
 
     // Use this for initialization
     void Start()
+    {
+        DrawMap();
+        InvokeRepeating("Blink", 0.5f, 0.5f);
+    }
+
+    public static CustomTile[,] GetTileMap()
+    {
+        return _tileMap;
+    }
+    public static void SetSelectedTile(CustomTile pCustomTile)
+    {
+        _selectedTile = pCustomTile;
+    }
+    public static CustomTile GetSelectedTile()
+    {
+        return _selectedTile;
+    }
+    public void ChangeSelectedTile(InputHandler.DirectionKey pDirection)
+    {
+        _selectedTile.Reset();
+        int[] Position = GetTilePosition(_selectedTile);
+        switch (pDirection)
+        {
+            case InputHandler.DirectionKey.LEFT:
+                Position[0] = Mathf.Clamp(Position[0] - 1, 0, _tileMap.GetLength(0) - 1);
+                break;
+            case InputHandler.DirectionKey.RIGHT:
+                Position[0] = Mathf.Clamp(Position[0] + 1, 0, _tileMap.GetLength(0) - 1);
+                break;
+            case InputHandler.DirectionKey.UP:
+                Position[1] = Mathf.Clamp(Position[1] + 1, 0, _tileMap.GetLength(1) - 1);
+                break;
+            case InputHandler.DirectionKey.DOWN:
+                Position[1] = Mathf.Clamp(Position[1] - 1, 0, _tileMap.GetLength(1) - 1);
+                break;
+        }
+        _selectedTile = GetTileAtPosition(Position[0], Position[1]);
+    }
+    private void DrawMap()
     {
         _tileMap = new CustomTile[Rows, Columns];
         for (int row = 0; row < Rows; row++)
@@ -26,20 +67,15 @@ public class TileCreater : MonoBehaviour
                 _tileMap[row, col] = tile;
             }
         }
-
         //Sets first tile to active.
-        SelectedTileHandler.SetSelectedTile(_tileMap[0, 0]);
+        _selectedTile = GetTileAtPosition(0, 0);
     }
-
-    public static CustomTile[,] GetTileMap()
+    private void Blink()
     {
-        return _tileMap;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (InputHandler.currentMode == InputHandler.CurrentMode.SELECTINGTILE)
+        {
+            _selectedTile.InvertColor();
+        }
     }
 
     //Gets the Tile position on the tilemap as X and Y coordinate.
@@ -64,8 +100,13 @@ public class TileCreater : MonoBehaviour
         return coOrdinates;
     }
 
+    public static CustomTile GetTileAtPosition(int xCoordinate, int yCoordinate)
+    {
+        return _tileMap[xCoordinate, yCoordinate];
+    }
+
     /// <summary>
-    /// Returns the tiles in a list, around the selected tile. First parameter gives the radius of it.
+    /// Returns the buildings in a list, around the selected tile. First parameter gives the radius of it.
     /// </summary>
     /// <param name="pAmountOfTiles"></param>
     /// <param name="pTargetTile"></param>
@@ -73,7 +114,7 @@ public class TileCreater : MonoBehaviour
     public static List<Building> GetBuildingsAroundTile(int pAmountOfTiles, CustomTile pTargetTile)
     {
         List<Building> Buildings = new List<Building>();
-        int[] Coordinates = TileCreater.GetTilePosition(pTargetTile);
+        int[] Coordinates = GetTilePosition(pTargetTile);
         List<CustomTile> tileTest = new List<CustomTile>();
         //This is the maximum difference between the first tile and the last tile.
         int MaxOffSet = (pAmountOfTiles * 2) + 1;
@@ -91,7 +132,7 @@ public class TileCreater : MonoBehaviour
             }
         }
 
-        foreach(Building building in Buildings)
+        foreach (Building building in Buildings)
         {
             Debug.Log(building.name);
         }

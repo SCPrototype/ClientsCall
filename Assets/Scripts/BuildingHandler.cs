@@ -24,7 +24,7 @@ public class BuildingHandler : MonoBehaviour {
     {
         Building buildingToPlace = Instantiate(pBuilding);
         Vector3 positionBuilding = pCustomTile.transform.position;
-        //Puts it on the right height.
+
         positionBuilding.y = buildingToPlace.transform.localScale.y / 2;
         buildingToPlace.transform.position = positionBuilding;
         buildingToPlace.transform.parent = pCustomTile.transform;

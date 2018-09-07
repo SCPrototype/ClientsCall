@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2892,9 +2892,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1624529970}
-  - component: {fileID: 1624529969}
-  - component: {fileID: 1624529971}
   - component: {fileID: 1624529972}
+  - component: {fileID: 1624529971}
+  - component: {fileID: 1624529969}
   m_Layer: 0
   m_Name: GameHandler
   m_TagString: Untagged
@@ -2910,9 +2910,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1624529968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cea09e6b4c80c6a429ded50c0531bafe, type: 3}
+  m_Script: {fileID: 11500000, guid: 15a9b77c6dbc2a84086dc86b7f1cd8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TilePrefab: {fileID: 114202496530961934, guid: e42968819e15a674e9d9e6a346618230,
+    type: 2}
+  Rows: 7
+  Columns: 7
+  OffSetBetweenTiles: 0.2
 --- !u!4 &1624529970
 Transform:
   m_ObjectHideFlags: 0
@@ -2934,7 +2939,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1624529968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696efd216edb7c8449be39d6a138e604, type: 3}
+  m_Script: {fileID: 11500000, guid: 86fc3e1010b11ef46b42775c1e48fd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingPanel: {fileID: 1833745903}
