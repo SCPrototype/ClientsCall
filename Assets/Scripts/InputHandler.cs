@@ -46,7 +46,7 @@ public class InputHandler : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.T))
         {
-            City.GetBuildingsAroundTile(1, City.GetSelectedTile());
+            _myCity.GetBuildingsAroundTile(1, _myCity.GetSelectedTile());
         }
         if (currentMode == CurrentMode.SELECTINGTILE)
         {
@@ -69,7 +69,7 @@ public class InputHandler : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 currentMode = CurrentMode.BUILDINGTILE;
-                City.GetSelectedTile().Reset();
+                _myCity.GetSelectedTile().Reset();
                 _uiHandler.ToggleBuildPanel(true);
             }
         }

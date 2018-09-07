@@ -9,8 +9,8 @@ public class City : MonoBehaviour {
     private int Columns;
     private float OffSetBetweenTiles;
 
-    private static CustomTile[,] _tileMap;
-    private static CustomTile _selectedTile;
+    private CustomTile[,] _tileMap;
+    private CustomTile _selectedTile;
 
     public City Initialize(int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
@@ -31,15 +31,15 @@ public class City : MonoBehaviour {
         InvokeRepeating("Blink", 0.5f, 0.5f);
     }
 
-    public static CustomTile[,] GetTileMap()
+    public CustomTile[,] GetTileMap()
     {
         return _tileMap;
     }
-    public static void SetSelectedTile(CustomTile pCustomTile)
+    public void SetSelectedTile(CustomTile pCustomTile)
     {
         _selectedTile = pCustomTile;
     }
-    public static CustomTile GetSelectedTile()
+    public CustomTile GetSelectedTile()
     {
         return _selectedTile;
     }
@@ -91,7 +91,7 @@ public class City : MonoBehaviour {
     }
 
     //Gets the Tile position on the tilemap as X and Y coordinate.
-    public static int[] GetTilePosition(CustomTile pCustomTile)
+    public int[] GetTilePosition(CustomTile pCustomTile)
     {
         int[] coOrdinates = new int[2];
         int arrayWidth = _tileMap.GetLength(0);
@@ -112,7 +112,7 @@ public class City : MonoBehaviour {
         return coOrdinates;
     }
 
-    public static CustomTile GetTileAtPosition(int xCoordinate, int yCoordinate)
+    public CustomTile GetTileAtPosition(int xCoordinate, int yCoordinate)
     {
         return _tileMap[xCoordinate, yCoordinate];
     }
@@ -123,7 +123,7 @@ public class City : MonoBehaviour {
     /// <param name="pAmountOfTiles"></param>
     /// <param name="pTargetTile"></param>
     /// <returns></returns>
-    public static List<Building> GetBuildingsAroundTile(int pAmountOfTiles, CustomTile pTargetTile)
+    public List<Building> GetBuildingsAroundTile(int pAmountOfTiles, CustomTile pTargetTile)
     {
         List<Building> Buildings = new List<Building>();
         int[] Coordinates = GetTilePosition(pTargetTile);

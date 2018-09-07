@@ -7,6 +7,7 @@ public class BuildingHandler : MonoBehaviour {
     private Building[] buildings;
     private int currentBuildingSelection;
     private Building placementBuilding;
+    private City currentCity;
 
     // Use this for initialization
     void Start () {
@@ -18,10 +19,15 @@ public class BuildingHandler : MonoBehaviour {
 		
 	}
 
+    public void SetCurrentCity(City pCity)
+    {
+        currentCity = pCity;
+    }
+
     public void StartBuilding()
     {
         placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
-        City.GetSelectedTile().SetBuilding(placementBuilding);
+        currentCity.GetSelectedTile().SetBuilding(placementBuilding);
         DestroyPlacementBuilding();
     }
 
@@ -61,7 +67,7 @@ public class BuildingHandler : MonoBehaviour {
         {
             currentBuildingSelection = index;
         }
-        placementBuilding = PlaceBuilding(City.GetSelectedTile());
+        placementBuilding = PlaceBuilding(currentCity.GetSelectedTile());
     }
 
     public void DestroyPlacementBuilding()
