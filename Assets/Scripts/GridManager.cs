@@ -115,15 +115,11 @@ public class GridManager : MonoBehaviour
     {
         List<Building> Buildings = new List<Building>();
         int[] Coordinates = GetTilePosition(pTargetTile);
-        List<CustomTile> tileTest = new List<CustomTile>();
         //This is the maximum difference between the first tile and the last tile.
         int MaxOffSet = (pAmountOfTiles * 2) + 1;
 
         for (int x = 0; x < MaxOffSet; x++)
         {
-            //Buildings.Add(_tileMap[Coordinates[0] - 1, Coordinates[1] - i].GetBuildingOnTile());
-            //Buildings.Add(_tileMap[Coordinates[0] , Coordinates[1] - i].GetBuildingOnTile());
-            //Buildings.Add(_tileMap[Coordinates[0] + 1, Coordinates[1] - i].GetBuildingOnTile());
             for (int y = 0; y < MaxOffSet; y++)
             {
                 if (pAmountOfTiles + y == 0 && pAmountOfTiles + x == 0) continue;
