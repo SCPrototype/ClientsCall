@@ -8,11 +8,12 @@ public class UIHandler : MonoBehaviour
 
     public static Text NotificationText;
     public static GameObject NotificationPanel;
-    public Image[] BuildingImages;
-    private int currentIndex = 0;
-    //Replace this with a constant probably.
-    public RectTransform ImagesContent;
-    public ScrollRect ScrollRectangle;
+    private int _currentIndex = 0;
+
+    private GameObject _buildingList;
+    private Image[] _buildingImages;
+    private ScrollRect _contentScroller;
+    private RectTransform _contentImagesHolder;
 
     // Use this for initialization
     void Start()
@@ -33,21 +34,19 @@ public class UIHandler : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    currentIndex--;
-                    currentIndex = Mathf.Clamp(currentIndex, 0, BuildingImages.Length);
+                    _currentIndex--;
+                    _currentIndex = Mathf.Clamp(_currentIndex, 0, _buildingImages.Length);
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    currentIndex++;
-                    currentIndex = Mathf.Clamp(currentIndex, 0, BuildingImages.Length - 1);
+                    _currentIndex++;
+                    _currentIndex = Mathf.Clamp(_currentIndex, 0, _buildingImages.Length - 1);
                 }
-                SetIconActive(currentIndex);
 
-                float number = 1.00f / (BuildingImages.Length -1);
-                float anotherNumber = number * currentIndex;
-               
-                Debug.Log(anotherNumber);
-                ScrollRectangle.verticalNormalizedPosition = 1 - anotherNumber;
+                SetIconActive(_currentIndex);
+
+                float scrollAmount = (1.00f / (_buildingImages.Length - 1) * _currentIndex);
+                _contentScroller.verticalNormalizedPosition = 1 - scrollAmount;
             }
         }
     }
@@ -57,6 +56,10 @@ public class UIHandler : MonoBehaviour
         NotificationPanel = GameObject.FindGameObjectWithTag("NotificationPanel");
         NotificationPanel.SetActive(false);
         NotificationText = NotificationPanel.GetComponentInChildren<Text>();
+        _contentScroller = GameObject.FindGameObjectWithTag("BuildingScroller").GetComponent<ScrollRect>();
+        _contentImagesHolder = GameObject.FindGameObjectWithTag("BuildingList").GetComponent<RectTransform>();
+        _buildingImages = _contentImagesHolder.GetComponentsInChildren<Image>();
+
 
         SetIconActive(0);
     }
@@ -69,9 +72,9 @@ public class UIHandler : MonoBehaviour
 
     private void SetIconActive(int pIndexNumber)
     {
-        foreach (Image pImage in BuildingImages)
+        foreach (Image pImage in _buildingImages)
         {
-            if (pImage == BuildingImages[pIndexNumber])
+            if (pImage == _buildingImages[pIndexNumber])
             {
                 pImage.color = new Color(1, 1, 1, 1);
             }

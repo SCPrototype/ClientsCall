@@ -7,6 +7,7 @@ TagManager:
   - PlacementBuilding
   - PlacedBuilding
   - NotificationPanel
+  - BuildingList
   layers:
   - Default
   - TransparentFX
