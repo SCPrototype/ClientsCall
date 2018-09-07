@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class InputHandler : MonoBehaviour
 {
-
-    private GridManager _gridManager;
+    private City _myCity;
     private BuildingHandler _buildingHandler;
+    private UIHandler _uiHandler;
 
-    public GameObject BuildingPanel;
     public enum DirectionKey { LEFT, RIGHT, UP, DOWN };
 
     //This one belongs in the game handler.
@@ -17,18 +16,21 @@ public class InputHandler : MonoBehaviour
     public static CurrentMode currentMode;
 
     private Building placementBuilding;
-    public Building SmallHouse;
-    public Building BigHouse;
 
-    //TODO: UI handler and shit.
-    public Image[] images;
+    public InputHandler Initialize(City pCity, BuildingHandler pBuildingHandler, UIHandler pUIHandler)
+    {
+        _myCity = pCity;
+        _buildingHandler = pBuildingHandler;
+        _uiHandler = pUIHandler;
+        currentMode = CurrentMode.SELECTINGTILE;
+
+        return this;
+    }
 
     // Use this for initialization
     void Start()
     {
-        _gridManager = GetComponent<GridManager>();
-        _buildingHandler = GetComponent<BuildingHandler>();
-        currentMode = CurrentMode.SELECTINGTILE;
+
     }
 
     // Update is called once per frame
@@ -44,79 +46,69 @@ public class InputHandler : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.T))
         {
-            GridManager.GetBuildingsAroundTile(1, GridManager.GetSelectedTile());
+            City.GetBuildingsAroundTile(1, City.GetSelectedTile());
         }
         if (currentMode == CurrentMode.SELECTINGTILE)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                _gridManager.ChangeSelectedTile(DirectionKey.RIGHT);
+                _myCity.ChangeSelectedTile(DirectionKey.RIGHT);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                _gridManager.ChangeSelectedTile(DirectionKey.LEFT);
+                _myCity.ChangeSelectedTile(DirectionKey.LEFT);
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                _gridManager.ChangeSelectedTile(DirectionKey.UP);
+                _myCity.ChangeSelectedTile(DirectionKey.UP);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                _gridManager.ChangeSelectedTile(DirectionKey.DOWN);
+                _myCity.ChangeSelectedTile(DirectionKey.DOWN);
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
                 currentMode = CurrentMode.BUILDINGTILE;
-                //_selectedTileHandler.ResetSelectedTile();
-                BuildingPanel.SetActive(true);
+                City.GetSelectedTile().Reset();
+                _uiHandler.ToggleBuildPanel(true);
             }
         }
         if (currentMode == CurrentMode.BUILDINGTILE)
         {
             //TODO: Make an event from this and put in buildinghandler.
             //Places a building in placement mode, can switch between buildings.
-            if (placementBuilding != null)
+            if (_buildingHandler.PlacementBuildingActive())
             {
-                images[1].color = new Color(1, 1, 1, 0.5f);
-                images[0].color = new Color(1, 1, 1, 1);
-                //TODO: Make an Array and swap between buildings.
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    DestroyPlacementBuilding();
-                    placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), BigHouse);
-                    images[0].color = new Color(1, 1, 1, 0.5f);
-                    images[1].color = new Color(1, 1, 1, 1);
+                    //BuildingHandler should probably tell UIHandler what to do.
+                    _buildingHandler.ChangeBuildingSelection(1);
+                    _uiHandler.SetActiveBuildingImage(1);
                 }
-                //TODO: Make an Array and swap between buildings.
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    DestroyPlacementBuilding();
-                    placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), SmallHouse);
-                    images[0].color = new Color(1, 1, 1, 1);
-                    images[1].color = new Color(1, 1, 1, 0.5f);
+                    _buildingHandler.ChangeBuildingSelection(-1);
+                    _uiHandler.SetActiveBuildingImage(-1);
                 }
 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    _buildingHandler.StartBuilding(placementBuilding, GridManager.GetSelectedTile());
-                    DestroyPlacementBuilding();
+                    _buildingHandler.StartBuilding();
                     currentMode = CurrentMode.SELECTINGTILE;
-                    BuildingPanel.SetActive(false);
-                    placementBuilding = null;
+                    _uiHandler.ToggleBuildPanel(false);
                 }
 
                 if (Input.GetKeyDown(KeyCode.G))
                 {
-                    DestroyPlacementBuilding();
+                    _buildingHandler.DestroyPlacementBuilding();
                     currentMode = CurrentMode.SELECTINGTILE;
-                    BuildingPanel.SetActive(false);
-                    placementBuilding = null;
+                    _uiHandler.ToggleBuildPanel(false);
                 }
-
             }
             else
             {
-                placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), SmallHouse);
+                _buildingHandler.ChangeBuildingSelection(0, false);
+                _uiHandler.SetActiveBuildingImage(0, false);
             }
         }
         if (Input.GetKeyDown(KeyCode.Return))
@@ -124,18 +116,4 @@ public class InputHandler : MonoBehaviour
             UIHandler.ShowNotification("Turn has ended");
         }
     }
-
-    private void DestroyPlacementBuilding()
-    {
-        Building[] buildings = FindObjectsOfType<Building>();
-
-        foreach (Building pBuilding in buildings)
-        {
-            if (pBuilding.GetBuildingPhase() == Building.BuildingPhase.PLACEMENT)
-            {
-                Destroy(pBuilding.gameObject);
-            }
-        }
-    }
-
 }

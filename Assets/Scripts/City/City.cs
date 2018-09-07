@@ -1,24 +1,34 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
-{
-    public CustomTile TilePrefab;
-    public int Rows;
-    public int Columns;
-    public float OffSetBetweenTiles;
+public class City : MonoBehaviour {
+
+    private CustomTile TilePrefab;
+    private int Rows;
+    private int Columns;
+    private float OffSetBetweenTiles;
 
     private static CustomTile[,] _tileMap;
     private static CustomTile _selectedTile;
 
+    public City Initialize(int pRows, int pColumns, float pOffset, Vector3 pStartPos)
+    {
+        Rows = pRows;
+        Columns = pColumns;
+        OffSetBetweenTiles = pOffset;
+
+        TilePrefab = (Resources.Load(Glob.tilePrefab) as GameObject).GetComponent<CustomTile>();
+        transform.position = pStartPos;
+
+        DrawMap(pStartPos);
+        return this;
+    }
 
     // Use this for initialization
     void Start()
     {
-        //();
-        //InvokeRepeating("Blink", 0.5f, 0.5f);
+        InvokeRepeating("Blink", 0.5f, 0.5f);
     }
 
     public static CustomTile[,] GetTileMap()
@@ -54,7 +64,7 @@ public class GridManager : MonoBehaviour
         }
         _selectedTile = GetTileAtPosition(Position[0], Position[1]);
     }
-    private void DrawMap()
+    private void DrawMap(Vector3 startPos)
     {
         _tileMap = new CustomTile[Rows, Columns];
         for (int row = 0; row < Rows; row++)
@@ -62,7 +72,7 @@ public class GridManager : MonoBehaviour
             for (int col = 0; col < Columns; col++)
             {
                 CustomTile tile = Instantiate(TilePrefab);
-                tile.transform.position = new Vector3((row * tile.transform.localScale.x) + row * OffSetBetweenTiles, 0, (tile.transform.localScale.z * col) + col * OffSetBetweenTiles);
+                tile.transform.position = startPos + new Vector3((row * tile.transform.localScale.x) + row * OffSetBetweenTiles, 0, (tile.transform.localScale.z * col) + col * OffSetBetweenTiles);
                 tile.transform.parent = this.transform;
                 _tileMap[row, col] = tile;
             }
@@ -74,7 +84,9 @@ public class GridManager : MonoBehaviour
     {
         if (InputHandler.currentMode == InputHandler.CurrentMode.SELECTINGTILE)
         {
-            _selectedTile.InvertColor();
+            if (_selectedTile != null) {
+                _selectedTile.InvertColor();
+            }
         }
     }
 
