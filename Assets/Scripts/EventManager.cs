@@ -30,7 +30,7 @@ public class EventManager : MonoBehaviour {
 	void Start () {
         TMX_Parser parser = new TMX_Parser();
         parser.Parse("Assets/XML/RandomEvents.txt", out allEvents);
-        Debug.Log(allEvents);
+        Debug.Log(allEvents);       
     }
 	
 	// Update is called once per frame
