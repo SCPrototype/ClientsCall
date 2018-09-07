@@ -21,6 +21,7 @@ public class InputHandler : MonoBehaviour
     public Building BigHouse;
 
     //TODO: UI handler and shit.
+    
     public Image[] images;
 
     // Use this for initialization
@@ -77,23 +78,18 @@ public class InputHandler : MonoBehaviour
             //Places a building in placement mode, can switch between buildings.
             if (placementBuilding != null)
             {
-                images[1].color = new Color(1, 1, 1, 0.5f);
-                images[0].color = new Color(1, 1, 1, 1);
+               
                 //TODO: Make an Array and swap between buildings.
-                if (Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     DestroyPlacementBuilding();
                     placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), BigHouse);
-                    images[0].color = new Color(1, 1, 1, 0.5f);
-                    images[1].color = new Color(1, 1, 1, 1);
                 }
                 //TODO: Make an Array and swap between buildings.
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     DestroyPlacementBuilding();
                     placementBuilding = _buildingHandler.PlaceBuilding(GridManager.GetSelectedTile(), SmallHouse);
-                    images[0].color = new Color(1, 1, 1, 1);
-                    images[1].color = new Color(1, 1, 1, 0.5f);
                 }
 
                 if (Input.GetKeyDown(KeyCode.F))
