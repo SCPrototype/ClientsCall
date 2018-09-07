@@ -30,6 +30,7 @@ public static class Glob {
         Sprite[] icons = new Sprite[buildingCount];
         icons[0] = Resources.Load<Sprite>(houseIcon);
         icons[1] = Resources.Load<Sprite>(factoryIcon);
+        icons[2] = Resources.Load<Sprite>(parkIcon);
         return icons;
     }
 }

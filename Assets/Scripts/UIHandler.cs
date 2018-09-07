@@ -15,10 +15,13 @@ public class UIHandler : MonoBehaviour {
     private Image[] buildingImages;
     private int currentBuildingSelection;
 
+    private ScrollRect scrollView;
+
 	// Use this for initialization
 	void Start () {
         buildPanel = GameObject.FindGameObjectWithTag("BuildPanel");
         buildPanel.SetActive(false);
+        scrollView = buildPanel.GetComponentInChildren<ScrollRect>();
         bottomBar = GameObject.FindGameObjectWithTag("BottomBar");
         notificationPanel = GameObject.FindGameObjectWithTag("NotificationPanel");
         notificationPanel.SetActive(false);
@@ -89,5 +92,7 @@ public class UIHandler : MonoBehaviour {
                 buildingImages[i].color = new Color(1, 1, 1, 1);
             }
         }
+        float scrollAmount = (1.00f / (buildingImages.Length - 1) * currentBuildingSelection);
+        scrollView.verticalNormalizedPosition = 1 - scrollAmount;
     }
 }
