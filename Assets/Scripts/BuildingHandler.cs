@@ -10,13 +10,7 @@ public class BuildingHandler : MonoBehaviour {
     private City currentCity;
     private bool readyToBuild = true;
     private float prevTurn;
-    private City _city;
 
-    public BuildingHandler Initialize(City pCity)
-    {
-        _city = pCity;
-        return this;
-    }
     // Use this for initialization
     void Start () {
         buildings = Glob.GetBuildingPrefabs();
@@ -35,7 +29,12 @@ public class BuildingHandler : MonoBehaviour {
 
     public void SetCurrentCity(City pCity)
     {
+        if (currentCity != null)
+        {
+            currentCity.SetCurrentMode(CityManager.CurrentMode.WAITINGFORTURN);//TODO: Fix the flashing tiles
+        }
         currentCity = pCity;
+        currentCity.SetCurrentMode(CityManager.CurrentMode.SELECTINGTILE);
         prevTurn = Time.time;
         readyToBuild = false;
     }
@@ -49,8 +48,8 @@ public class BuildingHandler : MonoBehaviour {
         placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
         currentCity.GetSelectedTile().SetBuilding(placementBuilding);
         DestroyPlacementBuilding();
-        _city.BudgetChange(-10);
-        // _city.BudgetChange(buildingToPlace.GetCost());
+        currentCity.BudgetChange(-10);
+        // currentCity.BudgetChange(buildingToPlace.GetCost());
     }
 
     public Building PlaceBuilding(CustomTile pCustomTile)

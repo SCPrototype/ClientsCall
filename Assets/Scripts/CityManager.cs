@@ -21,4 +21,13 @@ public abstract class CityManager : MonoBehaviour {
     }
 
     public abstract void HandleTurn(City pCity);
+
+    public CurrentMode GetCurrentMode()
+    {
+        return currentMode;
+    }
+    public void SetCurrentMode(CurrentMode pMode)
+    {
+        currentMode = pMode;
+    }
 }

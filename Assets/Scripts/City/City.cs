@@ -101,7 +101,7 @@ public class City : MonoBehaviour
     }
     private void Blink()
     {
-        if (InputHandler.currentMode == InputHandler.CurrentMode.SELECTINGTILE)
+        if (_myManager.GetCurrentMode() != CityManager.CurrentMode.WAITINGFORTURN)
         {
             if (_selectedTile != null)
             {
@@ -199,5 +199,10 @@ public class City : MonoBehaviour
         _happiness += pChange;
         _eventManager.UpdateHappiness((int)_happiness);
         Debug.Log(_happiness);
+    }
+
+    public void SetCurrentMode(CityManager.CurrentMode pMode)
+    {
+        _myManager.SetCurrentMode(pMode);
     }
 }

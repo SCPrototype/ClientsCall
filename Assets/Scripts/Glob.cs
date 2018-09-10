@@ -5,7 +5,7 @@ using UnityEngine;
 public static class Glob {
 
     //GAME VALUES
-    public const int AmountOfAICities = 3;
+    public const int AmountOfAICities = 1;
     public const int CityWidth = 7;
     public const int CityLength = 7;
     public const int CitySpacing = 50;
