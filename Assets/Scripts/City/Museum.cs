@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class Museum : FunctionBuilding {
 
-    public Museum(int cost, int pActionCost , City pCity) : base(cost, pActionCost, pCity)
+    public Museum()
     {
 
+    }
+
+    new public Museum Initialize(int pCost, int pActionCost)
+    {
+        base.Initialize(pCost, pActionCost);
+        return this;
     }
 
     // Use this for initialization

@@ -16,11 +16,15 @@ public abstract class Building : MonoBehaviour
     private CustomTile _builtTitle;
 
 
-    public Building(int cost, City pCity)
+    public Building()
     {
-        _buildingCost = cost;
-        _myCity = pCity;
-        getRenderer();
+
+    }
+
+    public Building Initialize(int pCost)
+    {
+        _buildingCost = pCost;
+        return this;
     }
 
     private void getRenderer()
@@ -79,5 +83,9 @@ public abstract class Building : MonoBehaviour
     public City GetCity()
     {
         return _myCity;
+    }
+    public void SetCity(City pCity)
+    {
+        _myCity = pCity;
     }
 }

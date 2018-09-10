@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Park : ProductionBuilding {
 
-    public Park(int cost, int pHappinessGain, int pMoneyGain, int range, City pCity) : base(cost, pHappinessGain, pMoneyGain, range, pCity)
+    public Park()
     {
 
+    }
+
+    new public Park Initialize(int pCost, int pHappinessGain, int pMoneyGain, int pRange)
+    {
+        base.Initialize(pCost, pHappinessGain, pMoneyGain, pRange);
+        return this;
     }
 
     // Use this for initialization

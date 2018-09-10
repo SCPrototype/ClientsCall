@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class House : CollectionBuilding {
 
-    public House(int cost, City pCity) : base(cost, pCity)
-    {
+    private const int _cost = 25;
 
+    public House()
+    {
+        
     }
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Awake() {
+        base.Initialize(_cost);
+    }
 	
 	// Update is called once per frame
 	void Update () {

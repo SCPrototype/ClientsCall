@@ -4,11 +4,15 @@ using UnityEngine;
 
 public abstract class CollectionBuilding : Building
 {
-    
-
-    public CollectionBuilding(int cost, City pCity) : base(cost, pCity)
+    public CollectionBuilding()
     {
    
+    }
+
+    new public CollectionBuilding Initialize(int pCost)
+    {
+        base.Initialize(pCost);
+        return this;
     }
 
     public void Collect(int pIncome, int pHappiness)

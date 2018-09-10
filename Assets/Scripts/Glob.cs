@@ -26,8 +26,8 @@ public static class Glob {
     public static Building[] GetBuildingPrefabs()
     {
         Building[] buildings = new Building[buildingCount];
-        buildings[0] = Resources.Load<Building>(housePrefab);
-        buildings[1] = Resources.Load<Building>(factoryPrefab);
+        buildings[0] = Resources.Load<House>(housePrefab);
+        buildings[1] = Resources.Load<Factory>(factoryPrefab);
         return buildings;
     }
 

@@ -6,9 +6,16 @@ public abstract class FunctionBuilding : Building {
 
     private int actionCost;
 
-    public FunctionBuilding(int cost, int pActionCost, City pCity) : base(cost, pCity)
+    public FunctionBuilding()
+    {
+
+    }
+
+    public FunctionBuilding Initialize(int pCost, int pActionCost)
     {
         actionCost = pActionCost;
+        base.Initialize(pCost);
+        return this;
     }
 
     //TODO: Dont forget to subtract money

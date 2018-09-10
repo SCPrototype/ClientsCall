@@ -11,11 +11,18 @@ public abstract class ProductionBuilding : Building
     private int tileAffectRange;
 
 
-    public ProductionBuilding(int cost, int pHappinessGain, int pMoneyGain, int range, City pCity) : base(cost, pCity)
+    public ProductionBuilding()
     {
-        //happinessGain = pHappinessGain;
-        //moneyGain = pMoneyGain;
-        //tileAffectRange = range;
+
+    }
+
+    public ProductionBuilding Initialize(int pCost, int pHappinessGain, int pMoneyGain, int pRange)
+    {
+        base.Initialize(pCost);
+        happinessGain = pHappinessGain;
+        moneyGain = pMoneyGain;
+        tileAffectRange = pRange;
+        return this;
     }
 
     public void Produce()

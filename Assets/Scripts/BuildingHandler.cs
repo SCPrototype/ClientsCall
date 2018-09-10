@@ -47,8 +47,8 @@ public class BuildingHandler : MonoBehaviour {
     {
         placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
         currentCity.GetSelectedTile().SetBuilding(placementBuilding);
+        currentCity.BudgetChange(placementBuilding.GetCost());
         DestroyPlacementBuilding();
-        currentCity.BudgetChange(-10);
         // currentCity.BudgetChange(buildingToPlace.GetCost());
     }
 
@@ -58,7 +58,8 @@ public class BuildingHandler : MonoBehaviour {
         //Makes a building which is into placement mode.
         buildingToPlace.SetBuildingTile(pCustomTile);
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.PLACEMENT);
-        
+
+        Debug.Log(buildingToPlace.GetCost());
         return buildingToPlace;
     }
 
