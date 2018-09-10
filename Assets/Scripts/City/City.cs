@@ -191,11 +191,13 @@ public class City : MonoBehaviour
     {
         _budget += pChange;
         _eventManager.UpdateBudget((int)_budget);
+        Debug.Log(_budget);
     }
 
     public void HappinessChange(int pChange)
     {
         _happiness += pChange;
         _eventManager.UpdateHappiness((int)_happiness);
+        Debug.Log(_happiness);
     }
 }

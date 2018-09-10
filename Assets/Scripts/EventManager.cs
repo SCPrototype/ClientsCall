@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EventManager : MonoBehaviour {
+public class EventManager : MonoBehaviour
+{
 
     private AllEvents allEvents;
     private RandomEvent currentEvent;
@@ -26,15 +27,17 @@ public class EventManager : MonoBehaviour {
     public Text BudgetText;
     public Text HappinessText;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         TMX_Parser parser = new TMX_Parser();
         parser.Parse("Assets/XML/RandomEvents.txt", out allEvents);
-        Debug.Log(allEvents);       
+        Debug.Log(allEvents);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             EnableRandomEvent();
@@ -71,14 +74,14 @@ public class EventManager : MonoBehaviour {
     {
         budget = pBudget;
         budget = Mathf.Clamp(budget, 0, 100);
-        BudgetText.text = "Budget: " + budget + "/100";
-        BudgetSlider.value = budget / 100f;
+        // BudgetText.text = "Budget: " + budget + "/100";
+        // BudgetSlider.value = budget / 100f;
     }
     public void UpdateHappiness(int pHappiness)
     {
         happiness = pHappiness;
         happiness = Mathf.Clamp(happiness, 0, 100);
-        HappinessText.text = "Happiness: " + happiness + "/100";
-        HappinessSlider.value = happiness / 100f;
+        // HappinessText.text = "Happiness: " + happiness + "/100";
+        // HappinessSlider.value = happiness / 100f;
     }
 }

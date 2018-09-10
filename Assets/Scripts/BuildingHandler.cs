@@ -10,7 +10,13 @@ public class BuildingHandler : MonoBehaviour {
     private City currentCity;
     private bool readyToBuild = true;
     private float prevTurn;
+    private City _city;
 
+    public BuildingHandler Initialize(City pCity)
+    {
+        _city = pCity;
+        return this;
+    }
     // Use this for initialization
     void Start () {
         buildings = Glob.GetBuildingPrefabs();
@@ -43,19 +49,17 @@ public class BuildingHandler : MonoBehaviour {
         placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
         currentCity.GetSelectedTile().SetBuilding(placementBuilding);
         DestroyPlacementBuilding();
+        _city.BudgetChange(-10);
+        // _city.BudgetChange(buildingToPlace.GetCost());
     }
 
     public Building PlaceBuilding(CustomTile pCustomTile)
     {
         Building buildingToPlace = Instantiate(buildings[currentBuildingSelection]);
-        Vector3 positionBuilding = pCustomTile.transform.position;
-
-        positionBuilding.y = buildingToPlace.transform.localScale.y / 2;
-        buildingToPlace.transform.position = positionBuilding;
-        buildingToPlace.transform.parent = pCustomTile.transform;
-
         //Makes a building which is into placement mode.
+        buildingToPlace.SetBuildingTile(pCustomTile);
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.PLACEMENT);
+        
         return buildingToPlace;
     }
 

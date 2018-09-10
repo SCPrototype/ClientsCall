@@ -21,7 +21,7 @@ public class GameInitializer : MonoBehaviour {
             allCities[i] = new GameObject("AICity").AddComponent<City>().Initialize(new AICityManager(), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(Glob.CitySpacing * i, 0, 0));
         }
 
-        buildHandler = new GameObject("BuildingHandler").AddComponent<BuildingHandler>();
+        buildHandler = new GameObject("BuildingHandler").AddComponent<BuildingHandler>().Initialize(playerCity);
         buildHandler.SetCurrentCity(allCities[0]);
         //playerInputHandler = new GameObject("InputHandler").AddComponent<InputHandler>().Initialize(playerCity, buildHandler, gameUIHandler);
         //AIInputHandler = new GameObject("AIInputHandler").AddComponent<AIInputHandler>().Initialize(buildHandler);

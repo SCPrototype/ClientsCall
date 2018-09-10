@@ -17,6 +17,11 @@ public class PlayerCityManager : CityManager {
 
     public override void HandleTurn(City pCity)
     {
+        //T is for testing, dat doe je met vrienden. U is voor u en mij.
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            pCity.CollectFromAllBuildings();
+        }
         if (currentMode == CurrentMode.SELECTINGTILE)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
