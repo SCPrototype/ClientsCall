@@ -4,6 +4,16 @@ using UnityEngine;
 
 public static class Glob {
 
+    //GAME VALUES
+    public const int AmountOfAICities = 3;
+    public const int CityWidth = 7;
+    public const int CityLength = 7;
+    public const int CitySpacing = 50;
+    public const float TileSpacing = 0.2f;
+
+    public const float TurnDelay = 1f;
+
+    //PREFABS
     public const string uiPrefab = "UI";
 
     public const string tilePrefab = "Tile";

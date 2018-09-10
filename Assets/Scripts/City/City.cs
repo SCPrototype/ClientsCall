@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class City : MonoBehaviour {
 
+    private CityManager _myManager;
+
     private CustomTile TilePrefab;
     private int Rows;
     private int Columns;
@@ -12,8 +14,10 @@ public class City : MonoBehaviour {
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
 
-    public City Initialize(int pRows, int pColumns, float pOffset, Vector3 pStartPos)
+    public City Initialize(CityManager pManager, int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
+        _myManager = pManager;
+
         Rows = pRows;
         Columns = pColumns;
         OffSetBetweenTiles = pOffset;
@@ -31,6 +35,14 @@ public class City : MonoBehaviour {
         InvokeRepeating("Blink", 0.5f, 0.5f);
     }
 
+    void Update()
+    {
+        if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && GameInitializer.GetBuildingHandler().IsReadyToBuild())
+        {
+            _myManager.HandleTurn(this);
+        }
+    }
+
     public CustomTile[,] GetTileMap()
     {
         return _tileMap;
@@ -43,22 +55,22 @@ public class City : MonoBehaviour {
     {
         return _selectedTile;
     }
-    public void ChangeSelectedTile(InputHandler.DirectionKey pDirection)
+    public void ChangeSelectedTile(CityManager.DirectionKey pDirection)
     {
         _selectedTile.Reset();
         int[] Position = GetTilePosition(_selectedTile);
         switch (pDirection)
         {
-            case InputHandler.DirectionKey.LEFT:
+            case CityManager.DirectionKey.LEFT:
                 Position[0] = Mathf.Clamp(Position[0] - 1, 0, _tileMap.GetLength(0) - 1);
                 break;
-            case InputHandler.DirectionKey.RIGHT:
+            case CityManager.DirectionKey.RIGHT:
                 Position[0] = Mathf.Clamp(Position[0] + 1, 0, _tileMap.GetLength(0) - 1);
                 break;
-            case InputHandler.DirectionKey.UP:
+            case CityManager.DirectionKey.UP:
                 Position[1] = Mathf.Clamp(Position[1] + 1, 0, _tileMap.GetLength(1) - 1);
                 break;
-            case InputHandler.DirectionKey.DOWN:
+            case CityManager.DirectionKey.DOWN:
                 Position[1] = Mathf.Clamp(Position[1] - 1, 0, _tileMap.GetLength(1) - 1);
                 break;
         }
@@ -82,7 +94,7 @@ public class City : MonoBehaviour {
     }
     private void Blink()
     {
-        if (InputHandler.currentMode == InputHandler.CurrentMode.SELECTINGTILE)
+        if (CityManager.currentMode == CityManager.CurrentMode.SELECTINGTILE)
         {
             if (_selectedTile != null) {
                 _selectedTile.InvertColor();

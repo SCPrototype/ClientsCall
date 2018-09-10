@@ -8,6 +8,8 @@ public class BuildingHandler : MonoBehaviour {
     private int currentBuildingSelection;
     private Building placementBuilding;
     private City currentCity;
+    private bool readyToBuild = true;
+    private float prevTurn;
 
     // Use this for initialization
     void Start () {
@@ -16,12 +18,24 @@ public class BuildingHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (!readyToBuild)
+        {
+            if (Time.time - prevTurn >= Glob.TurnDelay)
+            {
+                readyToBuild = true;
+            }
+        }
 	}
 
     public void SetCurrentCity(City pCity)
     {
         currentCity = pCity;
+        prevTurn = Time.time;
+        readyToBuild = false;
+    }
+    public City GetCurrentCity()
+    {
+        return currentCity;
     }
 
     public void StartBuilding()
@@ -87,5 +101,10 @@ public class BuildingHandler : MonoBehaviour {
     public bool PlacementBuildingActive()
     {
         return placementBuilding != null;
+    }
+
+    public bool IsReadyToBuild()
+    {
+        return readyToBuild;
     }
 }

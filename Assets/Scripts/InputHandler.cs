@@ -12,7 +12,7 @@ public class InputHandler : MonoBehaviour
     public enum DirectionKey { LEFT, RIGHT, UP, DOWN };
 
     //This one belongs in the game handler.
-    public enum CurrentMode { SELECTINGTILE, BUILDINGTILE };
+    public enum CurrentMode { SELECTINGTILE, BUILDINGTILE, WAITINGFORTURN };
     public static CurrentMode currentMode;
 
     private Building placementBuilding;
@@ -36,7 +36,7 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (currentMode != CurrentMode.WAITINGFORTURN && Input.anyKeyDown)
         {
             HandleInput();
         }
@@ -52,19 +52,19 @@ public class InputHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.RIGHT);
+                //_myCity.ChangeSelectedTile(DirectionKey.RIGHT);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.LEFT);
+                //.ChangeSelectedTile(DirectionKey.LEFT);
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.UP);
+                //_myCity.ChangeSelectedTile(DirectionKey.UP);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.DOWN);
+                //_myCity.ChangeSelectedTile(DirectionKey.DOWN);
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -113,6 +113,7 @@ public class InputHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            GameInitializer.EndTurn();
             UIHandler.ShowNotification("Turn has ended");
         }
     }
