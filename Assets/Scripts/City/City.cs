@@ -2,28 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class City : MonoBehaviour {
-
-    private CityManager _myManager;
+public class City : MonoBehaviour
+{
 
     private CustomTile TilePrefab;
     private int Rows;
     private int Columns;
     private float OffSetBetweenTiles;
+    private EventManager _eventManager;
+    private float _budget;
+    private float _happiness;
+    private static CustomTile[,] _tileMap;
+    private static CustomTile _selectedTile;
 
-    private CustomTile[,] _tileMap;
-    private CustomTile _selectedTile;
 
-    public City Initialize(CityManager pManager, int pRows, int pColumns, float pOffset, Vector3 pStartPos)
+
+    public City Initialize(int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
-        _myManager = pManager;
-
         Rows = pRows;
         Columns = pColumns;
         OffSetBetweenTiles = pOffset;
 
         TilePrefab = (Resources.Load(Glob.tilePrefab) as GameObject).GetComponent<CustomTile>();
         transform.position = pStartPos;
+
+        _eventManager = GameObject.FindGameObjectWithTag("EventManager").GetComponent<EventManager>();
 
         DrawMap(pStartPos);
         return this;
@@ -35,42 +38,34 @@ public class City : MonoBehaviour {
         InvokeRepeating("Blink", 0.5f, 0.5f);
     }
 
-    void Update()
-    {
-        if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && GameInitializer.GetBuildingHandler().IsReadyToBuild())
-        {
-            _myManager.HandleTurn(this);
-        }
-    }
-
-    public CustomTile[,] GetTileMap()
+    public static CustomTile[,] GetTileMap()
     {
         return _tileMap;
     }
-    public void SetSelectedTile(CustomTile pCustomTile)
+    public static void SetSelectedTile(CustomTile pCustomTile)
     {
         _selectedTile = pCustomTile;
     }
-    public CustomTile GetSelectedTile()
+    public static CustomTile GetSelectedTile()
     {
         return _selectedTile;
     }
-    public void ChangeSelectedTile(CityManager.DirectionKey pDirection)
+    public void ChangeSelectedTile(InputHandler.DirectionKey pDirection)
     {
         _selectedTile.Reset();
         int[] Position = GetTilePosition(_selectedTile);
         switch (pDirection)
         {
-            case CityManager.DirectionKey.LEFT:
+            case InputHandler.DirectionKey.LEFT:
                 Position[0] = Mathf.Clamp(Position[0] - 1, 0, _tileMap.GetLength(0) - 1);
                 break;
-            case CityManager.DirectionKey.RIGHT:
+            case InputHandler.DirectionKey.RIGHT:
                 Position[0] = Mathf.Clamp(Position[0] + 1, 0, _tileMap.GetLength(0) - 1);
                 break;
-            case CityManager.DirectionKey.UP:
+            case InputHandler.DirectionKey.UP:
                 Position[1] = Mathf.Clamp(Position[1] + 1, 0, _tileMap.GetLength(1) - 1);
                 break;
-            case CityManager.DirectionKey.DOWN:
+            case InputHandler.DirectionKey.DOWN:
                 Position[1] = Mathf.Clamp(Position[1] - 1, 0, _tileMap.GetLength(1) - 1);
                 break;
         }
@@ -94,16 +89,17 @@ public class City : MonoBehaviour {
     }
     private void Blink()
     {
-        if (CityManager.currentMode == CityManager.CurrentMode.SELECTINGTILE)
+        if (InputHandler.currentMode == InputHandler.CurrentMode.SELECTINGTILE)
         {
-            if (_selectedTile != null) {
+            if (_selectedTile != null)
+            {
                 _selectedTile.InvertColor();
             }
         }
     }
 
     //Gets the Tile position on the tilemap as X and Y coordinate.
-    public int[] GetTilePosition(CustomTile pCustomTile)
+    public static int[] GetTilePosition(CustomTile pCustomTile)
     {
         int[] coOrdinates = new int[2];
         int arrayWidth = _tileMap.GetLength(0);
@@ -124,7 +120,7 @@ public class City : MonoBehaviour {
         return coOrdinates;
     }
 
-    public CustomTile GetTileAtPosition(int xCoordinate, int yCoordinate)
+    public static CustomTile GetTileAtPosition(int xCoordinate, int yCoordinate)
     {
         return _tileMap[xCoordinate, yCoordinate];
     }
@@ -135,7 +131,7 @@ public class City : MonoBehaviour {
     /// <param name="pAmountOfTiles"></param>
     /// <param name="pTargetTile"></param>
     /// <returns></returns>
-    public List<Building> GetBuildingsAroundTile(int pAmountOfTiles, CustomTile pTargetTile)
+    public static Building[] GetBuildingsAroundTile(int pAmountOfTiles, CustomTile pTargetTile)
     {
         List<Building> Buildings = new List<Building>();
         int[] Coordinates = GetTilePosition(pTargetTile);
@@ -146,16 +142,48 @@ public class City : MonoBehaviour {
         {
             for (int y = 0; y < MaxOffSet; y++)
             {
-                if (pAmountOfTiles + y == 0 && pAmountOfTiles + x == 0) continue;
-                Building building = _tileMap[Coordinates[0] - pAmountOfTiles + y, Coordinates[1] - pAmountOfTiles + x].GetBuildingOnTile();
+                int xCoordinate = Coordinates[0] - pAmountOfTiles + x;
+                int yCoordinate = Coordinates[1] - pAmountOfTiles + y;
+                if ((xCoordinate < 0 || xCoordinate >= _tileMap.GetLength(0)) || (yCoordinate < 0 || yCoordinate >= _tileMap.GetLength(1))) continue;
+                Building building = _tileMap[xCoordinate, yCoordinate].GetBuildingOnTile();
                 if (building != null) Buildings.Add(building);
             }
         }
 
-        foreach (Building building in Buildings)
+        return Buildings.ToArray();
+    }
+
+    public void CollectFromAllBuildings()
+    {
+        foreach (CustomTile pTile in _tileMap)
         {
-            Debug.Log(building.name);
+            Building building = pTile.GetBuildingOnTile();
+            if (building != null)
+            {
+                if (building is ProductionBuilding)
+                {
+                    ProductionBuilding productionBuilding = building as ProductionBuilding;
+                    productionBuilding.Produce();
+                }
+            }
         }
-        return Buildings;
+    }
+
+    public void ReceiveCollection(int pBudget, int pHappiness)
+    {
+        BudgetChange(pBudget);
+        HappinessChange(pHappiness);
+    }
+
+    public void BudgetChange(int pChange)
+    {
+        _budget += pChange;
+        _eventManager.UpdateBudget((int)_budget);
+    }
+
+    public void HappinessChange(int pChange)
+    {
+        _happiness += pChange;
+        _eventManager.UpdateHappiness((int)_happiness);
     }
 }

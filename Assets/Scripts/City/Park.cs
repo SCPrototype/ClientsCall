@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Park : ProductionBuilding {
 
-    public Park(int cost, int pHappinessGain, int pMoneyGain, int range) : base(cost, pHappinessGain, pMoneyGain, range)
+    public Park(int cost, int pHappinessGain, int pMoneyGain, int range, City pCity) : base(cost, pHappinessGain, pMoneyGain, range, pCity)
     {
 
     }

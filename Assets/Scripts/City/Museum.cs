@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Museum : FunctionBuilding {
 
-    public Museum(int cost, int pActionCost) : base(cost, pActionCost)
+    public Museum(int cost, int pActionCost , City pCity) : base(cost, pActionCost, pCity)
     {
 
     }

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Factory : ProductionBuilding {
 
-    public Factory(int cost, int pHappinessGain, int pMoneyGain, int range) : base(cost, pHappinessGain, pMoneyGain, range)
+    
+    public Factory(int cost, int pHappinessGain, int pMoneyGain, int range, City pCity) : base(cost, pHappinessGain, pMoneyGain, range, pCity)
     {
-
+        
     }
 
     // Use this for initialization

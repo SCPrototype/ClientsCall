@@ -11,6 +11,7 @@ TagManager:
   - EventMenu
   - BottomBar
   - Values
+  - EventManager
   layers:
   - Default
   - TransparentFX

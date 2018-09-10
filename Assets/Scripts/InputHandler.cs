@@ -12,7 +12,7 @@ public class InputHandler : MonoBehaviour
     public enum DirectionKey { LEFT, RIGHT, UP, DOWN };
 
     //This one belongs in the game handler.
-    public enum CurrentMode { SELECTINGTILE, BUILDINGTILE, WAITINGFORTURN };
+    public enum CurrentMode { SELECTINGTILE, BUILDINGTILE };
     public static CurrentMode currentMode;
 
     private Building placementBuilding;
@@ -36,7 +36,7 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentMode != CurrentMode.WAITINGFORTURN && Input.anyKeyDown)
+        if (Input.anyKeyDown)
         {
             HandleInput();
         }
@@ -44,32 +44,33 @@ public class InputHandler : MonoBehaviour
 
     public void HandleInput()
     {
+        //T is for testing, dat doe je met vrienden. U is voor u en mij.
         if(Input.GetKeyDown(KeyCode.T))
         {
-            _myCity.GetBuildingsAroundTile(1, _myCity.GetSelectedTile());
+            _myCity.CollectFromAllBuildings();
         }
         if (currentMode == CurrentMode.SELECTINGTILE)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                //_myCity.ChangeSelectedTile(DirectionKey.RIGHT);
+                _myCity.ChangeSelectedTile(DirectionKey.RIGHT);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                //.ChangeSelectedTile(DirectionKey.LEFT);
+                _myCity.ChangeSelectedTile(DirectionKey.LEFT);
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                //_myCity.ChangeSelectedTile(DirectionKey.UP);
+                _myCity.ChangeSelectedTile(DirectionKey.UP);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                //_myCity.ChangeSelectedTile(DirectionKey.DOWN);
+                _myCity.ChangeSelectedTile(DirectionKey.DOWN);
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
                 currentMode = CurrentMode.BUILDINGTILE;
-                _myCity.GetSelectedTile().Reset();
+                City.GetSelectedTile().Reset();
                 _uiHandler.ToggleBuildPanel(true);
             }
         }
@@ -113,7 +114,6 @@ public class InputHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            GameInitializer.EndTurn();
             UIHandler.ShowNotification("Turn has ended");
         }
     }
