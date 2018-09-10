@@ -6,7 +6,7 @@ public abstract class FunctionBuilding : Building {
 
     private int actionCost;
 
-    public FunctionBuilding(int cost, int pActionCost) : base(cost)
+    public FunctionBuilding(int cost, int pActionCost, City pCity) : base(cost, pCity)
     {
         actionCost = pActionCost;
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class House : CollectionBuilding {
 
-    public House(int cost) : base(cost)
+    public House(int cost, City pCity) : base(cost, pCity)
     {
 
     }

@@ -44,9 +44,10 @@ public class InputHandler : MonoBehaviour
 
     public void HandleInput()
     {
+        //T is for testing, dat doe je met vrienden. U is voor u en mij.
         if(Input.GetKeyDown(KeyCode.T))
         {
-            City.GetBuildingsAroundTile(1, City.GetSelectedTile());
+            _myCity.CollectFromAllBuildings();
         }
         if (currentMode == CurrentMode.SELECTINGTILE)
         {

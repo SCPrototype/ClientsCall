@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CollectionBuilding : Building {
+public abstract class CollectionBuilding : Building
+{
+    
 
-    public CollectionBuilding(int cost) : base(cost)
+    public CollectionBuilding(int cost, City pCity) : base(cost, pCity)
     {
-
+   
     }
 
-    public void Collect()
+    public void Collect(int pIncome, int pHappiness)
     {
-        //TODO: Tell the city how much you collected.
+        //TODO: Tell collection buildings to collect from nearby production buildings   
+        this.GetCity().ReceiveCollection(pIncome, pHappiness);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MissileSilo : FunctionBuilding {
 
-    public MissileSilo(int cost, int pActionCost) : base(cost, pActionCost)
+    public MissileSilo(int cost, int pActionCost, City pCity) : base(cost, pActionCost, pCity)
     {
 
     }

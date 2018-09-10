@@ -1,41 +1,44 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingHandler : MonoBehaviour {
+public class BuildingHandler : MonoBehaviour
+{
 
-    private Building[] buildings;
-    private int currentBuildingSelection;
-    private Building placementBuilding;
+    private Building[] _buildings;
+    private int _currentBuildSelection;
+    private Building _placementBuilding;
+    private City _city;
 
-    // Use this for initialization
-    void Start () {
-        buildings = Glob.GetBuildingPrefabs();
+    public BuildingHandler Initialize(City pCity)
+    {
+        _city = pCity;
+        return this;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+        _buildings = Glob.GetBuildingPrefabs();
+    }
 
     public void StartBuilding()
     {
-        placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
-        City.GetSelectedTile().SetBuilding(placementBuilding);
+        _placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
+        City.GetSelectedTile().SetBuilding(_placementBuilding);
         DestroyPlacementBuilding();
     }
 
+   
+
     public Building PlaceBuilding(CustomTile pCustomTile)
     {
-        Building buildingToPlace = Instantiate(buildings[currentBuildingSelection]);
-        Vector3 positionBuilding = pCustomTile.transform.position;
-
-        positionBuilding.y = buildingToPlace.transform.localScale.y / 2;
-        buildingToPlace.transform.position = positionBuilding;
-        buildingToPlace.transform.parent = pCustomTile.transform;
-
+        Building buildingToPlace = Instantiate(_buildings[_currentBuildSelection]);
         //Makes a building which is into placement mode.
+        buildingToPlace.SetBuildingTile(pCustomTile);
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.PLACEMENT);
+        _city.BudgetChange(-10);
+        // _city.BudgetChange(buildingToPlace.GetCost());
         return buildingToPlace;
     }
 
@@ -46,22 +49,22 @@ public class BuildingHandler : MonoBehaviour {
         {
             for (int i = 0; i != index; i += (index / Mathf.Abs(index)))
             {
-                currentBuildingSelection += (index / Mathf.Abs(index));
-                if (currentBuildingSelection >= Glob.buildingCount)
+                _currentBuildSelection += (index / Mathf.Abs(index));
+                if (_currentBuildSelection >= Glob.buildingCount)
                 {
-                    currentBuildingSelection = 0;
+                    _currentBuildSelection = 0;
                 }
-                else if (currentBuildingSelection < 0)
+                else if (_currentBuildSelection < 0)
                 {
-                    currentBuildingSelection = Glob.buildingCount - 1;
+                    _currentBuildSelection = Glob.buildingCount - 1;
                 }
             }
         }
         else
         {
-            currentBuildingSelection = index;
+            _currentBuildSelection = index;
         }
-        placementBuilding = PlaceBuilding(City.GetSelectedTile());
+        _placementBuilding = PlaceBuilding(City.GetSelectedTile());
     }
 
     public void DestroyPlacementBuilding()
@@ -75,11 +78,11 @@ public class BuildingHandler : MonoBehaviour {
                 Destroy(pBuilding.gameObject);
             }
         }
-        placementBuilding = null;
+        _placementBuilding = null;
     }
 
     public bool PlacementBuildingActive()
     {
-        return placementBuilding != null;
+        return _placementBuilding != null;
     }
 }

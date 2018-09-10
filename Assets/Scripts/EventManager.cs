@@ -19,7 +19,7 @@ public class EventManager : MonoBehaviour {
     public GameObject effectBox;
     public Text effectText;
 
-    private int budget = 100;
+    private int budget = 75;
     private int happiness = 50;
     public Slider BudgetSlider;
     public Slider HappinessSlider;
@@ -67,16 +67,16 @@ public class EventManager : MonoBehaviour {
         UpdateHappiness(chc.GetHappiness() + currentRepercussion.GetHappiness());
     }
 
-    public void UpdateBudget(int cost)
+    public void UpdateBudget(int pBudget)
     {
-        budget -= cost;
+        budget = pBudget;
         budget = Mathf.Clamp(budget, 0, 100);
         BudgetText.text = "Budget: " + budget + "/100";
         BudgetSlider.value = budget / 100f;
     }
-    public void UpdateHappiness(int change)
+    public void UpdateHappiness(int pHappiness)
     {
-        happiness += change;
+        happiness = pHappiness;
         happiness = Mathf.Clamp(happiness, 0, 100);
         HappinessText.text = "Happiness: " + happiness + "/100";
         HappinessSlider.value = happiness / 100f;

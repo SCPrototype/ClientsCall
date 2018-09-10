@@ -11,11 +11,15 @@ public abstract class Building : MonoBehaviour
     private Material _materialClone;
     private Material _material;
 
-    private int BuildingCost;
+    private int _buildingCost;
+    public City _myCity;
+    private CustomTile _builtTitle;
 
-    public Building(int cost)
+
+    public Building(int cost, City pCity)
     {
-        BuildingCost = cost;
+        _buildingCost = cost;
+        _myCity = pCity;
         getRenderer();
     }
 
@@ -30,6 +34,22 @@ public abstract class Building : MonoBehaviour
     public BuildingPhase GetBuildingPhase()
     {
         return _currentBuildingPhase;
+    }
+
+    public CustomTile GetBuildingTile()
+    {
+        return _builtTitle;
+    }
+
+    public void SetBuildingTile(CustomTile pCustomTile)
+    {
+        Vector3 positionBuilding = pCustomTile.transform.position;
+
+        positionBuilding.y = this.transform.localScale.y / 2;
+        this.transform.position = positionBuilding;
+        this.transform.parent = pCustomTile.transform;
+        _myCity = pCustomTile.GetComponentInParent<City>();
+        _builtTitle = pCustomTile;
     }
 
     public void SetBuildingPhase(BuildingPhase pBuildingPhase)
@@ -53,6 +73,11 @@ public abstract class Building : MonoBehaviour
 
     public int GetCost()
     {
-        return BuildingCost;
+        return _buildingCost;
+    }
+
+    public City GetCity()
+    {
+        return _myCity;
     }
 }

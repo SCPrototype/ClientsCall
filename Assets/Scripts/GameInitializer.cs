@@ -13,7 +13,7 @@ public class GameInitializer : MonoBehaviour {
 	void Start () {
         gameUIHandler = Instantiate((Resources.Load(Glob.uiPrefab) as GameObject).GetComponent<UIHandler>());
         playerCity = new GameObject("PlayerCity").AddComponent<City>().Initialize(7, 7, 0.2f, new Vector3(0, 0, 0));
-        buildHandler = new GameObject("BuildingHandler").AddComponent<BuildingHandler>();
+        buildHandler = new GameObject("BuildingHandler").AddComponent<BuildingHandler>().Initialize(playerCity);
         playerInputHandler = new GameObject("InputHandler").AddComponent<InputHandler>().Initialize(playerCity, buildHandler, gameUIHandler);
     }
 	
