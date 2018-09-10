@@ -24,7 +24,7 @@ public abstract class ProductionBuilding : Building
         moneyGain = 3;
         happinessGain = -2;
         //TODO: Tell all CollectionBuildings within range to collect.
-        Building[] buildingsInRange = City.GetBuildingsAroundTile(tileAffectRange, this.GetBuildingTile());
+        Building[] buildingsInRange = _myCity.GetBuildingsAroundTile(tileAffectRange, this.GetBuildingTile());
         foreach (Building pBuilding in buildingsInRange)
         {
             if (pBuilding is CollectionBuilding)

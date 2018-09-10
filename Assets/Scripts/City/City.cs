@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class City : MonoBehaviour
 {
+    CityManager _myManager;
 
     private CustomTile TilePrefab;
     private int Rows;
@@ -12,13 +13,15 @@ public class City : MonoBehaviour
     private EventManager _eventManager;
     private float _budget;
     private float _happiness;
-    private static CustomTile[,] _tileMap;
-    private static CustomTile _selectedTile;
+    private CustomTile[,] _tileMap;
+    private CustomTile _selectedTile;
 
 
 
-    public City Initialize(int pRows, int pColumns, float pOffset, Vector3 pStartPos)
+    public City Initialize(CityManager pManager, int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
+        _myManager = pManager;
+
         Rows = pRows;
         Columns = pColumns;
         OffSetBetweenTiles = pOffset;
@@ -38,34 +41,43 @@ public class City : MonoBehaviour
         InvokeRepeating("Blink", 0.5f, 0.5f);
     }
 
-    public static CustomTile[,] GetTileMap()
+    void Update()
+    {
+        if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && GameInitializer.GetBuildingHandler().IsReadyToBuild())
+        {
+            _myManager.HandleTurn(this);
+        }
+    }
+
+
+    public CustomTile[,] GetTileMap()
     {
         return _tileMap;
     }
-    public static void SetSelectedTile(CustomTile pCustomTile)
+    public void SetSelectedTile(CustomTile pCustomTile)
     {
         _selectedTile = pCustomTile;
     }
-    public static CustomTile GetSelectedTile()
+    public CustomTile GetSelectedTile()
     {
         return _selectedTile;
     }
-    public void ChangeSelectedTile(InputHandler.DirectionKey pDirection)
+    public void ChangeSelectedTile(CityManager.DirectionKey pDirection)
     {
         _selectedTile.Reset();
         int[] Position = GetTilePosition(_selectedTile);
         switch (pDirection)
         {
-            case InputHandler.DirectionKey.LEFT:
+            case CityManager.DirectionKey.LEFT:
                 Position[0] = Mathf.Clamp(Position[0] - 1, 0, _tileMap.GetLength(0) - 1);
                 break;
-            case InputHandler.DirectionKey.RIGHT:
+            case CityManager.DirectionKey.RIGHT:
                 Position[0] = Mathf.Clamp(Position[0] + 1, 0, _tileMap.GetLength(0) - 1);
                 break;
-            case InputHandler.DirectionKey.UP:
+            case CityManager.DirectionKey.UP:
                 Position[1] = Mathf.Clamp(Position[1] + 1, 0, _tileMap.GetLength(1) - 1);
                 break;
-            case InputHandler.DirectionKey.DOWN:
+            case CityManager.DirectionKey.DOWN:
                 Position[1] = Mathf.Clamp(Position[1] - 1, 0, _tileMap.GetLength(1) - 1);
                 break;
         }
@@ -99,7 +111,7 @@ public class City : MonoBehaviour
     }
 
     //Gets the Tile position on the tilemap as X and Y coordinate.
-    public static int[] GetTilePosition(CustomTile pCustomTile)
+    public int[] GetTilePosition(CustomTile pCustomTile)
     {
         int[] coOrdinates = new int[2];
         int arrayWidth = _tileMap.GetLength(0);
@@ -120,7 +132,7 @@ public class City : MonoBehaviour
         return coOrdinates;
     }
 
-    public static CustomTile GetTileAtPosition(int xCoordinate, int yCoordinate)
+    public CustomTile GetTileAtPosition(int xCoordinate, int yCoordinate)
     {
         return _tileMap[xCoordinate, yCoordinate];
     }
@@ -131,7 +143,7 @@ public class City : MonoBehaviour
     /// <param name="pAmountOfTiles"></param>
     /// <param name="pTargetTile"></param>
     /// <returns></returns>
-    public static Building[] GetBuildingsAroundTile(int pAmountOfTiles, CustomTile pTargetTile)
+    public Building[] GetBuildingsAroundTile(int pAmountOfTiles, CustomTile pTargetTile)
     {
         List<Building> Buildings = new List<Building>();
         int[] Coordinates = GetTilePosition(pTargetTile);

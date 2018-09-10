@@ -53,24 +53,24 @@ public class InputHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.RIGHT);
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.RIGHT);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.LEFT);
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.LEFT);
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.UP);
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.UP);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                _myCity.ChangeSelectedTile(DirectionKey.DOWN);
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.DOWN);
             }
             if (Input.GetKeyDown(KeyCode.F))
             {
                 currentMode = CurrentMode.BUILDINGTILE;
-                City.GetSelectedTile().Reset();
+                _myCity.GetSelectedTile().Reset();
                 _uiHandler.ToggleBuildPanel(true);
             }
         }
