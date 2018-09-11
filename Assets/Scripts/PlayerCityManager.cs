@@ -69,9 +69,15 @@ public class PlayerCityManager : CityManager {
 
                     if (Input.GetKeyDown(KeyCode.F))
                     {
-                        GameInitializer.GetBuildingHandler().StartBuilding();
-                        currentMode = CurrentMode.SELECTINGTILE;
-                        GameInitializer.GetUIHandler().ToggleBuildPanel(false);
+                        if(GameInitializer.GetBuildingHandler().StartBuilding())
+                        {
+                            currentMode = CurrentMode.SELECTINGTILE;
+                            GameInitializer.GetUIHandler().ToggleBuildPanel(false);
+                        } else
+                        {
+                            //Error, not enough funds.
+                        }
+                        
                     }
 
                     if (Input.GetKeyDown(KeyCode.G))

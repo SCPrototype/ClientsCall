@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraHandler : MonoBehaviour
+public class CameraHandlerX : MonoBehaviour
 {
 
     private Vector3 _defaultPosition;

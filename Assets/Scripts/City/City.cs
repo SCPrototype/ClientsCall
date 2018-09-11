@@ -195,12 +195,27 @@ public class City : MonoBehaviour
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget += pChange;
         _uiHandler.SetResourcesBars((int)_budget, (int) _happiness);
+        //softcap for now.
+        _budget = Mathf.Clamp(_budget, 0, 100);
     }
 
     public void HappinessChange(int pChange)
     {
         _happiness += pChange;
         _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
+        //softcap for now.
+        _happiness = Mathf.Clamp(_happiness, 0, 100);
+    }
+
+    public bool CanBuild(int pBuildingCost)
+    {
+        if(_budget - pBuildingCost < 0)
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
     }
 
     public void SetCurrentMode(CityManager.CurrentMode pMode)
