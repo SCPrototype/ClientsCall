@@ -11,10 +11,11 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget;
-    private float _happiness;
+    private float _budget = 75;
+    private float _happiness = 75;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
+    private UIHandler _uiHandler;
 
 
 
@@ -30,7 +31,8 @@ public class City : MonoBehaviour
         transform.position = pStartPos;
 
         _eventManager = GameObject.FindGameObjectWithTag("EventManager").GetComponent<EventManager>();
-
+        _uiHandler = GameInitializer.GetUIHandler();
+ 
         DrawMap(pStartPos);
         return this;
     }
@@ -39,6 +41,7 @@ public class City : MonoBehaviour
     void Start()
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
+        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
     }
 
     void Update()
@@ -215,16 +218,30 @@ public class City : MonoBehaviour
 
     public void BudgetChange(int pChange)
     {
-        Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
+        //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget += pChange;
-        _eventManager.UpdateBudget((int)_budget);
+        _uiHandler.SetResourcesBars((int)_budget, (int) _happiness);
+        //softcap for now.
+        _budget = Mathf.Clamp(_budget, 0, 100);
     }
 
     public void HappinessChange(int pChange)
     {
         _happiness += pChange;
-        _eventManager.UpdateHappiness((int)_happiness);
-        Debug.Log(_happiness);
+        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
+        //softcap for now.
+        _happiness = Mathf.Clamp(_happiness, 0, 100);
+    }
+
+    public bool CanBuild(int pBuildingCost)
+    {
+        if(_budget - pBuildingCost < 0)
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
     }
 
     public void SetCurrentMode(CityManager.CurrentMode pMode)

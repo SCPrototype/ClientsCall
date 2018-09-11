@@ -12,6 +12,9 @@ TagManager:
   - BottomBar
   - Values
   - EventManager
+  - BuildingInfoPanel
+  - BudgetSlider
+  - HappinessSlider
   layers:
   - Default
   - TransparentFX

@@ -9,9 +9,9 @@ public class MissileSilo : FunctionBuilding {
 
     }
 
-    new public MissileSilo Initialize(int pCost, int pActionCost)
+    new public MissileSilo Initialize(int pCost, int pActionCost, string pDescription)
     {
-        base.Initialize(pCost, pActionCost);
+        base.Initialize(pCost, pActionCost, pDescription);
         return this;
     }
 
