@@ -6,9 +6,9 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Factory0%
+  m_Name: Material_Park#0
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _METALLICGLOSSMAP
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _NORMALMAP _PARALLAXMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 996da9dd5be0e9b40b0468082a39d3eb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -40,19 +40,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3db63202c6384d6498bb898dad306125, type: 3}
+        m_Texture: {fileID: 2800000, guid: b2e51f3cf4bf3a64c8716e92380225d7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: aad7da072b8f0334790de0c20c5fe2b6, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: c9924d90e53bbff49b1cfaa189184aaa, type: 3}
+        m_Texture: {fileID: 2800000, guid: 66b4ca85eac7d104d8b0ad8bd600f350, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 367e4dcb72a594540889269867dbb884, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -61,7 +61,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 3

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildingHandler : MonoBehaviour {
 
-    private Building[] buildings;
+    public Building[] buildings;
     private int currentBuildingSelection;
     private Building placementBuilding;
     private City currentCity;
@@ -47,7 +47,7 @@ public class BuildingHandler : MonoBehaviour {
     {
         placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
         currentCity.GetSelectedTile().SetBuilding(placementBuilding);
-        currentCity.BudgetChange(placementBuilding.GetCost());
+        currentCity.BudgetChange(-placementBuilding.GetCost());
         DestroyPlacementBuilding();
         // currentCity.BudgetChange(buildingToPlace.GetCost());
     }
@@ -58,8 +58,6 @@ public class BuildingHandler : MonoBehaviour {
         //Makes a building which is into placement mode.
         buildingToPlace.SetBuildingTile(pCustomTile);
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.PLACEMENT);
-
-        Debug.Log(buildingToPlace.GetCost());
         return buildingToPlace;
     }
 

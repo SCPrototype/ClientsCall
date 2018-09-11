@@ -5,9 +5,9 @@ using UnityEngine;
 public class Factory : ProductionBuilding {
 
     private const int _cost = 5;
-    private const int _happinessGain = 4;
-    private const int _moneyGain = 3;
-    private const int _range = 2;
+    private const int _happinessGain = -3;
+    private const int _moneyGain = 4;
+    private const int _range = 1;
     
     public Factory()
     {

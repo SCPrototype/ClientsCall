@@ -4,24 +4,18 @@ using UnityEngine;
 
 public class Park : ProductionBuilding {
 
+    private const int _cost = 5;
+    private const int _happinessGain = 4;
+    private const int _moneyGain = -2;
+    private const int _range = 1;
+
     public Park()
     {
 
     }
 
-    new public Park Initialize(int pCost, int pHappinessGain, int pMoneyGain, int pRange)
+    void Awake()
     {
-        base.Initialize(pCost, pHappinessGain, pMoneyGain, pRange);
-        return this;
+        base.Initialize(_cost, _happinessGain, _moneyGain, _range);
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

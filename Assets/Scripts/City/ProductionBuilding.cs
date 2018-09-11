@@ -27,9 +27,7 @@ public abstract class ProductionBuilding : Building
 
     public void Produce()
     {
-        tileAffectRange = 1;
-        moneyGain = 3;
-        happinessGain = -2;
+
         //TODO: Tell all CollectionBuildings within range to collect.
         Building[] buildingsInRange = _myCity.GetBuildingsAroundTile(tileAffectRange, this.GetBuildingTile());
         foreach (Building pBuilding in buildingsInRange)
@@ -40,5 +38,14 @@ public abstract class ProductionBuilding : Building
                 prodBuilding.Collect(moneyGain, happinessGain);
             }
         }
+    }
+
+    public int[] GetMoneyHappinessRange()
+    {
+        int[] valueArray = new int[3];
+        valueArray[0] = moneyGain;
+        valueArray[1] = happinessGain;
+        valueArray[2] = tileAffectRange;
+        return valueArray;
     }
 }
