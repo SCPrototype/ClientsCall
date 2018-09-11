@@ -5,13 +5,19 @@ using UnityEngine;
 public static class Glob {
 
     //GAME VALUES
-    public const int AmountOfAICities = 1;
+    public const int AmountOfAICities = 3;
     public const int CityWidth = 7;
     public const int CityLength = 7;
     public const int CitySpacing = 50;
     public const float TileSpacing = 0.2f;
+    public const int RandomHouseAmount = 5;
+    public const int RandomFactoryAmount = 1;
+    public const int RandomParkAmount = 1;
 
-    public const float TurnDelay = 1f;
+    public const float TurnDelay = 2.5f;
+    public const float AIEndTurnDelay = 0.5f;
+
+    public const float CameraCitySwitchTime = 2;
 
     //PREFABS
     public const string uiPrefab = "UI";
@@ -26,8 +32,8 @@ public static class Glob {
     public static Building[] GetBuildingPrefabs()
     {
         Building[] buildings = new Building[buildingCount];
-        buildings[0] = Resources.Load<House>(housePrefab);
-        buildings[1] = Resources.Load<Factory>(factoryPrefab);
+        buildings[0] = Resources.Load<House>(housePrefab).Initialize();
+        buildings[1] = Resources.Load<Factory>(factoryPrefab).Initialize();
         return buildings;
     }
 

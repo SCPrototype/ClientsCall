@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class House : CollectionBuilding {
 
-    private const int _cost = 25;
+    private const int _cost = 5;
 
     public House()
     {
@@ -14,6 +14,12 @@ public class House : CollectionBuilding {
     // Use this for initialization
     void Awake() {
         base.Initialize(_cost);
+    }
+
+    public House Initialize()
+    {
+        base.Initialize(_cost);
+        return this;
     }
 	
 	// Update is called once per frame

@@ -5,29 +5,163 @@ using UnityEngine;
 
 public class AICityManager : CityManager {
 
+    private Building[] buildings;
+    private bool _turnEnded = false;
+    private float _turnEndTime;
+
+    private class Move
+    {
+        public Move(CustomTile pTile, Building pBuilding, int pValue)
+        {
+            _tile = pTile;
+            _building = pBuilding;
+            _value = pValue;
+        }
+
+        public CustomTile _tile;
+        public Building _building;
+        public float _value;
+    }
+
 	// Use this for initialization
 	void Start () {
-		
-	}
+        buildings = Glob.GetBuildingPrefabs();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     public override void HandleTurn(City pCity)
     {
-        //TODO: Add calculations for optimal move here
-        //Move 1 tile to the right
-        pCity.ChangeSelectedTile(DirectionKey.RIGHT);
+        if (!_turnEnded)
+        {
+            if (buildings == null)
+            {
+                buildings = Glob.GetBuildingPrefabs();
+            }
 
-        //Select the tile
-        pCity.GetSelectedTile().Reset();
+            //TODO: Add calculations for optimal move here
+            //Move 1 tile to the right
+            Move myMove = getMove(pCity);
+            Debug.Log("Move value: " + myMove._value);
+            Debug.Log("Move tile: " + pCity.GetTilePosition(myMove._tile)[0] + ", " + pCity.GetTilePosition(myMove._tile)[1]);
 
-        GameInitializer.GetBuildingHandler().ChangeBuildingSelection(1);
+            pCity.SetSelectedTile(myMove._tile);
 
-        GameInitializer.GetBuildingHandler().StartBuilding();
+            //Select the tile
+            pCity.GetSelectedTile().Reset();
 
-        GameInitializer.EndTurn();
+            GameInitializer.GetBuildingHandler().ChangeBuildingSelection(myMove._building);
+
+            GameInitializer.GetBuildingHandler().StartBuilding();
+            _turnEnded = true;
+            _turnEndTime = Time.time;
+        }
+        else if (Time.time - _turnEndTime >= Glob.AIEndTurnDelay)
+        {
+            GameInitializer.EndTurn();
+            _turnEnded = false;
+        }
+    }
+
+    private Move getMove(City pCity, int optimalChance = 75, int subOptimalDiff = 2)//TODO: Make AI
+    {
+        CustomTile[,] grid = pCity.GetTileMap();
+        Move optimalMove = new Move(grid[0,0], buildings[0], -50);
+        Move subOptimalMove = new Move(grid[0,0], buildings[0], -50);
+        Move currentMove = new Move(grid[0, 0], buildings[0], 0);
+
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                if (grid[i,j].GetBuildingOnTile() == null) {
+                    currentMove._tile = grid[i, j];//For every tile on the grid
+                    currentMove._value = 0;
+                    for (int k = 0; k < Glob.buildingCount; k++)//Place every possible building
+                    {
+                        currentMove._building = buildings[k];
+                        currentMove._value = getMoveValue(currentMove._tile, currentMove._building);
+                        if (currentMove._value > subOptimalMove._value && currentMove._value < optimalMove._value - subOptimalDiff)
+                        {
+                            subOptimalMove._tile = currentMove._tile; //Overwrite the sub-optimal move with the current one.
+                            subOptimalMove._building = currentMove._building;
+                            subOptimalMove._value = currentMove._value;
+                        }
+                        else if (currentMove._value > optimalMove._value)//If the tile/building combination gives a higher value than the previous optimal move.
+                        {
+                            optimalMove._tile = currentMove._tile; //Overwrite the optimal move with the current one.
+                            optimalMove._building = currentMove._building;
+                            optimalMove._value = currentMove._value;
+                        }
+                    }
+                }
+            }
+        }
+
+        int rnd = UnityEngine.Random.Range(0, 100);
+        if (rnd < optimalChance || subOptimalMove._value < 0)
+        {
+            return optimalMove;
+        } else
+        {
+            Debug.Log("did a sub optimal move");
+            return subOptimalMove;
+        }
+    }
+
+    private float getMoveValue(CustomTile pTile, Building pBuilding)
+    {
+        float value = -pBuilding.GetCost(); //Remove cost from the value of the move.
+        value = 0;
+        City tileCity = pTile.GetCity();
+
+        bool buildingIsProduction = false;
+        float productionValue = 0;
+        float collectionValue = 1;
+        if (pBuilding is ProductionBuilding)
+        {
+            buildingIsProduction = true;
+            ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
+            productionValue += prodBuilding.GetHappinessGain();
+            productionValue += prodBuilding.GetMoneyGain();
+            collectionValue = 0;
+        }
+
+        Building[] buildingsInRange = tileCity.GetBuildingsAroundTile(1, pTile);
+        foreach (Building b in buildingsInRange)
+        {
+            if (b is CollectionBuilding && buildingIsProduction)
+            {
+                //If this move places a production building next to a collection building, add value to the move.
+                collectionValue += 1;
+            }
+            else if (b is ProductionBuilding)
+            {
+                if (!buildingIsProduction)
+                {
+                    //If this move places a collection building next to a production building, add value to the move.
+                    ProductionBuilding prodBuilding = b as ProductionBuilding;
+                    productionValue += prodBuilding.GetHappinessGain(); //TODO: Make sure the 5% multipliers for neighbouring production buildings is included here.
+                    productionValue += prodBuilding.GetMoneyGain();
+                }
+                else if (pBuilding.GetType() == b.GetType())
+                {
+                    ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
+                    productionValue += prodBuilding.GetHappinessGain() * 0.05f; //TODO: Store this multiplier value in the glob.
+                    productionValue += prodBuilding.GetMoneyGain() * 0.05f; //If a production building is placed next to a production building of the same type, add value to the move.
+                } else
+                {
+                    //If a production building is placed next to a production building of a different type, subtract value from the move.
+                    ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
+                    productionValue -= prodBuilding.GetHappinessGain() * 0.05f; //TODO: Store this multiplier value in the glob.
+                    productionValue -= prodBuilding.GetMoneyGain() * 0.05f;
+                }
+            }
+        }
+        value += productionValue * collectionValue;
+        return value;
     }
 }

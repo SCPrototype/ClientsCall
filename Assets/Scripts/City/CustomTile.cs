@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CustomTile : MonoBehaviour
 {
+    private City _myCity;
+
     private Renderer _meshRenderer;
 
     private Renderer _renderer;
@@ -21,6 +23,15 @@ public class CustomTile : MonoBehaviour
         _renderer = GetComponent<Renderer>();
         _material = _renderer.material;
         _materialClone = new Material(_material);
+    }
+
+    public void SetCity(City pCity)
+    {
+        _myCity = pCity;
+    }
+    public City GetCity()
+    {
+        return _myCity;
     }
 
     // Update is called once per frame

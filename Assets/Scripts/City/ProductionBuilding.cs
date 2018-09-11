@@ -6,9 +6,9 @@ using UnityEngine;
 public abstract class ProductionBuilding : Building
 {
 
-    private int happinessGain;
-    private int moneyGain;
-    private int tileAffectRange;
+    private int _happinessGain;
+    private int _moneyGain;
+    private int _tileAffectRange;
 
 
     public ProductionBuilding()
@@ -19,26 +19,36 @@ public abstract class ProductionBuilding : Building
     public ProductionBuilding Initialize(int pCost, int pHappinessGain, int pMoneyGain, int pRange)
     {
         base.Initialize(pCost);
-        happinessGain = pHappinessGain;
-        moneyGain = pMoneyGain;
-        tileAffectRange = pRange;
+        _happinessGain = pHappinessGain;
+        _moneyGain = pMoneyGain;
+        _tileAffectRange = pRange;
         return this;
     }
 
     public void Produce()
     {
-        tileAffectRange = 1;
-        moneyGain = 3;
-        happinessGain = -2;
         //TODO: Tell all CollectionBuildings within range to collect.
-        Building[] buildingsInRange = _myCity.GetBuildingsAroundTile(tileAffectRange, this.GetBuildingTile());
+        Building[] buildingsInRange = _myCity.GetBuildingsAroundTile(_tileAffectRange, this.GetBuildingTile());
         foreach (Building pBuilding in buildingsInRange)
         {
             if (pBuilding is CollectionBuilding)
             {
                 CollectionBuilding prodBuilding = pBuilding as CollectionBuilding;
-                prodBuilding.Collect(moneyGain, happinessGain);
+                prodBuilding.Collect(_moneyGain, _happinessGain);
             }
         }
+    }
+
+    public int GetHappinessGain()
+    {
+        return _happinessGain;
+    }
+    public int GetMoneyGain()
+    {
+        return _moneyGain;
+    }
+    public int GetRange()
+    {
+        return _tileAffectRange;
     }
 }

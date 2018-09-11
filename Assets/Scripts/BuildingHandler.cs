@@ -37,10 +37,23 @@ public class BuildingHandler : MonoBehaviour {
         currentCity.SetCurrentMode(CityManager.CurrentMode.SELECTINGTILE);
         prevTurn = Time.time;
         readyToBuild = false;
+        GameInitializer.GetCameraManager().MoveCameraTo(pCity.transform.position + new Vector3(3, 31, -10), Glob.CameraCitySwitchTime);
     }
     public City GetCurrentCity()
     {
         return currentCity;
+    }
+
+    public void QuickBuildBuilding(City pCity, CustomTile pCustomTile, int pBuildingIndex)
+    {
+        if (buildings == null)
+        {
+            buildings = Glob.GetBuildingPrefabs();
+        }
+        Building buildingToPlace = Instantiate(buildings[pBuildingIndex]);
+        buildingToPlace.SetBuildingTile(pCustomTile);
+        pCustomTile.SetBuilding(buildingToPlace);
+        buildingToPlace.SetBuildingPhase(Building.BuildingPhase.DONE);
     }
 
     public void StartBuilding()
@@ -59,7 +72,6 @@ public class BuildingHandler : MonoBehaviour {
         buildingToPlace.SetBuildingTile(pCustomTile);
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.PLACEMENT);
 
-        Debug.Log(buildingToPlace.GetCost());
         return buildingToPlace;
     }
 
@@ -84,6 +96,19 @@ public class BuildingHandler : MonoBehaviour {
         else
         {
             currentBuildingSelection = index;
+        }
+        placementBuilding = PlaceBuilding(currentCity.GetSelectedTile());
+    }
+    public void ChangeBuildingSelection(Building pBuilding)
+    {
+        DestroyPlacementBuilding();
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            if (buildings[i] == pBuilding)
+            {
+                currentBuildingSelection = i;
+                break;
+            }
         }
         placementBuilding = PlaceBuilding(currentCity.GetSelectedTile());
     }

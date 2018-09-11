@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Factory : ProductionBuilding {
 
-    private const int _cost = 5;
-    private const int _happinessGain = 4;
-    private const int _moneyGain = 3;
+    private const int _cost = 15;
+    private const int _happinessGain = -2;
+    private const int _moneyGain = 10;
     private const int _range = 2;
     
     public Factory()
@@ -17,6 +17,12 @@ public class Factory : ProductionBuilding {
     // Use this for initialization
     void Awake () {
         base.Initialize(_cost, _happinessGain, _moneyGain, _range);
+    }
+
+    public Factory Initialize()
+    {
+        base.Initialize(_cost, _happinessGain, _moneyGain, _range);
+        return this;
     }
 	
 	// Update is called once per frame

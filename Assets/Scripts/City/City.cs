@@ -91,11 +91,37 @@ public class City : MonoBehaviour
             for (int col = 0; col < Columns; col++)
             {
                 CustomTile tile = Instantiate(TilePrefab);
+                tile.SetCity(this);
                 tile.transform.position = startPos + new Vector3((row * tile.transform.localScale.x) + row * OffSetBetweenTiles, 0, (tile.transform.localScale.z * col) + col * OffSetBetweenTiles);
                 tile.transform.parent = this.transform;
                 _tileMap[row, col] = tile;
             }
         }
+
+        for (int i = 0; i < Glob.RandomHouseAmount; i++)
+        {
+            CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
+            if (targetTile.GetBuildingOnTile() == null)
+            {
+                GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 0);
+            } else
+            {
+                i--;
+            }
+        }
+        for (int i = 0; i < Glob.RandomFactoryAmount; i++)
+        {
+            CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
+            if (targetTile.GetBuildingOnTile() == null)
+            {
+                GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 1);
+            }
+            else
+            {
+                i--;
+            }
+        }
+
         //Sets first tile to active.
         _selectedTile = GetTileAtPosition(0, 0);
     }
