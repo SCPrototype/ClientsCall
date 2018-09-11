@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4941672065872066}
   - component: {fileID: 95172031335740646}
   m_Layer: 0
-  m_Name: Factory10
+  m_Name: Factory2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
