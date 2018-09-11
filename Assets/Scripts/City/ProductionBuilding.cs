@@ -39,6 +39,15 @@ public abstract class ProductionBuilding : Building
         }
     }
 
+    public int[] GetMoneyHappinessRange()
+    {
+        int[] valueArray = new int[3];
+        valueArray[0] = _moneyGain;
+        valueArray[1] = _happinessGain;
+        valueArray[2] = _tileAffectRange;
+        return valueArray;
+    }
+
     public int GetHappinessGain()
     {
         return _happinessGain;

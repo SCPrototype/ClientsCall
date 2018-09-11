@@ -56,13 +56,21 @@ public class BuildingHandler : MonoBehaviour {
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.DONE);
     }
 
-    public void StartBuilding()
+    public bool StartBuilding()
     {
-        placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
-        currentCity.GetSelectedTile().SetBuilding(placementBuilding);
-        currentCity.BudgetChange(placementBuilding.GetCost());
-        DestroyPlacementBuilding();
-        // currentCity.BudgetChange(buildingToPlace.GetCost());
+        if (currentCity.CanBuild(placementBuilding.GetCost()))
+        {
+            placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
+            currentCity.GetSelectedTile().SetBuilding(placementBuilding);
+            currentCity.BudgetChange(-placementBuilding.GetCost());
+            DestroyPlacementBuilding();
+            // currentCity.BudgetChange(buildingToPlace.GetCost());
+            return true;
+        }
+        else
+        {  //Handle error message, insuficient funds. 
+            return false;
+        }
     }
 
     public Building PlaceBuilding(CustomTile pCustomTile)
