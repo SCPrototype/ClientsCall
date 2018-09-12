@@ -21,7 +21,7 @@ public class GameInitializer : MonoBehaviour {
         _allCities[0] = _playerCity;
         for (int i = 1; i < Glob.AmountOfAICities+1; i++)
         {
-            _allCities[i] = new GameObject("AICity").AddComponent<City>().Initialize(new AICityManager(), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(Glob.CitySpacing * i, 0, 0));
+            _allCities[i] = new GameObject("AICity").AddComponent<City>().Initialize(new AICityManager(Random.Range(0, 100)), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(Glob.CitySpacing * i, 0, 0));
         }
         _buildHandler.SetCurrentCity(_allCities[0]);
         //playerInputHandler = new GameObject("InputHandler").AddComponent<InputHandler>().Initialize(playerCity, buildHandler, gameUIHandler);

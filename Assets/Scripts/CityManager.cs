@@ -22,6 +22,13 @@ public abstract class CityManager : MonoBehaviour {
 
     public abstract void HandleTurn(City pCity);
 
+    public void TaxCity(City pCity)
+    {
+        pCity.BudgetChange(20);
+        pCity.HappinessChange(-65);
+        UIHandler.ShowNotification("Your city has no more funds! You gained a temporary boost in income by taxing your inhabitants, but they are not happy about that!");
+    }
+
     public CurrentMode GetCurrentMode()
     {
         return currentMode;

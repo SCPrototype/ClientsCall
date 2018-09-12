@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-
     private AllEvents allEvents;
     private RandomEvent currentEvent;
 
@@ -33,6 +32,8 @@ public class EventManager : MonoBehaviour
         TMX_Parser parser = new TMX_Parser();
         parser.Parse("Assets/XML/RandomEvents.txt", out allEvents);
         Debug.Log(allEvents);
+
+        EventMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -49,11 +50,11 @@ public class EventManager : MonoBehaviour
         currentEvent = allEvents.events[Random.Range(0, allEvents.events.Length)];
         eventText.text = currentEvent.description;
         choiceText1.text = currentEvent.choices[0].description + "\nCost: " + currentEvent.choices[0].cost;
-        choiceText1.text += string.Format("\n\nPollution: {0}, Entertainment: {1}, Health: {2}, Population: {3}, Education: {4}", currentEvent.choices[0].pollutionValue, currentEvent.choices[0].entertainmentValue, currentEvent.choices[0].healthValue, currentEvent.choices[0].populationValue, currentEvent.choices[0].educationValue);
+        choiceText1.text += string.Format("\n\nHappiness: {0}", currentEvent.choices[0].happinessValue);
         choiceText2.text = currentEvent.choices[1].description + "\nCost: " + currentEvent.choices[1].cost;
-        choiceText2.text += string.Format("\n\nPollution: {0}, Entertainment: {1}, Health: {2}, Population: {3}, Education: {4}", currentEvent.choices[1].pollutionValue, currentEvent.choices[1].entertainmentValue, currentEvent.choices[1].healthValue, currentEvent.choices[1].populationValue, currentEvent.choices[1].educationValue);
+        choiceText2.text += string.Format("\n\nHappiness: {0}", currentEvent.choices[1].happinessValue);
         choiceText3.text = currentEvent.choices[2].description + "\nCost: " + currentEvent.choices[2].cost;
-        choiceText3.text += string.Format("\n\nPollution: {0}, Entertainment: {1}, Health: {2}, Population: {3}, Education: {4}", currentEvent.choices[2].pollutionValue, currentEvent.choices[2].entertainmentValue, currentEvent.choices[2].healthValue, currentEvent.choices[2].populationValue, currentEvent.choices[2].educationValue);
+        choiceText3.text += string.Format("\n\nHappiness: {0}", currentEvent.choices[2].happinessValue);
         effectBox.SetActive(false);
 
         EventMenu.SetActive(true);
@@ -65,7 +66,7 @@ public class EventManager : MonoBehaviour
         effectBox.SetActive(true);
         Repercussion currentRepercussion = chc.repercussions[Random.Range(0, chc.repercussions.Length)];
         effectText.text = currentRepercussion.description + "\nCost: " + currentRepercussion.cost;
-        effectText.text += string.Format("\n\nPollution: {0}, Entertainment: {1}, Health: {2}, Population: {3}, Education: {4}", currentRepercussion.pollutionValue, currentRepercussion.entertainmentValue, currentRepercussion.healthValue, currentRepercussion.populationValue, currentRepercussion.educationValue);
+        effectText.text += string.Format("\n\nHappiness: {0}", currentRepercussion.happinessValue);
         UpdateBudget(chc.cost + currentRepercussion.cost);
         UpdateHappiness(chc.GetHappiness() + currentRepercussion.GetHappiness());
     }

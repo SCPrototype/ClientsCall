@@ -13,11 +13,12 @@ public class City : MonoBehaviour
     private EventManager _eventManager;
     private float _budget = 75;
     private float _happiness = 75;
+    private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
 
-
+    private int _currentTurn = 1;
 
     public City Initialize(CityManager pManager, int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
@@ -30,7 +31,7 @@ public class City : MonoBehaviour
         TilePrefab = (Resources.Load(Glob.tilePrefab) as GameObject).GetComponent<CustomTile>();
         transform.position = pStartPos;
 
-        _eventManager = GameObject.FindGameObjectWithTag("EventManager").GetComponent<EventManager>();
+        _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
  
         DrawMap(pStartPos);
@@ -48,7 +49,25 @@ public class City : MonoBehaviour
     {
         if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && GameInitializer.GetBuildingHandler().IsReadyToBuild())
         {
+            if (!_collectedThisTurn)
+            {
+                CollectFromAllBuildings();
+                _collectedThisTurn = true;
+                if (_budget < 18)
+                {
+                    _myManager.TaxCity(this);
+                }
+                if (_currentTurn % 4 == 0 && _myManager is PlayerCityManager)
+                {
+                    _eventManager.EnableRandomEvent();
+                }
+            }
             _myManager.HandleTurn(this);
+        }
+        else if (_collectedThisTurn)
+        {
+            _collectedThisTurn = false;
+            _currentTurn++;
         }
     }
 
@@ -118,6 +137,18 @@ public class City : MonoBehaviour
             if (targetTile.GetBuildingOnTile() == null)
             {
                 GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 1);
+            }
+            else
+            {
+                i--;
+            }
+        }
+        for (int i = 0; i < Glob.RandomParkAmount; i++)
+        {
+            CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
+            if (targetTile.GetBuildingOnTile() == null)
+            {
+                GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 2);
             }
             else
             {
@@ -247,5 +278,14 @@ public class City : MonoBehaviour
     public void SetCurrentMode(CityManager.CurrentMode pMode)
     {
         _myManager.SetCurrentMode(pMode);
+    }
+
+    public float GetBudget()
+    {
+        return _budget;
+    }
+    public float GetHappiness()
+    {
+        return _happiness;
     }
 }
