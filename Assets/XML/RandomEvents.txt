@@ -14,79 +14,79 @@
   <choice description="Send police to disperse the protest." cost = "5" happinessValue="-2">
    <repercussion description="Three civilians have been injured, and the city is questioning your decisions." cost = "5" happinessValue="-3"></repercussion>
    <repercussion description="The civilians have understood the message, and stopped protesting." cost = "0" happinessValue="-1"></repercussion>
-   <repercussion description="The protest has become even bigger." cost = "5" happinessValue="0"></repercussion> 
+   <repercussion description="The protest has become even bigger." cost = "5" happinessValue="-1"></repercussion> 
   </choice> 
  </randomEvent>
 
  <randomEvent type="0" description="Erika Santana has requested financial support of 5 gold for her broken, infected ankle. She broke her ankle while working in one of the local factories.">
   <choice description="Give financial support." cost = "5" happinessValue="0">
    <repercussion description="Erika Santana is happy, and told all her friends and family about the great support you gave." cost = "0" happinessValue="2"></repercussion>
-   <repercussion description="Erika Santana's story was covered by a local newspaper. As a result there are a bunch of financial support requests flooding your inbox." cost = "5" happinessValue="0"></repercussion>
-   <repercussion description="Erika Santana's story was made up, and she ran away with the money." cost = "0" happinessValue="-1"></repercussion> 
+   <repercussion description="Erika Santana's story was covered by a local newspaper. As a result there are a bunch of financial support requests flooding your inbox." cost = "5" happinessValue="1"></repercussion>
+   <repercussion description="Erika Santana's story was made up, and she ran away with the money." cost = "0" happinessValue="0"></repercussion> 
   </choice>  
   <choice description="Don't give financial support." cost = "0" happinessValue="-1">
-   <repercussion description="The infection in Erika Santana's ankle has has resulted in her death. If she had gotten the care she required, she would have made it." cost = "0" happinessValue="-4"></repercussion>
+   <repercussion description="The infection in Erika Santana's ankle has resulted in her death. If she had gotten the care she required, she would have made it." cost = "0" happinessValue="-4"></repercussion>
    <repercussion description="Erika Santana took a bit longer to heal, but was fine in the end." cost = "0" happinessValue="0"></repercussion>
    <repercussion description="Erika Santana started spreading her story on Twitter, but luckily there was no real backlash." cost = "0" happinessValue="0"></repercussion> 
   </choice>
   <choice description="Lower the cost of medical support." cost = "0" happinessValue="4">
    <repercussion description="Medical staff has gone on strike, since their salaries have been lowered as a result of the reduced income." cost = "10" happinessValue="-3"></repercussion>
-   <repercussion description="The civilians are happy." cost = "0" happinessValue="1"></repercussion>
-   <repercussion description="Because of the reduced cost, more people go to the hospital for minor things. Because of this the hospitals are filled up more quickle, and wait times have increased." cost = "5" happinessValue="-4"></repercussion> 
+   <repercussion description="The civilians are happy." cost = "15" happinessValue="1"></repercussion>
+   <repercussion description="Because of the reduced cost, more people go to the hospital for minor things. Because of this the hospitals are filled up more quickly, and wait times have increased." cost = "5" happinessValue="-2"></repercussion> 
   </choice> 
  </randomEvent>
 
  <randomEvent type="0" description="There was a babyboom a few years ago, and the local schools have been extremely cramped as of late. Some of the parents are worried about this.">
-  <choice description="Build a new school." cost = "25" happinessValue="0">
-   <repercussion description="The people are happy with your decision." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="The local factories are worried that their transport trucks will be slowed down by the new school, since drivers will have to be extra careful around it." cost = "5" happinessValue="0"></repercussion>
-   <repercussion description="The worried parents are relieved, but the rest of the civilians are angry about the usage of their tax money." cost = "0" happinessValue="0"></repercussion> 
+  <choice description="Build a new school." cost = "25" happinessValue="2">
+   <repercussion description="The people are happy with your decision." cost = "0" happinessValue="5"></repercussion>
+   <repercussion description="The local factories are worried that their transport trucks will be slowed down by the new school, since drivers will have to be extra careful around it." cost = "0" happinessValue="-1"></repercussion>
+   <repercussion description="The worried parents are relieved, but the rest of the civilians are angry about the usage of their tax money." cost = "0" happinessValue="-1"></repercussion> 
   </choice>  
-  <choice description="Give financial support to existing schools, so they can expand." cost = "10" happinessValue="0">
-   <repercussion description="The people are happy with your decision." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="Because of the rebuilding of one of the schools, there is even less room for the children." cost = "5" happinessValue="0"></repercussion>
-   <repercussion description="The worried parents are somewhat relieved, but the rest of the civilians are angry about the usage of their tax money." cost = "0" happinessValue="0"></repercussion> 
+  <choice description="Give financial support to existing schools, so they can expand." cost = "10" happinessValue="1">
+   <repercussion description="The people are happy with your decision." cost = "0" happinessValue="2"></repercussion>
+   <repercussion description="Because of the rebuilding of one of the schools, there is even less room for the children." cost = "0" happinessValue="0"></repercussion>
+   <repercussion description="The worried parents are somewhat relieved, but the rest of the civilians are angry about the usage of their tax money." cost = "0" happinessValue="-1"></repercussion> 
   </choice>
   <choice description="Ignore the request." cost = "0" happinessValue="0">
-   <repercussion description="The parents aren't happy, and have attempted to start a protest. Luckily they failed to rile up other sub-groups of the civilization." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="Multiple families with young children have moved to different cities, with better educational support." cost = "5" happinessValue="0"></repercussion>
-   <repercussion description="Some parents of young children are forced to stay home and watch them." cost = "10" happinessValue="0"></repercussion> 
+   <repercussion description="The parents aren't happy, and have attempted to start a protest. Luckily they failed to rile up other sub-groups of the civilization." cost = "0" happinessValue="-1"></repercussion>
+   <repercussion description="Multiple families with young children have moved to different cities, with better educational support." cost = "5" happinessValue="-2"></repercussion>
+   <repercussion description="Some parents of young children are forced to stay home and watch them." cost = "0" happinessValue="-1"></repercussion> 
   </choice> 
  </randomEvent>
 
  <randomEvent type="0" description="You have been receiving multiple alerts about a local apartment building producing strange noises on a stuctural level after a heavy rainstorm.">
   <choice description="Send a team to go check it out, and repair any instabilities they find." cost = "10" happinessValue="0">
-   <repercussion description="No problems were found, but the inhabitants were very happy with your decision. The inhabitants brought you a gift as thanks." cost = "-5" happinessValue="0"></repercussion>
-   <repercussion description="In the end there was nothing wrong with the building." cost = "5" happinessValue="0"></repercussion>
-   <repercussion description="The team you send found some cracks in some important structural pillars. The repairs are going to take a couple of months, and the inhabitants will have to stay in temporary homes for the time being." cost = "10" happinessValue="0"></repercussion> 
+   <repercussion description="No problems were found, but the inhabitants were very happy with your decision. The inhabitants brought you a gift as thanks." cost = "-5" happinessValue="1"></repercussion>
+   <repercussion description="In the end there was nothing wrong with the building." cost = "0" happinessValue="0"></repercussion>
+   <repercussion description="The team you send found some cracks in some important structural pillars. The repairs are going to take a couple of months, and the inhabitants will have to stay in temporary homes for the time being." cost = "10" happinessValue="2"></repercussion> 
   </choice>  
-  <choice description="Do nothing." cost = "0" pollutionValue="0" entertainmentValue="0" healthValue="0" populationValue="0" educationValue="0">
-   <repercussion description="The inhabitants were furious about your lack of interest in their safety, but in the end the noises disappeared without anything happening." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="Part of the building collapsed during the night, killing 2 families. The rest of the inhabitants have demanded temporary shelter until everything is secured." cost = "35" happinessValue="0"></repercussion>
-   <repercussion description="The inhabitants told all the local newspapers about your lack of interest in their safety, and a huge part of the city went on a protest against your decision. The only way to calm the protesters down was to have a team do a check-up on the building." cost = "10" happinessValue="0"></repercussion> 
+  <choice description="Do nothing." cost = "0" happinessValue="0">
+   <repercussion description="The inhabitants were furious about your lack of interest in their safety, but in the end the noises disappeared without anything happening." cost = "0" happinessValue="-2"></repercussion>
+   <repercussion description="Part of the building collapsed during the night, killing 2 families. The rest of the inhabitants have demanded temporary shelter until everything is secured." cost = "35" happinessValue="-5"></repercussion>
+   <repercussion description="The inhabitants told all the local newspapers about your lack of interest in their safety, and a huge part of the city went on a protest against your decision. The only way to calm the protesters down was to have a team do a check-up on the building." cost = "10" happinessValue="-10"></repercussion> 
   </choice>
-  <choice description="Evacuate the building, and give all inhabitants a temporary home until the building has been completely secured." cost = "25" happinessValue="0">
-   <repercussion description="Part of the building collapsed, and the inhabitants are extremely relieved and happy about your decision." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="The team you send didn't find any dangers in the structural integrity of the building, and all the inhabitants moved back in." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="The team you send found some cracks in some important structural pillars. The repairs are going to take a couple of months, and the inhabitants will have to stay in their temporary homes for longer than anticipated." cost = "10" happinessValue="0"></repercussion> 
+  <choice description="Evacuate the building, and give all inhabitants a temporary home until the building has been completely secured." cost = "25" happinessValue="2">
+   <repercussion description="Part of the building collapsed, and the inhabitants are extremely relieved and happy about your decision." cost = "0" happinessValue="3"></repercussion>
+   <repercussion description="The team you send didn't find any dangers in the structural integrity of the building, and all the inhabitants moved back in." cost = "0" happinessValue="2"></repercussion>
+   <repercussion description="The team you send found some cracks in some important structural pillars. The repairs are going to take a couple of months, and the inhabitants will have to stay in their temporary homes for longer than anticipated." cost = "10" happinessValue="1"></repercussion> 
   </choice> 
  </randomEvent>
 
  <randomEvent type="0" description="You received multiple complaints about disruptive youth hanging around a neighbourhood.">
-  <choice description="Build an entertainment terrain with a skatepark and football field." cost = "15" happinessValue="0">
+  <choice description="Build an entertainment terrain with a skatepark and football field." cost = "25" happinessValue="5">
    <repercussion description="The youth has moved to the new terrain." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="The entire neighbourhood loves the new terrain. The disruptive youth, however, doesn't like how crowded it is there, and they still hang around the neighbourhood." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="Civilians are complaining about the use of their tax money." cost = "0" happinessValue="0"></repercussion> 
+   <repercussion description="The entire neighbourhood loves the new terrain. The disruptive youth, however, doesn't like how crowded it is there, and they still hang around the neighbourhood." cost = "0" happinessValue="-1"></repercussion>
+   <repercussion description="Civilians are complaining about the use of their tax money." cost = "0" happinessValue="-1"></repercussion> 
   </choice>  
-  <choice description="Send police to scare off the youth." cost = "0" happinessValue="0">
-   <repercussion description="The youth has not returned to that neighbourhood since." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="The youth got in a fight with the police, and got arrested. They are now doing community service as punishment." cost = "-5" happinessValue="0"></repercussion>
+  <choice description="Send police to scare off the youth." cost = "5" happinessValue="-1">
+   <repercussion description="The youth has not returned to that neighbourhood since." cost = "0" happinessValue="3"></repercussion>
+   <repercussion description="The youth got in a fight with the police, and got arrested. They are now doing community service as punishment." cost = "-5" happinessValue="1"></repercussion>
    <repercussion description="The youth dispersed when the police told them to, but they simply returned the day after." cost = "0" happinessValue="0"></repercussion> 
   </choice>
-  <choice description="Install high pitch sound generators in the neighbourhood to push them away." cost = "5" happinessValue="0">
-   <repercussion description="The youth moved to the next neighbourhood, forcing you to install more sound generators." cost = "5" happinessValue="0"></repercussion>
-   <repercussion description="The youth seem to have left the neighbourhood." cost = "0" happinessValue="0"></repercussion>
-   <repercussion description="The youth destroyed the sound generators." cost = "0" happinessValue="0"></repercussion> 
+  <choice description="Install high pitch sound generators in the neighbourhood to push them away." cost = "5" happinessValue="-1">
+   <repercussion description="The youth moved to the next neighbourhood, forcing you to install more sound generators." cost = "5" happinessValue="-1"></repercussion>
+   <repercussion description="The youth seem to have left the neighbourhood." cost = "0" happinessValue="1"></repercussion>
+   <repercussion description="The youth destroyed the sound generators." cost = "5" happinessValue="0"></repercussion> 
   </choice> 
  </randomEvent>
 </allEvents>

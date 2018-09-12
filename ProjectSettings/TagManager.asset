@@ -16,6 +16,7 @@ TagManager:
   - BudgetSlider
   - HappinessSlider
   - ExaminePanel
+  - TurnCounter
   layers:
   - Default
   - TransparentFX

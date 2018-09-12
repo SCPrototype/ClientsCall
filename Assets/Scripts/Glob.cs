@@ -19,6 +19,9 @@ public static class Glob {
 
     public const float CameraCitySwitchTime = 2f;
 
+    public const int TurnAmount = 16;
+    public const int EventTurnInterval = 4;
+
     //PREFABS
     public const string uiPrefab = "UI";
 

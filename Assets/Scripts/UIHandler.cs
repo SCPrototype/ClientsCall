@@ -6,20 +6,21 @@ using UnityEngine.UI;
 public class UIHandler : MonoBehaviour
 {
 
-    private GameObject buildPanel;
+    private GameObject _buildPanel;
     private GameObject _examinePanel;
-    private GameObject bottomBar;
-    private static GameObject notificationPanel;
-    private static Text notificationText;
-    private GameObject eventMenu;
-    private GameObject valuesPanel;
+    private GameObject _bottomBar;
+    private static GameObject _notificationPanel;
+    private static Text _notificationText;
+    private Text _turnCounter;
+    private GameObject _eventMenu;
+    private GameObject _valuesPanel;
     private GameObject _buildInfoPanel;
-    public Building[] _buildings;
+    private Building[] _buildings;
 
-    private Image[] buildingImages;
-    private int currentBuildingSelection;
+    private Image[] _buildingImages;
+    private int _currentBuildingSelection;
     private Text _buildInfoText;
-    private ScrollRect scrollView;
+    private ScrollRect _scrollView;
 
     private Slider _budgetSlider;
     private Slider _happinessSlider;
@@ -37,12 +38,12 @@ public class UIHandler : MonoBehaviour
 
     private void InitializeBuildPanel()
     {
-        buildingImages = new Image[Glob.buildingCount];
-        GameObject layoutGroup = buildPanel.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+        _buildingImages = new Image[Glob.buildingCount];
+        GameObject layoutGroup = _buildPanel.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
         for (int i = 0; i < Glob.buildingCount; i++)
         {
-            buildingImages[i] = GameObject.Instantiate((Resources.Load(Glob.buildingImagePrefab) as GameObject), layoutGroup.transform).GetComponent<Image>();
-            buildingImages[i].sprite = Glob.GetBuildingIcons()[i];
+            _buildingImages[i] = GameObject.Instantiate((Resources.Load(Glob.buildingImagePrefab) as GameObject), layoutGroup.transform).GetComponent<Image>();
+            _buildingImages[i].sprite = Glob.GetBuildingIcons()[i];
         }
     }
 
@@ -51,19 +52,19 @@ public class UIHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            notificationPanel.gameObject.SetActive(false);
+            _notificationPanel.gameObject.SetActive(false);
         }
     }
 
     public static void ShowNotification(string message)
     {
-        notificationPanel.SetActive(true);
-        notificationText.text = message;
+        _notificationPanel.SetActive(true);
+        _notificationText.text = message;
     }
 
     public void ToggleBuildPanel(bool toggle)
     {
-        buildPanel.SetActive(toggle);
+        _buildPanel.SetActive(toggle);
     }
 
     public void ToggleExaminePanel(bool toggle)
@@ -78,36 +79,36 @@ public class UIHandler : MonoBehaviour
         {
             for (int i = 0; i != index; i += (index / Mathf.Abs(index)))
             {
-                currentBuildingSelection += (index / Mathf.Abs(index));
-                if (currentBuildingSelection >= Glob.buildingCount)
+                _currentBuildingSelection += (index / Mathf.Abs(index));
+                if (_currentBuildingSelection >= Glob.buildingCount)
                 {
-                    currentBuildingSelection = 0;
+                    _currentBuildingSelection = 0;
                 }
-                else if (currentBuildingSelection < 0)
+                else if (_currentBuildingSelection < 0)
                 {
-                    currentBuildingSelection = Glob.buildingCount - 1;
+                    _currentBuildingSelection = Glob.buildingCount - 1;
                 }
             }
         }
         else
         {
-            currentBuildingSelection = index;
+            _currentBuildingSelection = index;
 
         }
-        for (int i = 0; i < buildingImages.Length; i++)
+        for (int i = 0; i < _buildingImages.Length; i++)
         {
-            if (i != currentBuildingSelection)
+            if (i != _currentBuildingSelection)
             {
-                buildingImages[i].color = new Color(1, 1, 1, 0.5f);
+                _buildingImages[i].color = new Color(1, 1, 1, 0.5f);
             }
             else
             {
-                buildingImages[i].color = new Color(1, 1, 1, 1);
+                _buildingImages[i].color = new Color(1, 1, 1, 1);
                 SetBuildingInfoText(_buildings[i]);
             }
         }
-        float scrollAmount = (1.00f / (buildingImages.Length - 1) * currentBuildingSelection);
-        scrollView.verticalNormalizedPosition = 1 - scrollAmount;
+        float scrollAmount = (1.00f / (_buildingImages.Length - 1) * _currentBuildingSelection);
+        _scrollView.verticalNormalizedPosition = 1 - scrollAmount;
 
     }
 
@@ -160,21 +161,27 @@ public class UIHandler : MonoBehaviour
         _examineText.text = text;
     }
 
+    public void SetTurnText(int pTurn)
+    {
+        _turnCounter.text = "Turn: " + pTurn + "/" + Glob.TurnAmount;
+    }
+
     //Do not open /!\ Hazardous /!\
     private void Initialize()
     {
         _buildInfoPanel = GameObject.FindGameObjectWithTag("BuildingInfoPanel");
         _buildInfoText = _buildInfoPanel.GetComponentInChildren<Text>();
         _buildInfoPanel.SetActive(false);
-        buildPanel = GameObject.FindGameObjectWithTag("BuildPanel");
-        buildPanel.SetActive(false);
-        scrollView = buildPanel.GetComponentInChildren<ScrollRect>();
-        bottomBar = GameObject.FindGameObjectWithTag("BottomBar");
-        notificationPanel = GameObject.FindGameObjectWithTag("NotificationPanel");
-        notificationPanel.SetActive(false);
-        notificationText = notificationPanel.GetComponentInChildren<Text>();
-        eventMenu = GameObject.FindGameObjectWithTag("EventMenu");
-        valuesPanel = GameObject.FindGameObjectWithTag("Values");
+        _buildPanel = GameObject.FindGameObjectWithTag("BuildPanel");
+        _buildPanel.SetActive(false);
+        _scrollView = _buildPanel.GetComponentInChildren<ScrollRect>();
+        _bottomBar = GameObject.FindGameObjectWithTag("BottomBar");
+        _notificationPanel = GameObject.FindGameObjectWithTag("NotificationPanel");
+        _notificationPanel.SetActive(false);
+        _notificationText = _notificationPanel.GetComponentInChildren<Text>();
+        _turnCounter = GameObject.FindGameObjectWithTag("TurnCounter").GetComponent<Text>();
+        _eventMenu = GameObject.FindGameObjectWithTag("EventMenu");
+        _valuesPanel = GameObject.FindGameObjectWithTag("Values");
         _budgetSlider = GameObject.FindGameObjectWithTag("BudgetSlider").GetComponent<Slider>();
         _happinessSlider = GameObject.FindGameObjectWithTag("HappinessSlider").GetComponent<Slider>();
         _budgetText = _budgetSlider.GetComponentInChildren<Text>();

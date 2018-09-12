@@ -49,20 +49,29 @@ public class City : MonoBehaviour
     {
         if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && GameInitializer.GetBuildingHandler().IsReadyToBuild())
         {
-            if (!_collectedThisTurn)
-            {
-                CollectFromAllBuildings();
-                _collectedThisTurn = true;
-                if (_budget < 18)
+            if (!GameInitializer.GetPaused()) {
+                if (_currentTurn > Glob.TurnAmount)
                 {
-                    _myManager.TaxCity(this);
+                    GameInitializer.EndGame();
+                    return;
                 }
-                if (_currentTurn % 4 == 0 && _myManager is PlayerCityManager)
+                if (!_collectedThisTurn)
                 {
-                    _eventManager.EnableRandomEvent();
+                    GameInitializer.GetUIHandler().SetTurnText(_currentTurn);
+                    CollectFromAllBuildings();
+                    _collectedThisTurn = true;
+                    if (_budget < 18)
+                    {
+                        _myManager.TaxCity(this);
+                    }
+                    if (_currentTurn % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager)
+                    {
+                        _eventManager.EnableRandomEvent();
+                    }
+                    _uiHandler.SetResourcesBars((int)_budget, (int)_happiness); //Just in case no buildings collected anything
                 }
+                _myManager.HandleTurn(this);
             }
-            _myManager.HandleTurn(this);
         }
         else if (_collectedThisTurn)
         {
@@ -251,17 +260,19 @@ public class City : MonoBehaviour
     {
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget += pChange;
-        _uiHandler.SetResourcesBars((int)_budget, (int) _happiness);
         //softcap for now.
         _budget = Mathf.Clamp(_budget, 0, 100);
+
+        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
     }
 
     public void HappinessChange(int pChange)
     {
         _happiness += pChange;
-        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
         //softcap for now.
         _happiness = Mathf.Clamp(_happiness, 0, 100);
+
+        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
     }
 
     public bool CanBuild(int pBuildingCost)
@@ -287,5 +298,22 @@ public class City : MonoBehaviour
     public float GetHappiness()
     {
         return _happiness;
+    }
+
+    public float GetScore()
+    {
+        float score = 0;
+        score += _budget * (1 + (_happiness/25)); //100% happiness: max score is 500, 0% happiness: max score is 100
+        float tileScore = 0;
+        Debug.Log("Budget and Happiness score: " + score);
+        foreach (CustomTile tile in _tileMap)
+        {
+            tileScore += _myManager.GetTileValue(tile);//Only factories: +/- 1000 tileScore
+        }
+        Debug.Log("City tiles score: " + tileScore);
+
+        score += tileScore / 10;
+
+        return score;
     }
 }

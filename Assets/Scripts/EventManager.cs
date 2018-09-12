@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
-    private AllEvents allEvents;
-    private RandomEvent currentEvent;
+    private AllEvents _allEvents;
+    private RandomEvent _currentEvent;
 
     public GameObject EventMenu;
 
@@ -19,8 +19,8 @@ public class EventManager : MonoBehaviour
     public GameObject effectBox;
     public Text effectText;
 
-    private int budget = 75;
-    private int happiness = 50;
+    private int _budget = 75;
+    private int _happiness = 50;
     public Slider BudgetSlider;
     public Slider HappinessSlider;
     public Text BudgetText;
@@ -30,8 +30,8 @@ public class EventManager : MonoBehaviour
     void Start()
     {
         TMX_Parser parser = new TMX_Parser();
-        parser.Parse("Assets/XML/RandomEvents.txt", out allEvents);
-        Debug.Log(allEvents);
+        parser.Parse("Assets/XML/RandomEvents.txt", out _allEvents);
+        Debug.Log(_allEvents);
 
         EventMenu.SetActive(false);
     }
@@ -39,50 +39,41 @@ public class EventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            EnableRandomEvent();
-        }
+
     }
 
     public void EnableRandomEvent()
     {
-        currentEvent = allEvents.events[Random.Range(0, allEvents.events.Length)];
-        eventText.text = currentEvent.description;
-        choiceText1.text = currentEvent.choices[0].description + "\nCost: " + currentEvent.choices[0].cost;
-        choiceText1.text += string.Format("\n\nHappiness: {0}", currentEvent.choices[0].happinessValue);
-        choiceText2.text = currentEvent.choices[1].description + "\nCost: " + currentEvent.choices[1].cost;
-        choiceText2.text += string.Format("\n\nHappiness: {0}", currentEvent.choices[1].happinessValue);
-        choiceText3.text = currentEvent.choices[2].description + "\nCost: " + currentEvent.choices[2].cost;
-        choiceText3.text += string.Format("\n\nHappiness: {0}", currentEvent.choices[2].happinessValue);
+        _currentEvent = _allEvents.events[Random.Range(0, _allEvents.events.Length)];
+        eventText.text = _currentEvent.description;
+        choiceText1.text = _currentEvent.choices[0].description + "\nCost: " + _currentEvent.choices[0].cost;
+        choiceText1.text += string.Format("\n\nHappiness: {0}", _currentEvent.choices[0].happinessValue);
+        choiceText2.text = _currentEvent.choices[1].description + "\nCost: " + _currentEvent.choices[1].cost;
+        choiceText2.text += string.Format("\n\nHappiness: {0}", _currentEvent.choices[1].happinessValue);
+        choiceText3.text = _currentEvent.choices[2].description + "\nCost: " + _currentEvent.choices[2].cost;
+        choiceText3.text += string.Format("\n\nHappiness: {0}", _currentEvent.choices[2].happinessValue);
         effectBox.SetActive(false);
 
         EventMenu.SetActive(true);
+        choiceText1.GetComponentInParent<Button>().Select();
+
+        GameInitializer.SetPaused(true);
     }
 
     public void HandleChoice(int choice)
     {
-        Choice chc = currentEvent.choices[choice];
+        Choice chc = _currentEvent.choices[choice];
         effectBox.SetActive(true);
         Repercussion currentRepercussion = chc.repercussions[Random.Range(0, chc.repercussions.Length)];
         effectText.text = currentRepercussion.description + "\nCost: " + currentRepercussion.cost;
         effectText.text += string.Format("\n\nHappiness: {0}", currentRepercussion.happinessValue);
-        UpdateBudget(chc.cost + currentRepercussion.cost);
-        UpdateHappiness(chc.GetHappiness() + currentRepercussion.GetHappiness());
+
+        GameInitializer.GetBuildingHandler().GetCurrentCity().ReceiveCollection(-(chc.cost + currentRepercussion.cost), chc.GetHappiness() + currentRepercussion.GetHappiness());
+
     }
 
-    public void UpdateBudget(int pBudget)
+    public void EndEvent()
     {
-        budget = pBudget;
-        budget = Mathf.Clamp(budget, 0, 100);
-        // BudgetText.text = "Budget: " + budget + "/100";
-        // BudgetSlider.value = budget / 100f;
-    }
-    public void UpdateHappiness(int pHappiness)
-    {
-        happiness = pHappiness;
-        happiness = Mathf.Clamp(happiness, 0, 100);
-        // HappinessText.text = "Happiness: " + happiness + "/100";
-        // HappinessSlider.value = happiness / 100f;
+        GameInitializer.SetPaused(false);
     }
 }
