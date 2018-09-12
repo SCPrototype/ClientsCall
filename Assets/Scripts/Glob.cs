@@ -5,7 +5,7 @@ using UnityEngine;
 public static class Glob {
 
     //GAME VALUES
-    public const int AmountOfAICities = 3;
+    public const int AmountOfAICities = 1;
     public const int CityWidth = 7;
     public const int CityLength = 7;
     public const int CitySpacing = 50;
@@ -17,7 +17,7 @@ public static class Glob {
     public const float TurnDelay = 2.5f;
     public const float AIEndTurnDelay = 0.5f;
 
-    public const float CameraCitySwitchTime = 2;
+    public const float CameraCitySwitchTime = 2f;
 
     //PREFABS
     public const string uiPrefab = "UI";
@@ -38,25 +38,19 @@ public static class Glob {
     public static Building[] GetBuildingPrefabs()
     {
         Building[] buildings = new Building[buildingCount];
-        buildings[0] = Resources.Load<House>(housePrefab);
-        buildings[1] = Resources.Load<Factory>(factoryPrefab0);
-        buildings[2] = Resources.Load<Park>(parkPrefab0);
+        buildings[0] = Resources.Load<House>(housePrefab).Initialize();
+        buildings[1] = Resources.Load<Factory>(factoryPrefab0).Initialize();
+        buildings[2] = Resources.Load<Park>(parkPrefab0).Initialize();
+        //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
+        //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
+        //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
         return buildings;
-    }
-
-    public static Factory[] GetFactoryPrefabs()
-    {
-        Factory[] factories = new Factory[factoriesVariations];
-        factories[0] = Resources.Load<Factory>(factoryPrefab1);
-
-        return factories;
     }
 
     public const string buildingImagePrefab = "BuildingIcon";
     public const string houseIcon = "HouseIcon";
     public const string factoryIcon = "FactoryIcon";
     public const string parkIcon = "ParkIcon";
-    public const string selectedIcon = "SelectedIcon";
 
     public static Sprite[] GetBuildingIcons()
     {
@@ -64,7 +58,6 @@ public static class Glob {
         icons[0] = Resources.Load<Sprite>(houseIcon);
         icons[1] = Resources.Load<Sprite>(factoryIcon);
         icons[2] = Resources.Load<Sprite>(parkIcon);
-        
         return icons;
     }
 }
