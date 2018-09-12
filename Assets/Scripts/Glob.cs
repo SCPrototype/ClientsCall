@@ -41,16 +41,22 @@ public static class Glob {
         buildings[0] = Resources.Load<House>(housePrefab);
         buildings[1] = Resources.Load<Factory>(factoryPrefab0);
         buildings[2] = Resources.Load<Park>(parkPrefab0);
-        //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
-        //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
-        //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
         return buildings;
+    }
+
+    public static Factory[] GetFactoryPrefabs()
+    {
+        Factory[] factories = new Factory[factoriesVariations];
+        factories[0] = Resources.Load<Factory>(factoryPrefab1);
+
+        return factories;
     }
 
     public const string buildingImagePrefab = "BuildingIcon";
     public const string houseIcon = "HouseIcon";
     public const string factoryIcon = "FactoryIcon";
     public const string parkIcon = "ParkIcon";
+    public const string selectedIcon = "SelectedIcon";
 
     public static Sprite[] GetBuildingIcons()
     {
@@ -58,6 +64,7 @@ public static class Glob {
         icons[0] = Resources.Load<Sprite>(houseIcon);
         icons[1] = Resources.Load<Sprite>(factoryIcon);
         icons[2] = Resources.Load<Sprite>(parkIcon);
+        
         return icons;
     }
 }

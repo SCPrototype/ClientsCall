@@ -15,6 +15,7 @@ TagManager:
   - BuildingInfoPanel
   - BudgetSlider
   - HappinessSlider
+  - ExaminePanel
   layers:
   - Default
   - TransparentFX

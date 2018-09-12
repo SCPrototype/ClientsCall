@@ -7,6 +7,7 @@ public class UIHandler : MonoBehaviour
 {
 
     private GameObject buildPanel;
+    private GameObject _examinePanel;
     private GameObject bottomBar;
     private static GameObject notificationPanel;
     private static Text notificationText;
@@ -20,11 +21,11 @@ public class UIHandler : MonoBehaviour
     private Text _buildInfoText;
     private ScrollRect scrollView;
 
-
     private Slider _budgetSlider;
     private Slider _happinessSlider;
     private Text _budgetText;
     private Text _happinessText;
+    private Text _examineText;
 
 
     // Use this for initialization
@@ -63,6 +64,11 @@ public class UIHandler : MonoBehaviour
     public void ToggleBuildPanel(bool toggle)
     {
         buildPanel.SetActive(toggle);
+    }
+
+    public void ToggleExaminePanel(bool toggle)
+    {
+        _examinePanel.SetActive(toggle);
     }
 
     public void SetActiveBuildingImage(int index, bool addToCurrent = true)
@@ -136,7 +142,25 @@ public class UIHandler : MonoBehaviour
         _happinessText.text = "Happiness: " + pHappiness + "/100";
         _happinessSlider.value = pHappiness / 100f;
     }
+    public void SetExamineMode(Building pBuilding)
+    {
+        ToggleExaminePanel(true);
+        string text = "This is a <b>" + pBuilding.GetType() + "</b>\n";
+        if (pBuilding is ProductionBuilding)
+        {
+            ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
+            text += "It produces <b>" + prodBuilding.GetMoneyHappinessRange()[0] + "</b> Income\n It produces <b>" + prodBuilding.GetMoneyHappinessRange()[1] + "</b> happiness\n";
+            text += "And has a range of <b>" + prodBuilding.GetMoneyHappinessRange()[2] + "</b>";
+        }
+        if(pBuilding is CollectionBuilding)
+        {
+            CollectionBuilding colBuilding = pBuilding as CollectionBuilding;
+            text += "It collects resources from productionbuildings in range\n";
+        }
+        _examineText.text = text;
+    }
 
+    //Do not open /!\ Hazardous /!\
     private void Initialize()
     {
         _buildInfoPanel = GameObject.FindGameObjectWithTag("BuildingInfoPanel");
@@ -155,6 +179,9 @@ public class UIHandler : MonoBehaviour
         _happinessSlider = GameObject.FindGameObjectWithTag("HappinessSlider").GetComponent<Slider>();
         _budgetText = _budgetSlider.GetComponentInChildren<Text>();
         _happinessText = _happinessSlider.GetComponentInChildren<Text>();
+        _examinePanel = GameObject.FindGameObjectWithTag("ExaminePanel");
+        _examineText = _examinePanel.GetComponentInChildren<Text>();
+        _examinePanel.SetActive(false);
 
         _buildings = Glob.GetBuildingPrefabs();
 

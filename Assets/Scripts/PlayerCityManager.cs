@@ -3,17 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCityManager : CityManager {
+public class PlayerCityManager : CityManager
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public override void HandleTurn(City pCity)
     {
@@ -44,14 +47,23 @@ public class PlayerCityManager : CityManager {
                 }
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    currentMode = CurrentMode.BUILDINGTILE;
-                    pCity.GetSelectedTile().Reset();
-                    GameInitializer.GetUIHandler().ToggleBuildPanel(true);
+                    if (pCity.GetSelectedTile().GetBuildingOnTile() == null)
+                    {
+                        currentMode = CurrentMode.BUILDINGTILE;
+                        pCity.GetSelectedTile().Reset();
+                        GameInitializer.GetUIHandler().ToggleBuildPanel(true);
+                    }
+                    else
+                    {
+                        currentMode = CurrentMode.EXAMINEMODE;
+                        GameInitializer.GetUIHandler().SetExamineMode(pCity.GetSelectedTile().GetBuildingOnTile());
+                        pCity.GetSelectedTile().Reset();
+                        
+                    }
                 }
             }
             if (currentMode == CurrentMode.BUILDINGTILE)
             {
-                //TODO: Make an event from this and put in buildinghandler.
                 //Places a building in placement mode, can switch between buildings.
                 if (GameInitializer.GetBuildingHandler().PlacementBuildingActive())
                 {
@@ -69,15 +81,17 @@ public class PlayerCityManager : CityManager {
 
                     if (Input.GetKeyDown(KeyCode.F))
                     {
-                        if(GameInitializer.GetBuildingHandler().StartBuilding())
+                        if (GameInitializer.GetBuildingHandler().StartBuilding())
                         {
                             currentMode = CurrentMode.SELECTINGTILE;
                             GameInitializer.GetUIHandler().ToggleBuildPanel(false);
-                        } else
+                        }
+                        else
                         {
+                            //TODO
                             //Error, not enough funds.
                         }
-                        
+
                     }
 
                     if (Input.GetKeyDown(KeyCode.G))
@@ -91,6 +105,14 @@ public class PlayerCityManager : CityManager {
                 {
                     GameInitializer.GetBuildingHandler().ChangeBuildingSelection(0, false);
                     GameInitializer.GetUIHandler().SetActiveBuildingImage(0, false);
+                }
+            }
+            if(currentMode == CurrentMode.EXAMINEMODE)
+            {
+                if(Input.GetKeyDown(KeyCode.G))
+                {
+                    GameInitializer.GetUIHandler().ToggleExaminePanel(false);
+                    currentMode = CurrentMode.SELECTINGTILE;
                 }
             }
             if (Input.GetKeyDown(KeyCode.Return))
