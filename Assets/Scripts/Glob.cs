@@ -15,7 +15,8 @@ public static class Glob {
     public const int RandomParkAmount = 1;
 
     public const float TurnDelay = 2.5f;
-    public const float AIEndTurnDelay = 0.5f;
+    public const float AIEndTurnDelay = 2f;
+    public const float AnimationCollection = 0.2f;
 
     public const float CameraCitySwitchTime = 2f;
 
@@ -25,6 +26,7 @@ public static class Glob {
     public const string tilePrefab = "Tile";
 
     public const int buildingCount = 3;
+    public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
     public const string housePrefab = "House";
@@ -60,4 +62,15 @@ public static class Glob {
         icons[2] = Resources.Load<Sprite>(parkIcon);
         return icons;
     }
+
+    //public const string factoryParticle = "FactoryParticle";
+    //public const string parkParticle = "ParkParticle";
+
+    //public static ParticleSystem[] GetParticleEffects()
+    //{
+    //    ParticleSystem[] particles = new ParticleSystem[particleCount];
+    //    particles[0] = Resources.Load<ParticleSystem>(factoryParticle);
+    //    particles[0] = Resources.Load<ParticleSystem>(parkParticle);
+    //    return particles;
+    //}
 }

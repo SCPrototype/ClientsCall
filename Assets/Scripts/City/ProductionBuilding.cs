@@ -9,6 +9,7 @@ public abstract class ProductionBuilding : Building
     private int _happinessGain;
     private int _moneyGain;
     private int _tileAffectRange;
+    private ParticleSystem _particle;
 
 
     public ProductionBuilding()
@@ -16,27 +17,41 @@ public abstract class ProductionBuilding : Building
 
     }
 
-    public ProductionBuilding Initialize(int pCost, int pHappinessGain, int pMoneyGain, int pRange)
+    public ProductionBuilding Initialize(int pCost, int pHappinessGain, int pMoneyGain, int pRange, ParticleSystem pParticle)
     {
         base.Initialize(pCost);
         _happinessGain = pHappinessGain;
         _moneyGain = pMoneyGain;
         _tileAffectRange = pRange;
+        _particle = pParticle;
         return this;
     }
 
-    public void Produce()
+    public int[] Produce()
     {
-        //TODO: Tell all CollectionBuildings within range to collect.
+        int[] values = new int[2];
         Building[] buildingsInRange = _myCity.GetBuildingsAroundTile(_tileAffectRange, this.GetBuildingTile());
         foreach (Building pBuilding in buildingsInRange)
         {
             if (pBuilding is CollectionBuilding)
             {
                 CollectionBuilding prodBuilding = pBuilding as CollectionBuilding;
-                prodBuilding.Collect(_moneyGain, _happinessGain);
+                StartCoroutine(PlayParticle());
+                //prodBuilding.Collect(_moneyGain, _happinessGain);
+                values[0] += _moneyGain;
+                values[1] += _happinessGain;
             }
         }
+
+        return values;
+    }
+
+    public IEnumerator PlayParticle()
+    {
+        _particle.Play();
+        ParticleSystem.EmissionModule em = _particle.emission;
+        em.enabled = true;
+        yield return Glob.AnimationCollection;
     }
 
     public int[] GetMoneyHappinessRange()
@@ -46,6 +61,11 @@ public abstract class ProductionBuilding : Building
         valueArray[1] = _happinessGain;
         valueArray[2] = _tileAffectRange;
         return valueArray;
+    }
+
+    public void PlayAnimation()
+    {
+        //nothing yet.
     }
 
     public int GetHappinessGain()

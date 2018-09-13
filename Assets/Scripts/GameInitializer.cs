@@ -46,6 +46,7 @@ public class GameInitializer : MonoBehaviour {
             _currentCity = 0;
         }
         _buildHandler.SetCurrentCity(_allCities[_currentCity]);
+        _gameUIHandler.SetResourcesBars(_allCities[_currentCity].GetBudget(), _allCities[_currentCity].GetHappiness());
     }
 
     public static UIHandler GetUIHandler()

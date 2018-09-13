@@ -20,6 +20,7 @@ public class UIHandler : MonoBehaviour
     private int currentBuildingSelection;
     private Text _buildInfoText;
     private ScrollRect scrollView;
+    private static GameObject _tutorialPanel;
 
     private Slider _budgetSlider;
     private Slider _happinessSlider;
@@ -135,10 +136,10 @@ public class UIHandler : MonoBehaviour
 
     public void SetResourcesBars(int pBudget, int pHappiness)
     {
-        pBudget = Mathf.Clamp(pBudget, 0, 100);
+       //pBudget = Mathf.Clamp(pBudget, 0, 100);
         _budgetText.text = "Budget: " + pBudget + "/100";
         _budgetSlider.value = pBudget / 100f;
-        pHappiness = Mathf.Clamp(pHappiness, 0, 100);
+        //pHappiness = Mathf.Clamp(pHappiness, 0, 100);
         _happinessText.text = "Happiness: " + pHappiness + "/100";
         _happinessSlider.value = pHappiness / 100f;
     }
@@ -160,6 +161,17 @@ public class UIHandler : MonoBehaviour
         _examineText.text = text;
     }
 
+    public static bool IsTutorialActive()
+    {
+        if(_tutorialPanel.activeSelf == true)
+        {
+            _tutorialPanel.SetActive(false);
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
     //Do not open /!\ Hazardous /!\
     private void Initialize()
     {
@@ -182,6 +194,8 @@ public class UIHandler : MonoBehaviour
         _examinePanel = GameObject.FindGameObjectWithTag("ExaminePanel");
         _examineText = _examinePanel.GetComponentInChildren<Text>();
         _examinePanel.SetActive(false);
+        _tutorialPanel = GameObject.FindGameObjectWithTag("TutorialPanel");
+
 
         _buildings = Glob.GetBuildingPrefabs();
 

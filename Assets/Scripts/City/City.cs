@@ -11,12 +11,13 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget = 75;
-    private float _happiness = 75;
+    private int _budget = 75;
+    private int _happiness = 75;
     private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
+
 
     private int _currentTurn = 1;
 
@@ -33,7 +34,7 @@ public class City : MonoBehaviour
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
- 
+
         DrawMap(pStartPos);
         return this;
     }
@@ -51,6 +52,7 @@ public class City : MonoBehaviour
         {
             if (!_collectedThisTurn)
             {
+                //StartCoroutine(PlayAnimations());
                 CollectFromAllBuildings();
                 _collectedThisTurn = true;
                 if (_budget < 18)
@@ -126,7 +128,8 @@ public class City : MonoBehaviour
             if (targetTile.GetBuildingOnTile() == null)
             {
                 GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 0);
-            } else
+            }
+            else
             {
                 i--;
             }
@@ -227,6 +230,7 @@ public class City : MonoBehaviour
 
     public void CollectFromAllBuildings()
     {
+        int[] values = new int[2];
         foreach (CustomTile pTile in _tileMap)
         {
             Building building = pTile.GetBuildingOnTile();
@@ -235,11 +239,18 @@ public class City : MonoBehaviour
                 if (building is ProductionBuilding)
                 {
                     ProductionBuilding productionBuilding = building as ProductionBuilding;
-                    productionBuilding.Produce();
+                    int[] newvalues = productionBuilding.Produce();
+                    values[0] += newvalues[0];
+                    values[1] += newvalues[1];
+                    productionBuilding.PlayAnimation();
                 }
             }
         }
+        ReceiveCollection(values[0], values[1]);
+        Debug.Log(values[0] + " " + values[1] + "budget is now:" + _budget + "happiness is now" + _happiness);
     }
+    
+    
 
     public void ReceiveCollection(int pBudget, int pHappiness)
     {
@@ -251,7 +262,7 @@ public class City : MonoBehaviour
     {
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget += pChange;
-        _uiHandler.SetResourcesBars((int)_budget, (int) _happiness);
+        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
         //softcap for now.
         _budget = Mathf.Clamp(_budget, 0, 100);
     }
@@ -266,10 +277,11 @@ public class City : MonoBehaviour
 
     public bool CanBuild(int pBuildingCost)
     {
-        if(_budget - pBuildingCost < 0)
+        if (_budget - pBuildingCost < 0)
         {
             return false;
-        } else
+        }
+        else
         {
             return true;
         }
@@ -280,11 +292,11 @@ public class City : MonoBehaviour
         _myManager.SetCurrentMode(pMode);
     }
 
-    public float GetBudget()
+    public int GetBudget()
     {
         return _budget;
     }
-    public float GetHappiness()
+    public int GetHappiness()
     {
         return _happiness;
     }

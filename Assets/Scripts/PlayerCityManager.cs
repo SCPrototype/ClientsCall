@@ -23,10 +23,10 @@ public class PlayerCityManager : CityManager
         //T is for testing, dat doe je met vrienden. U is voor u en mij.
         if (Input.anyKeyDown)
         {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                pCity.CollectFromAllBuildings();
-            }
+            //if (Input.GetKeyDown(KeyCode.T))
+            //{
+            //    pCity.CollectFromAllBuildings();
+            //}
             if (currentMode == CurrentMode.SELECTINGTILE)
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -117,9 +117,13 @@ public class PlayerCityManager : CityManager
             }
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                GameInitializer.EndTurn();
-                //Debug.Log(GameInitializer.GetBuildingHandler().GetCurrentCity());
-                UIHandler.ShowNotification("Turn has ended");
+                if(!UIHandler.IsTutorialActive())
+                {
+                    GameInitializer.EndTurn();
+                    //Debug.Log(GameInitializer.GetBuildingHandler().GetCurrentCity());
+                    UIHandler.ShowNotification("Turn has ended");
+                }
+                
             }
         }
     }

@@ -5,9 +5,11 @@ using UnityEngine;
 public class Factory : ProductionBuilding {
 
     private const int _cost = 18;
-    private const int _happinessGain = -5;
-    private const int _moneyGain = 11;
+    private const int _happinessGain = -2;
+    private const int _moneyGain = 4;
     private const int _range = 1;
+    //private ParticleSystem[] _particles = Glob.GetParticleEffects();
+    public ParticleSystem _particle;
     
     public Factory()
     {
@@ -16,12 +18,14 @@ public class Factory : ProductionBuilding {
 
     // Use this for initialization
     void Awake () {
-        base.Initialize(_cost, _happinessGain, _moneyGain, _range);
+        //_particle = _particles[0];
+        base.Initialize(_cost, _happinessGain, _moneyGain, _range, _particle);
     }
 
     public Factory Initialize()
     {
-        base.Initialize(_cost, _happinessGain, _moneyGain, _range);
+        //_particle = _particles[0];
+        base.Initialize(_cost, _happinessGain, _moneyGain, _range, _particle);
         return this;
     }
 	

@@ -18,7 +18,7 @@ public abstract class CollectionBuilding : Building
     public void Collect(int pIncome, int pHappiness)
     {
         //TODO: Tell collection buildings to collect from nearby production buildings   
-        this.GetCity().ReceiveCollection(pIncome, pHappiness);
+        //this.GetCity().ReceiveCollection(pIncome, pHappiness);
     }
 
     
