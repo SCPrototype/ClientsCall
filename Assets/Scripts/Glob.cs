@@ -25,7 +25,7 @@ public static class Glob {
 
     public const string tilePrefab = "Tile";
 
-    public const int buildingCount = 3;
+    public const int buildingCount = 4;
     public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
@@ -36,6 +36,8 @@ public static class Glob {
     public const string factoryPrefab3 = "Factory3";
     public const string factoryPrefab4 = "Factory4";
     public const string parkPrefab0 = "Park0";
+    public const string digsitePrefab = "Digsite";
+
 
     public static Building[] GetBuildingPrefabs()
     {
@@ -43,6 +45,7 @@ public static class Glob {
         buildings[0] = Resources.Load<House>(housePrefab).Initialize();
         buildings[1] = Resources.Load<Factory>(factoryPrefab0).Initialize();
         buildings[2] = Resources.Load<Park>(parkPrefab0).Initialize();
+        buildings[3] = Resources.Load<Digsite>(digsitePrefab).Initialize();
         //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
@@ -53,6 +56,7 @@ public static class Glob {
     public const string houseIcon = "HouseIcon";
     public const string factoryIcon = "FactoryIcon";
     public const string parkIcon = "ParkIcon";
+    public const string digsiteIcon = "DigsiteIcon";
 
     public static Sprite[] GetBuildingIcons()
     {
@@ -60,6 +64,7 @@ public static class Glob {
         icons[0] = Resources.Load<Sprite>(houseIcon);
         icons[1] = Resources.Load<Sprite>(factoryIcon);
         icons[2] = Resources.Load<Sprite>(parkIcon);
+        icons[3] = Resources.Load<Sprite>(digsiteIcon);
         return icons;
     }
 

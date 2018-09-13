@@ -31,7 +31,7 @@ public class EventManager : MonoBehaviour
     {
         TMX_Parser parser = new TMX_Parser();
         parser.Parse("Assets/XML/RandomEvents.txt", out allEvents);
-        Debug.Log(allEvents);
+        //Debug.Log(allEvents);
 
         EventMenu.SetActive(false);
     }

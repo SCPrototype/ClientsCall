@@ -14,7 +14,7 @@ public class AICityManager : CityManager {
     public AICityManager (int pMinHappiness)
     {
         _minimalHappiness = pMinHappiness;
-        Debug.Log(_minimalHappiness);
+        //Debug.Log(_minimalHappiness);
     }
 
     private class Move

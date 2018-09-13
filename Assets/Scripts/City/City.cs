@@ -17,6 +17,8 @@ public class City : MonoBehaviour
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
+    private int _amountOfRelics;
+    private int _amountOfRelicsNeededToWin = 5;
 
 
     private int _currentTurn = 1;
@@ -228,6 +230,7 @@ public class City : MonoBehaviour
         return Buildings.ToArray();
     }
 
+    //Now collects all the values and adds them later.
     public void CollectFromAllBuildings()
     {
         int[] values = new int[2];
@@ -244,18 +247,35 @@ public class City : MonoBehaviour
                     values[1] += newvalues[1];
                     productionBuilding.PlayAnimation();
                 }
+                if (building is FunctionBuilding)
+                {
+                    FunctionBuilding functionBuilding = building as FunctionBuilding;
+                    functionBuilding.DoAction();
+                }
             }
         }
         ReceiveCollection(values[0], values[1]);
-        Debug.Log(values[0] + " " + values[1] + "budget is now:" + _budget + "happiness is now" + _happiness);
+        //Debug.Log(values[0] + " " + values[1] + "budget is now:" + _budget + "happiness is now" + _happiness);
     }
-    
-    
 
     public void ReceiveCollection(int pBudget, int pHappiness)
     {
         BudgetChange(pBudget);
         HappinessChange(pHappiness);
+    }
+
+    public int GetAmountOfRelics()
+    {
+        return _amountOfRelics;
+    }
+
+    public void AddRelic(int pAmount)
+    {
+        _amountOfRelics += pAmount;
+        if (_amountOfRelics >= _amountOfRelicsNeededToWin)
+        {
+            //Implement game victory here.
+        }
     }
 
     public void BudgetChange(int pChange)
