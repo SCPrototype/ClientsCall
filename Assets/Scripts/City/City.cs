@@ -18,7 +18,7 @@ public class City : MonoBehaviour
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
     private int _amountOfRelics;
-    private int _amountOfRelicsNeededToWin = 5;
+   
 
 
     private int _currentTurn = 1;
@@ -272,7 +272,7 @@ public class City : MonoBehaviour
     public void AddRelic(int pAmount)
     {
         _amountOfRelics += pAmount;
-        if (_amountOfRelics >= _amountOfRelicsNeededToWin)
+        if (_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
         {
             //Implement game victory here.
         }

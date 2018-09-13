@@ -31,18 +31,10 @@ public class Digsite : FunctionBuilding
     {
         //TODO: Mine for a relic
         //Change to a different number for more chance.
-        int outcome = UnityEngine.Random.Range(0, 2);
-        switch(outcome)
+        int outcome = UnityEngine.Random.Range(0, 100);
+        if(outcome < Glob.ChanceToMineRelic)
         {
-            case 1:
-                this.GetCity().AddRelic(1);
-                _particle.Play();
-                ParticleSystem.EmissionModule em = _particle.emission;
-                em.enabled = true;
-                break;
-            default:
-                //Nothing happened.
-                break;
+            this.GetCity().AddRelic(1);
         }
     }
 }

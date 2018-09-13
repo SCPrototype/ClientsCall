@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingHandler : MonoBehaviour {
+public class BuildingHandler : MonoBehaviour
+{
 
     private Building[] buildings;
     private int currentBuildingSelection;
@@ -12,12 +13,14 @@ public class BuildingHandler : MonoBehaviour {
     private float prevTurn;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         buildings = Glob.GetBuildingPrefabs();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (!readyToBuild)
         {
             if (Time.time - prevTurn >= Glob.TurnDelay)
@@ -25,7 +28,7 @@ public class BuildingHandler : MonoBehaviour {
                 readyToBuild = true;
             }
         }
-	}
+    }
 
     public void SetCurrentCity(City pCity)
     {
@@ -58,19 +61,54 @@ public class BuildingHandler : MonoBehaviour {
 
     public bool StartBuilding()
     {
+        //Can the building get placed.
         if (currentCity.CanBuild(placementBuilding.GetCost()))
         {
-            placementBuilding.SetBuildingPhase(Building.BuildingPhase.INPROGRESS);
+            //Place the building.
+            //Check for building type if there is another building tile near it. If so, upgruade the building to the amount of buildings.
+            //Give the other building an index of +1.
+            
+            //placementBuilding = UpgruadeBuilding(placementBuilding);
+            //Debug.Log(placementBuilding.name);
+            placementBuilding.SetBuildingPhase(Building.BuildingPhase.DONE);
             currentCity.GetSelectedTile().SetBuilding(placementBuilding);
             currentCity.BudgetChange(-placementBuilding.GetCost());
             DestroyPlacementBuilding();
-            // currentCity.BudgetChange(buildingToPlace.GetCost());
             return true;
         }
         else
         {  //Handle error message, insuficient funds. 
             return false;
         }
+    }
+
+    public Building UpgruadeBuilding(Building pBuilding)
+    {
+        Building[] buildingsInRange = currentCity.GetBuildingsAroundTile(1, pBuilding.GetBuildingTile());
+        Building placebuilding = null;
+        Factory[] factoriesPrefabs = Glob.GetFactoriesPrefabs();
+        int amountOfFactories = 0;
+        foreach (Building pBuildingFromList in buildingsInRange)
+        {
+            if (pBuildingFromList is Factory)
+            {
+                amountOfFactories++;
+            }
+        }
+        if (pBuilding is Factory)
+        {
+            Factory factoryToPlace;
+            
+            if (amountOfFactories > factoriesPrefabs.Length)
+            {
+                amountOfFactories = factoriesPrefabs.Length;
+            }
+            factoryToPlace = factoriesPrefabs[amountOfFactories];
+            placebuilding = factoryToPlace;
+        }
+
+        DestroyPlacementBuilding();
+        return placebuilding;
     }
 
     public Building PlaceBuilding(CustomTile pCustomTile)

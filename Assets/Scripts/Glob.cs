@@ -17,6 +17,9 @@ public static class Glob {
     public const float TurnDelay = 2.5f;
     public const float AIEndTurnDelay = 2f;
     public const float AnimationCollection = 0.2f;
+    public const int AmountOfRelicsNeededToWin = 10;
+    //As a percentage.
+    public const int ChanceToMineRelic = 50;
 
     public const float CameraCitySwitchTime = 2f;
 
@@ -50,6 +53,17 @@ public static class Glob {
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
         return buildings;
+    }
+
+    public static Factory[] GetFactoriesPrefabs()
+    {
+        Factory[] factories = new Factory[factoriesVariations];
+        factories[0] = Resources.Load<Factory>(factoryPrefab0).Initialize();
+        factories[1] = Resources.Load<Factory>(factoryPrefab1).Initialize();
+        factories[2] = Resources.Load<Factory>(factoryPrefab2).Initialize();
+        factories[3] = Resources.Load<Factory>(factoryPrefab3).Initialize();
+        factories[4] = Resources.Load<Factory>(factoryPrefab4).Initialize();
+        return factories;
     }
 
     public const string buildingImagePrefab = "BuildingIcon";

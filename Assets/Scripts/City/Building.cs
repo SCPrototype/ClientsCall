@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Building : MonoBehaviour
 {
-    public enum BuildingPhase { PLACEMENT, INPROGRESS, DONE };
+    public enum BuildingPhase { PLACEMENT, DONE };
     private BuildingPhase _currentBuildingPhase;
 
     private Renderer _renderer;
@@ -68,7 +68,7 @@ public abstract class Building : MonoBehaviour
         {
             _materialClone.color = new Color(_materialClone.color.r, _materialClone.color.g, _materialClone.color.b, 0.5f);
         }
-        if (_currentBuildingPhase == BuildingPhase.INPROGRESS)
+        if (_currentBuildingPhase == BuildingPhase.DONE)
         {
             _materialClone.color = _material.color;
         }
