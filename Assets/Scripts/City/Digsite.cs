@@ -34,7 +34,7 @@ public class Digsite : FunctionBuilding
         int outcome = UnityEngine.Random.Range(0, 100);
         if(outcome < Glob.ChanceToMineRelic)
         {
-            this.GetCity().AddRelic(1);
+            this.GetCity().AddRelic();
         }
     }
 }

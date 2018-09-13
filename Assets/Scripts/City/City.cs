@@ -17,6 +17,7 @@ public class City : MonoBehaviour
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
+    private int _amountOfRelics;
 
     private int _currentTurn = 1;
 
@@ -337,6 +338,15 @@ public class City : MonoBehaviour
             }
         }
         return happyHouses;
+    }
+
+    public void AddRelic()
+    {
+        _amountOfRelics++;
+        if(_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
+        {
+            //End game.
+        }
     }
 
     public float GetScore()

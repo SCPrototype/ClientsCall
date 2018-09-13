@@ -58,7 +58,7 @@ public class PlayerCityManager : CityManager
                         currentMode = CurrentMode.EXAMINEMODE;
                         GameInitializer.GetUIHandler().SetExamineMode(pCity.GetSelectedTile().GetBuildingOnTile());
                         pCity.GetSelectedTile().Reset();
-                        
+
                     }
                 }
             }
@@ -107,9 +107,9 @@ public class PlayerCityManager : CityManager
                     GameInitializer.GetUIHandler().SetActiveBuildingImage(0, false);
                 }
             }
-            if(currentMode == CurrentMode.EXAMINEMODE)
+            if (currentMode == CurrentMode.EXAMINEMODE)
             {
-                if(Input.GetKeyDown(KeyCode.G))
+                if (Input.GetKeyDown(KeyCode.G))
                 {
                     GameInitializer.GetUIHandler().ToggleExaminePanel(false);
                     currentMode = CurrentMode.SELECTINGTILE;
@@ -117,13 +117,9 @@ public class PlayerCityManager : CityManager
             }
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                if(!UIHandler.IsTutorialActive())
-                {
-                    GameInitializer.EndTurn();
-                    //Debug.Log(GameInitializer.GetBuildingHandler().GetCurrentCity());
-                    UIHandler.ShowNotification("Turn has ended");
-                }
-                
+                GameInitializer.EndTurn();
+                //Debug.Log(GameInitializer.GetBuildingHandler().GetCurrentCity());
+                UIHandler.ShowNotification("Turn has ended");
             }
         }
     }
