@@ -10,11 +10,38 @@ public class AICityManager : CityManager {
     private float _turnEndTime;
 
     private int _minimalHappiness = 0;
+    private int _animosity; //High animosity = aggressive
+    //99-85 animosity = missiles
+    //84-55 animosity = digsites
+    //54-1 animosity = wonder
+    //0 animosity = bridge
+
+    private enum AIFocus
+    {
+        Missiles,
+        Digsites,
+        Wonder,
+        Bridge
+    }
+    private AIFocus _myFocus = AIFocus.Wonder;
 
     public AICityManager (int pMinHappiness)
     {
         _minimalHappiness = pMinHappiness;
-        //Debug.Log(_minimalHappiness);
+        _animosity = UnityEngine.Random.Range(25, 90); //Starting animosity decides wether the AI will focus on digsites, a wonder, or missiles. Will only change to a bridge if affected by player. Chances for each option: 30, 30, 5 = ~(46.25%, 46.25%, 7.5%)
+        //If animosity drops below missiles range, change focus to digsites or wonder (whichever is cheapest).
+        if (_animosity < 55)
+        {
+            _myFocus = AIFocus.Wonder;
+        }
+        else if (_animosity < 85)
+        {
+            _myFocus = AIFocus.Digsites;
+        }
+        else if (_animosity < 90)
+        {
+            _myFocus = AIFocus.Missiles;
+        }
     }
 
     private class Move
@@ -50,8 +77,6 @@ public class AICityManager : CityManager {
                 _buildings = Glob.GetBuildingPrefabs();
             }
 
-            //TODO: Add calculations for optimal move here
-            //Move 1 tile to the right
             Move myMove = getMove(pCity);
 
             pCity.SetSelectedTile(myMove._tile);
@@ -75,7 +100,7 @@ public class AICityManager : CityManager {
         }
     }
 
-    private Move getMove(City pCity, int optimalChance = 75, int subOptimalDiff = 2)//TODO: Make AI
+    private Move getMove(City pCity, int optimalChance = 75, int subOptimalDiff = 2)
     {
         CustomTile[,] grid = pCity.GetTileMap();
         Move optimalMove = new Move(grid[0,0], _buildings[0], -50);
@@ -94,6 +119,18 @@ public class AICityManager : CityManager {
                         if (_buildings[k].GetCost() <= pCity.GetBudget())
                         {
                             currentMove._building = _buildings[k];
+                            if (_buildings[k] is MissileSilo && _myFocus == AIFocus.Missiles)
+                            {
+                                currentMove._value = 50; //TODO: Balance this value
+                            }
+                            else if (_buildings[k] is Digsite && _myFocus == AIFocus.Digsites)
+                            {
+                                currentMove._value = 50;//TODO: Balance this value
+                            }
+                            else if (_buildings[k] is Park && _myFocus == AIFocus.Wonder)
+                            {
+                                currentMove._value = 50;//TODO: Check for multiple bordering houses.
+                            }
                             currentMove._value = getMoveValue(currentMove._tile, currentMove._building);
                             if (currentMove._value > subOptimalMove._value && currentMove._value < optimalMove._value - subOptimalDiff)
                             {

@@ -1,15 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Park : ProductionBuilding {
+public class Park : FunctionBuilding {
 
     private const int _cost = 10;
-    private const int _happinessGain = 4;
-    private const int _moneyGain = -2;
-    private const int _range = 1;
-    //private ParticleSystem[] _particles = Glob.GetParticleEffects();
-    public ParticleSystem _particle;
 
     public Park()
     {
@@ -18,14 +14,17 @@ public class Park : ProductionBuilding {
 
     void Awake()
     {
-        //_particle = _particles[1];
-        base.Initialize(_cost, _happinessGain, _moneyGain, _range, _particle);
+        base.Initialize(_cost, "Iz a parc.");
     }
 
     public Park Initialize()
     {
-       // _particle = _particles[1];
-        base.Initialize(_cost, _happinessGain, _moneyGain, _range, _particle);
+        base.Initialize(_cost, "Iz a parc.");
         return this;
+    }
+
+    public override void DoAction()
+    {
+        
     }
 }
