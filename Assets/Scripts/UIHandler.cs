@@ -61,6 +61,10 @@ public class UIHandler : MonoBehaviour
         _notificationPanel.SetActive(true);
         _notificationText.text = message;
     }
+    public static void ToggleNotificationPanel(bool toggle)
+    {
+        _notificationPanel.SetActive(toggle);
+    }
 
     public void ToggleBuildPanel(bool toggle)
     {

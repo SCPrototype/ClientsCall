@@ -62,8 +62,11 @@ public class AICityManager : CityManager {
             GameInitializer.GetBuildingHandler().ChangeBuildingSelection(myMove._building);
 
             GameInitializer.GetBuildingHandler().StartBuilding();
-            _turnEnded = true;
-            _turnEndTime = Time.time;
+            if (pCity.GetBudget() < 20)
+            {
+                _turnEnded = true;
+                _turnEndTime = Time.time;
+            }
         }
         else if (Time.time - _turnEndTime >= Glob.AIEndTurnDelay)
         {

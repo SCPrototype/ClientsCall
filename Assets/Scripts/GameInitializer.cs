@@ -13,6 +13,12 @@ public class GameInitializer : MonoBehaviour {
 
     private static bool _isPaused = false;
 
+    public static void ResetGame()
+    {
+        Application.LoadLevel(0);
+        
+    }
+
 	// Use this for initialization
 	void Start () {
         _cameraManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
@@ -30,7 +36,10 @@ public class GameInitializer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ResetGame();
+        }
     }
 
     public static City GetCurrentCity()
@@ -47,6 +56,8 @@ public class GameInitializer : MonoBehaviour {
             
         }
         _buildHandler.SetCurrentCity(_allCities[_currentCity]);
+        _gameUIHandler.ToggleBuildPanel(false);
+        _gameUIHandler.ToggleExaminePanel(false);
     }
 
     public static void EndGame(City pWinner = null)

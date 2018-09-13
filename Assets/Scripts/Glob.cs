@@ -26,6 +26,8 @@ public static class Glob {
     public const string uiPrefab = "UI";
 
     public const string tilePrefab = "Tile";
+    public static Color happyColor = new Color(0.25f, 0.5f, 0f, 1);
+    public static Color unhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
 
     public const int buildingCount = 3;
     public const int factoriesVariations = 5;

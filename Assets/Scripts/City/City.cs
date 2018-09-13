@@ -58,6 +58,8 @@ public class City : MonoBehaviour
                 if (!_collectedThisTurn)
                 {
                     GameInitializer.GetUIHandler().SetTurnText(_currentTurn);
+                    UIHandler.ToggleNotificationPanel(false);
+
                     CollectFromAllBuildings();
                     _collectedThisTurn = true;
                     if (_budget < 18)
@@ -300,15 +302,52 @@ public class City : MonoBehaviour
         return _happiness;
     }
 
+    public void HandleHappiness(CustomTile pTile, bool pHappy)
+    {
+        int[] tilePos = GetTilePosition(pTile);
+        for (int x = 0; x < 3; x++)//Check all bordering tiles
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                int xCoordinate = tilePos[0] - 1 + x;
+                int yCoordinate = tilePos[1] - 1 + y;
+                if ((xCoordinate < 0 || xCoordinate >= _tileMap.GetLength(0)) || (yCoordinate < 0 || yCoordinate >= _tileMap.GetLength(1))) continue;
+                CustomTile borderingTile = _tileMap[xCoordinate, yCoordinate];
+                if (!borderingTile.GetIsHappy())
+                {
+                    borderingTile.SetIsHappy(pHappy);
+                }
+            }
+        }
+    }
+    public int GetHappyHouseAmount()
+    {
+        int happyHouses = 0;
+        for (int x = 0; x < _tileMap.GetLength(0); x++)//Check every tile
+        {
+            for (int y = 0; y < _tileMap.GetLength(1); y++)
+            {
+                if (_tileMap[x,y].GetIsHappy())
+                {
+                    if (_tileMap[x,y].GetBuildingOnTile() is House)
+                    {
+                        happyHouses++;
+                    }
+                }
+            }
+        }
+        return happyHouses;
+    }
+
     public float GetScore()
     {
         float score = 0;
-        score += _budget * (1 + (_happiness/25)); //100% happiness: max score is 500, 0% happiness: max score is 100
+        score += _budget * (1 + (_happiness/25));
         float tileScore = 0;
         Debug.Log("Budget and Happiness score: " + score);
         foreach (CustomTile tile in _tileMap)
         {
-            tileScore += _myManager.GetTileValue(tile);//Only factories: +/- 1000 tileScore
+            tileScore += _myManager.GetTileValue(tile);
         }
         Debug.Log("City tiles score: " + tileScore);
 
