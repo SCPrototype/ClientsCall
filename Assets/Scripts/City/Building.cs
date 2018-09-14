@@ -49,7 +49,7 @@ public abstract class Building : MonoBehaviour
     {
         Vector3 positionBuilding = pCustomTile.transform.position;
 
-        positionBuilding.y = this.transform.localScale.y / 2;
+        positionBuilding.y = 0.5f;
         this.transform.position = positionBuilding;
         this.transform.parent = pCustomTile.transform;
         _myCity = pCustomTile.GetComponentInParent<City>();

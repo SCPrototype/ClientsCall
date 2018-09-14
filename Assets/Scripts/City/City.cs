@@ -11,8 +11,7 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget = 10;
-    private float _happiness = 100;
+    private float _budget = 18;
     private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
@@ -35,7 +34,7 @@ public class City : MonoBehaviour
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
- 
+
         DrawMap(pStartPos);
         return this;
     }
@@ -44,14 +43,15 @@ public class City : MonoBehaviour
     void Start()
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
-        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
+        _uiHandler.SetResourcesBars((int)_budget);
     }
 
     void Update()
     {
         if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && GameInitializer.GetBuildingHandler().IsReadyToBuild())
         {
-            if (!GameInitializer.GetPaused()) {
+            if (!GameInitializer.GetPaused())
+            {
                 if (_currentTurn > Glob.TurnAmount)
                 {
                     GameInitializer.EndGame();
@@ -72,7 +72,7 @@ public class City : MonoBehaviour
                     {
                         _eventManager.EnableRandomEvent();
                     }
-                    _uiHandler.SetResourcesBars((int)_budget, (int)_happiness); //Just in case no buildings collected anything
+                    _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
                 }
                 _myManager.HandleTurn(this);
             }
@@ -139,7 +139,8 @@ public class City : MonoBehaviour
             if (targetTile.GetBuildingOnTile() == null)
             {
                 GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 0);
-            } else
+            }
+            else
             {
                 i--;
             }
@@ -180,7 +181,7 @@ public class City : MonoBehaviour
             {
                 if (_myManager.GetCurrentMode() != CityManager.CurrentMode.MISSILEAIM)
                 {
-                    _selectedTile.InvertColor(new Color(0,0,0,0));
+                    _selectedTile.InvertColor(new Color(0, 0, 0, 0));
                 }
                 else
                 {
@@ -268,34 +269,21 @@ public class City : MonoBehaviour
     public void ReceiveCollection(int pBudget, int pHappiness)
     {
         BudgetChange(pBudget);
-        HappinessChange(pHappiness);
     }
 
     public void BudgetChange(int pChange)
     {
-        //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget += pChange;
-        //softcap for now.
-        _budget = Mathf.Clamp(_budget, 0, 100);
-
-        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
-    }
-
-    public void HappinessChange(int pChange)
-    {
-        _happiness += pChange;
-        //softcap for now.
-        _happiness = Mathf.Clamp(_happiness, 0, 100);
-
-        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
+        _uiHandler.SetResourcesBars((int)_budget);
     }
 
     public bool CanBuild(int pBuildingCost)
     {
-        if(_budget - pBuildingCost < 0)
+        if (_budget - pBuildingCost < 0)
         {
             return false;
-        } else
+        }
+        else
         {
             return true;
         }
@@ -309,10 +297,6 @@ public class City : MonoBehaviour
     public float GetBudget()
     {
         return _budget;
-    }
-    public float GetHappiness()
-    {
-        return _happiness;
     }
 
     public void HandleHappiness(CustomTile pTile, bool pHappy)
@@ -333,6 +317,7 @@ public class City : MonoBehaviour
             }
         }
     }
+
     public int GetHappyHouseAmount()
     {
         int happyHouses = 0;
@@ -340,9 +325,9 @@ public class City : MonoBehaviour
         {
             for (int y = 0; y < _tileMap.GetLength(1); y++)
             {
-                if (_tileMap[x,y].GetIsHappy())
+                if (_tileMap[x, y].GetIsHappy())
                 {
-                    if (_tileMap[x,y].GetBuildingOnTile() is House)
+                    if (_tileMap[x, y].GetBuildingOnTile() is House)
                     {
                         happyHouses++;
                     }
@@ -355,7 +340,7 @@ public class City : MonoBehaviour
     public void AddRelic()
     {
         _amountOfRelics++;
-        if(_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
+        if (_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
         {
             GameInitializer.EndGame(this);
         }
@@ -372,7 +357,7 @@ public class City : MonoBehaviour
     public float GetScore()
     {
         float score = 0;
-        score += _budget * (1 + (_happiness/25));
+        //score += _budget * (1 + (_happiness / 25));
         float tileScore = 0;
         Debug.Log("Budget and Happiness score: " + score);
         foreach (CustomTile tile in _tileMap)

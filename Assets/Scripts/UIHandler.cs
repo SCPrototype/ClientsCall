@@ -136,14 +136,11 @@ public class UIHandler : MonoBehaviour
         }
     }
 
-    public void SetResourcesBars(int pBudget, int pHappiness)
+    public void SetResourcesBars(int pBudget)
     {
-        pBudget = Mathf.Clamp(pBudget, 0, 100);
-        _budgetText.text = "Budget: " + pBudget + "/100";
-        _budgetSlider.value = pBudget / 100f;
-        pHappiness = Mathf.Clamp(pHappiness, 0, 100);
-        _happinessText.text = "Happiness: " + pHappiness + "/100";
-        _happinessSlider.value = pHappiness / 100f;
+        //pBudget = Mathf.Clamp(pBudget, 0, 100);
+        _budgetText.text = "Budget: " + pBudget ;
+        _budgetSlider.value = pBudget / Glob.BudgetCap;
     }
     public void SetExamineMode(Building pBuilding)
     {
@@ -190,9 +187,7 @@ public class UIHandler : MonoBehaviour
         _eventMenu = GameObject.FindGameObjectWithTag("EventMenu");
         _valuesPanel = GameObject.FindGameObjectWithTag("Values");
         _budgetSlider = GameObject.FindGameObjectWithTag("BudgetSlider").GetComponent<Slider>();
-        _happinessSlider = GameObject.FindGameObjectWithTag("HappinessSlider").GetComponent<Slider>();
         _budgetText = _budgetSlider.GetComponentInChildren<Text>();
-        _happinessText = _happinessSlider.GetComponentInChildren<Text>();
         _examinePanel = GameObject.FindGameObjectWithTag("ExaminePanel");
         _examineText = _examinePanel.GetComponentInChildren<Text>();
         _examinePanel.SetActive(false);

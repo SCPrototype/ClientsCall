@@ -13,6 +13,7 @@ public static class Glob {
     public const int RandomHouseAmount = 5;
     public const int RandomFactoryAmount = 1;
     public const int RandomParkAmount = 1;
+    public const int BudgetCap = 500;
 
     public const float TurnDelay = 2.5f;
     public const float AIEndTurnDelay = 2f;
@@ -96,14 +97,5 @@ public static class Glob {
         return icons;
     }
 
-    //public const string factoryParticle = "FactoryParticle";
-    //public const string parkParticle = "ParkParticle";
-
-    //public static ParticleSystem[] GetParticleEffects()
-    //{
-    //    ParticleSystem[] particles = new ParticleSystem[particleCount];
-    //    particles[0] = Resources.Load<ParticleSystem>(factoryParticle);
-    //    particles[0] = Resources.Load<ParticleSystem>(parkParticle);
-    //    return particles;
-    //}
+   
 }

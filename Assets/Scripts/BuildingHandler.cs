@@ -120,12 +120,15 @@ public class BuildingHandler : MonoBehaviour
         }
     }
 
-    public void ReplaceFactory(Factory pCurrentFactory, int indexChange)
+    public void ReplaceFactory(Factory pCurrentFactory, int pIndexChange)
     {
         Factory[] factoriesPrefab = Glob.GetFactoriesPrefabs();
         int boost = pCurrentFactory.GetBoost();
-        Factory newFactory = Instantiate(factoriesPrefab[boost + indexChange]);
-        newFactory.AddBoost(boost + indexChange);
+        int index = boost + pIndexChange;
+        if (index >= factoriesPrefab.Length) index = factoriesPrefab.Length - 1;
+        Debug.Log("Index is " + index + " array length is " + factoriesPrefab.Length);
+        Factory newFactory = Instantiate(factoriesPrefab[index]);
+        newFactory.AddBoost(boost + pIndexChange);
         newFactory.SetBuildingPhase(Building.BuildingPhase.DONE);
         newFactory.SetBuildingTile(pCurrentFactory.GetBuildingTile());
         pCurrentFactory.GetBuildingTile().SetBuilding(newFactory);
