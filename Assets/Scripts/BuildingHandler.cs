@@ -64,6 +64,15 @@ public class BuildingHandler : MonoBehaviour
         //Can the building get placed.
         if (currentCity.CanBuild(placementBuilding.GetCost()))
         {
+            if (placementBuilding is Wonder)
+            {
+                if (currentCity.GetHappyHouseAmount() < Glob.WonderHappyHouseReq)
+                {
+                    //TODO: Give player info about needing more happy houses.
+                    UIHandler.ShowNotification("The inhabitants are preventing your workers from building this. They don't want you 'wasting' money on this, instead of making them happy. Try building some parks next to houses first.");
+                    return false;
+                }
+            }
             //Place the building.
             //Check for building type if there is another building tile near it. If so, upgruade the building to the amount of buildings.
             //Give the other building an index of +1.
@@ -79,11 +88,17 @@ public class BuildingHandler : MonoBehaviour
                 MissileSilo building = placementBuilding as MissileSilo;
                 building.DoAction();
             }
+            else if (placementBuilding is Wonder)
+            {
+                Wonder building = placementBuilding as Wonder;
+                building.DoAction();
+            }
             DestroyPlacementBuilding();
             return true;
         }
         else
-        {  //Handle error message, insuficient funds. 
+        {
+            UIHandler.ShowNotification("You don't have enough money to build that.");
             return false;
         }
     }

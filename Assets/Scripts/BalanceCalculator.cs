@@ -33,8 +33,8 @@ public class BalanceCalculator : MonoBehaviour {
         _houses = StartingHouses;
         _turn = 1;
 
-        cityGrid[0, 1] = 2; //Is a house
-        cityGrid[1,1] = 1; //Is a factory
+        cityGrid[2, 3] = 2; //Is a house
+        cityGrid[3,3] = 1; //Is a factory
 
         if (AutoCalculate)
         {

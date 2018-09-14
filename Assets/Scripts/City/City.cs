@@ -63,6 +63,11 @@ public class City : MonoBehaviour
                     UIHandler.ToggleNotificationPanel(false);
 
                     CollectFromAllBuildings();
+                    if (_myManager is PlayerCityManager)
+                    {
+                        AICityManager AICity = GameInitializer.GetNextCity(this).GetManager() as AICityManager;
+                        AICity.ChangeAnimosity(-Mathf.RoundToInt(GetHappyHouseAmount() * Glob.HappyHouseAnimosityChange));
+                    }
                     _collectedThisTurn = true;
                     if (_budget < 18)
                     {
@@ -257,6 +262,11 @@ public class City : MonoBehaviour
                     ProductionBuilding productionBuilding = building as ProductionBuilding;
                     productionBuilding.Produce();
                 }
+                if (building is Digsite)
+                {
+                    Digsite digSite = building as Digsite;
+                    digSite.DoAction();
+                }
             }
         }
     }
@@ -286,9 +296,9 @@ public class City : MonoBehaviour
         _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
     }
 
-    public bool CanBuild(int pBuildingCost)
+    public bool CanBuild(int pBuildingCost, int happyHouses = 0)
     {
-        if(_budget - pBuildingCost < 0)
+        if(_budget - pBuildingCost < 0 || GetHappyHouseAmount() < happyHouses)
         {
             return false;
         } else
@@ -359,6 +369,11 @@ public class City : MonoBehaviour
     public void AddMissileLaunched()
     {
         _missilesLaunched++;
+        if (_myManager is PlayerCityManager)
+        {
+            AICityManager AICity = GameInitializer.GetNextCity(this).GetManager() as AICityManager;
+            AICity.ChangeAnimosity(50);
+        }
         if (_missilesLaunched >= Glob.AmountOfMissilesNeededToWin)
         {
             GameInitializer.EndGame(this);
@@ -380,5 +395,10 @@ public class City : MonoBehaviour
         score += tileScore / 10;
 
         return score;
+    }
+
+    public CityManager GetManager()
+    {
+        return _myManager;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class House : CollectionBuilding {
 
-    private const int _cost = 9;
+    private const int _cost = 20;
 
     public House()
     {

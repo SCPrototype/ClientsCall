@@ -23,6 +23,7 @@ public class AICityManager : CityManager {
         Wonder,
         Bridge
     }
+    private AIFocus _initialFocus = AIFocus.Wonder;
     private AIFocus _myFocus = AIFocus.Wonder;
 
     public AICityManager (int pMinHappiness)
@@ -32,16 +33,20 @@ public class AICityManager : CityManager {
         //If animosity drops below missiles range, change focus to digsites or wonder (whichever is cheapest).
         if (_animosity < 55)
         {
+            _initialFocus = AIFocus.Wonder;
             _myFocus = AIFocus.Wonder;
         }
         else if (_animosity < 85)
         {
+            _initialFocus = AIFocus.Digsites;
             _myFocus = AIFocus.Digsites;
         }
         else if (_animosity < 90)
         {
+            _initialFocus = AIFocus.Digsites;
             _myFocus = AIFocus.Missiles;
         }
+        Debug.Log(_animosity);
     }
 
     private class Move
@@ -97,6 +102,24 @@ public class AICityManager : CityManager {
         {
             GameInitializer.EndTurn();
             _turnEnded = false;
+        }
+    }
+
+    public void ChangeAnimosity(int pAnimo)
+    {
+        _animosity = Mathf.Clamp(_animosity + pAnimo, 0, 100);
+        Debug.Log("New animosity: " + _animosity);
+        if (_animosity <= 0)
+        {
+            _myFocus = AIFocus.Bridge;
+        }
+        else if (_animosity < 85)
+        {
+            _myFocus = _initialFocus;
+        }
+        else if (_animosity < 100)
+        {
+            _myFocus = AIFocus.Missiles;
         }
     }
 

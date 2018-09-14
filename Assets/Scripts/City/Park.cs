@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Park : FunctionBuilding {
 
-    private const int _cost = 10;
-    private const string _description = "Will make the surrounding area happy. Perhaps the enemy will become more friendly if he sees you treat you people well.";
+    private const int _cost = 70;
+    private const string _description = "Will make the surrounding area happy. \nPerhaps the enemy will become more friendly if they see you treat your people well.";
 
     public Park()
     {

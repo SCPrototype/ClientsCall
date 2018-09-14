@@ -6,9 +6,9 @@ using UnityEngine;
 public class Digsite : FunctionBuilding
 {
 
-    private const int _cost = 9;
+    private const int _cost = 25;
     public ParticleSystem _particle;
-    private const string _description = "Building one of these will give you a chance to find a relic at the start of your turn. Fill up a museum with 10 relics, and display dominance through tourism!";
+    private const string _description = "Building one of these will give you a chance to find a relic at the start of your turn. \nFill up a museum with 10 relics, and display dominance through tourism!";
     
     public Digsite()
     {

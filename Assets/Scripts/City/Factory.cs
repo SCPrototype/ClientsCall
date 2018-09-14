@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Factory : ProductionBuilding {
 
-    private const int _cost = 18;
+    private const int _cost = 50;
     private const int _happinessGain = -2;
     private const int _moneyGain = 10;
     private const int _range = 1;

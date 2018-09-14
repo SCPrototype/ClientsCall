@@ -5,7 +5,7 @@ using UnityEngine;
 public static class Glob {
 
     //GAME VALUES
-    public const int AmountOfAICities = 1;
+    public const int AmountOfAICities = 1; //Dont change this value, it will break the game. (Spaghetti code caused by time restraints.)
     public const int CityWidth = 7;
     public const int CityLength = 7;
     public const int CitySpacing = 50;
@@ -23,6 +23,11 @@ public static class Glob {
     public const float FactoryIncreasePerUpgruade = 0.5f;
 
     public const int AmountOfMissilesNeededToWin = 3;
+    public const int MissileAnimosityChange = 75; //out of 100
+
+    public const float HappyHouseAnimosityChange = 1; //out of 100
+
+    public const int WonderHappyHouseReq = 11;
 
     public const float CameraCitySwitchTime = 2f;
     public static Vector3 CameraOffset = new Vector3(3, 31, -10);
@@ -38,7 +43,7 @@ public static class Glob {
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
     public static Color MissileAimColor = new Color(1, 0, 0, 1);
 
-    public const int buildingCount = 5;
+    public const int buildingCount = 6;
     public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
@@ -51,6 +56,7 @@ public static class Glob {
     public const string parkPrefab0 = "Park0";
     public const string digsitePrefab = "Digsite";
     public const string missileSiloPrefab = "MissileSilo";
+    public const string wonderPrefab = "Wonder";
 
 
     public static Building[] GetBuildingPrefabs()
@@ -61,6 +67,7 @@ public static class Glob {
         buildings[2] = Resources.Load<Park>(parkPrefab0).Initialize();
         buildings[3] = Resources.Load<Digsite>(digsitePrefab).Initialize();
         buildings[4] = Resources.Load<MissileSilo>(missileSiloPrefab).Initialize();
+        buildings[5] = Resources.Load<Wonder>(wonderPrefab).Initialize();
         //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
@@ -84,6 +91,7 @@ public static class Glob {
     public const string parkIcon = "ParkIcon";
     public const string digsiteIcon = "DigsiteIcon";
     public const string missileSiloIcon = "DigsiteIcon";//TODO: Correct icon
+    public const string wonderIcon = "DigsiteIcon";//TODO: Correct icon
 
     public static Sprite[] GetBuildingIcons()
     {
@@ -93,6 +101,7 @@ public static class Glob {
         icons[2] = Resources.Load<Sprite>(parkIcon);
         icons[3] = Resources.Load<Sprite>(digsiteIcon);
         icons[4] = Resources.Load<Sprite>(missileSiloIcon);
+        icons[5] = Resources.Load<Sprite>(wonderIcon);
         return icons;
     }
 
