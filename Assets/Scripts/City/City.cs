@@ -44,7 +44,7 @@ public class City : MonoBehaviour
     void Start()
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
-        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
+        _uiHandler.SetResourcesBars((int)_budget);
     }
 
     void Update()
@@ -69,15 +69,11 @@ public class City : MonoBehaviour
                         AICity.ChangeAnimosity(-Mathf.RoundToInt(GetHappyHouseAmount() * Glob.HappyHouseAnimosityChange));
                     }
                     _collectedThisTurn = true;
-                    if (_budget < 18)
-                    {
-                        _myManager.TaxCity(this);
-                    }
                     if (_currentTurn % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager)
                     {
                         _eventManager.EnableRandomEvent();
                     }
-                    _uiHandler.SetResourcesBars((int)_budget, (int)_happiness); //Just in case no buildings collected anything
+                    _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
                 }
                 _myManager.HandleTurn(this);
             }
@@ -252,6 +248,7 @@ public class City : MonoBehaviour
 
     public void CollectFromAllBuildings()
     {
+        float incomeThisTurn = 0;
         foreach (CustomTile pTile in _tileMap)
         {
             Building building = pTile.GetBuildingOnTile();
@@ -260,7 +257,7 @@ public class City : MonoBehaviour
                 if (building is ProductionBuilding)
                 {
                     ProductionBuilding productionBuilding = building as ProductionBuilding;
-                    productionBuilding.Produce();
+                    incomeThisTurn += productionBuilding.Produce();
                 }
                 if (building is Digsite)
                 {
@@ -269,12 +266,13 @@ public class City : MonoBehaviour
                 }
             }
         }
+        ReceiveCollection((int)incomeThisTurn);
     }
 
-    public void ReceiveCollection(int pBudget, int pHappiness)
+    public void ReceiveCollection(int pBudget)
     {
         BudgetChange(pBudget);
-        HappinessChange(pHappiness);
+
     }
 
     public void BudgetChange(int pChange)
@@ -282,19 +280,11 @@ public class City : MonoBehaviour
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget += pChange;
         //softcap for now.
-        _budget = Mathf.Clamp(_budget, 0, 100);
 
-        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
+        _uiHandler.SetResourcesBars((int)_budget);
     }
 
-    public void HappinessChange(int pChange)
-    {
-        _happiness += pChange;
-        //softcap for now.
-        _happiness = Mathf.Clamp(_happiness, 0, 100);
-
-        _uiHandler.SetResourcesBars((int)_budget, (int)_happiness);
-    }
+   
 
     public bool CanBuild(int pBuildingCost, int happyHouses = 0)
     {

@@ -66,7 +66,7 @@ public class EventManager : MonoBehaviour
         effectText.text = currentRepercussion.description + "\nCost: " + currentRepercussion.cost;
         effectText.text += string.Format("\n\nHappiness: {0}", currentRepercussion.happinessValue);
 
-        GameInitializer.GetBuildingHandler().GetCurrentCity().ReceiveCollection(-(chc.cost + currentRepercussion.cost), chc.GetHappiness() + currentRepercussion.GetHappiness());
+        GameInitializer.GetBuildingHandler().GetCurrentCity().ReceiveCollection(-(chc.cost + currentRepercussion.cost));
 
     }
 
