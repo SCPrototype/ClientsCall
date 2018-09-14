@@ -11,8 +11,7 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget = 10;
-    private float _happiness = 100;
+    private float _budget;
     private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
@@ -24,6 +23,8 @@ public class City : MonoBehaviour
 
     public City Initialize(CityManager pManager, int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
+        _budget = Glob.StartingBudget;
+
         _myManager = pManager;
 
         Rows = pRows;
@@ -306,10 +307,6 @@ public class City : MonoBehaviour
     {
         return _budget;
     }
-    public float GetHappiness()
-    {
-        return _happiness;
-    }
 
     public void HandleHappiness(CustomTile pTile, bool pHappy)
     {
@@ -373,7 +370,7 @@ public class City : MonoBehaviour
     public float GetScore()
     {
         float score = 0;
-        score += _budget * (1 + (_happiness/25));
+        score += _budget;
         float tileScore = 0;
         Debug.Log("Budget and Happiness score: " + score);
         foreach (CustomTile tile in _tileMap)

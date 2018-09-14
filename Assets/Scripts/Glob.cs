@@ -13,11 +13,13 @@ public static class Glob {
     public const int RandomHouseAmount = 5;
     public const int RandomFactoryAmount = 1;
     public const int RandomParkAmount = 1;
+    public const int StartingBudget = 10;
     public const int BudgetCap = 500;
 
     public const float TurnDelay = 2.5f;
     public const float AIEndTurnDelay = 2f;
     public const float AnimationCollection = 0.2f;
+
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
     public const int ChanceToMineRelic = 50;
