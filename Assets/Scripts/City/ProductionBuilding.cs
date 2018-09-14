@@ -94,7 +94,6 @@ public abstract class ProductionBuilding : Building
         {
 
         }
-        Debug.Log(value);
         return value;
     }
 }

@@ -236,10 +236,7 @@ public class AICityManager : CityManager {
         {
             moneyValue *= 2;
         }
-        else if (tileCity.GetHappiness() < _minimalHappiness)
-        {
-            happinessValue *= 2;
-        }
+       
         value += (happinessValue + moneyValue) * collectionValue;
         return value;
     }

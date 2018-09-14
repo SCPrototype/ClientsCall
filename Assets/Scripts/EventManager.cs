@@ -19,8 +19,6 @@ public class EventManager : MonoBehaviour
     public GameObject effectBox;
     public Text effectText;
 
-    private int _budget = 75;
-    private int _happiness = 50;
     public Slider BudgetSlider;
     public Slider HappinessSlider;
     public Text BudgetText;
