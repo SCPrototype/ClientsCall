@@ -30,7 +30,7 @@ public abstract class ProductionBuilding : Building
     public float[] Produce()
     {
         float[] values = new float[2];
-        Building[] buildingsInRange = _myCity.GetBuildingsAroundTile(_tileAffectRange, this.GetBuildingTile());
+        Building[] buildingsInRange = GetCity().GetBuildingsAroundTile(_tileAffectRange, this.GetBuildingTile());
         foreach (Building pBuilding in buildingsInRange)
         {
             if (pBuilding is CollectionBuilding)

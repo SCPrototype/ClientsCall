@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MissileSilo : FunctionBuilding {
 
-    private const int _cost = 100;
+    private const int _cost = 20;
     private const string _description = "If you build this you can launch a missile at the enemy's city! I'm sure they will surrender after being hit three times.";
 
     public MissileSilo()

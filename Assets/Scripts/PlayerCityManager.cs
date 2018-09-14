@@ -72,7 +72,16 @@ public class PlayerCityManager : CityManager
                 }
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    if (currentMode == CurrentMode.MISSILEAIM)
+                    if (targetCity.GetSelectedTile().GetBuildingOnTile() == null)
+                    {
+                        if (_isFocusedOnOwnCity)
+                        {
+                            SetCurrentMode(CurrentMode.BUILDINGTILE);
+                            targetCity.GetSelectedTile().Reset();
+                            GameInitializer.GetUIHandler().ToggleBuildPanel(true);
+                        }
+                    }
+                    else if (currentMode == CurrentMode.MISSILEAIM)
                     {
                         //TODO: Launch missile
                         Destroy(targetCity.GetSelectedTile().GetBuildingOnTile().gameObject);
@@ -82,15 +91,6 @@ public class PlayerCityManager : CityManager
                         targetCity = pCity;
                         GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
                         pCity.AddMissileLaunched();
-                    }
-                    else if (targetCity.GetSelectedTile().GetBuildingOnTile() == null)
-                    {
-                        if (_isFocusedOnOwnCity)
-                        {
-                            SetCurrentMode(CurrentMode.BUILDINGTILE);
-                            targetCity.GetSelectedTile().Reset();
-                            GameInitializer.GetUIHandler().ToggleBuildPanel(true);
-                        }
                     }
                     else
                     {
