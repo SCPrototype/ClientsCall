@@ -247,6 +247,7 @@ public class City : MonoBehaviour
 
     public void CollectFromAllBuildings()
     {
+        float[] income = new float[2];
         foreach (CustomTile pTile in _tileMap)
         {
             Building building = pTile.GetBuildingOnTile();
@@ -255,10 +256,13 @@ public class City : MonoBehaviour
                 if (building is ProductionBuilding)
                 {
                     ProductionBuilding productionBuilding = building as ProductionBuilding;
-                    productionBuilding.Produce();
+                    float[] perBuilding = productionBuilding.Produce();
+                    income[0] += perBuilding[0];
+                    income[1] += perBuilding[1];
                 }
             }
         }
+        ReceiveCollection((int)income[0], (int)income[1]);
     }
 
     public void ReceiveCollection(int pBudget, int pHappiness)
