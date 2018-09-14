@@ -23,7 +23,7 @@ public class GameInitializer : MonoBehaviour {
 	void Start () {
         _cameraManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
         _buildHandler = new GameObject("BuildingHandler").AddComponent<BuildingHandler>();
-        _gameUIHandler = Instantiate((Resources.Load(Glob.uiPrefab) as GameObject).GetComponent<UIHandler>());
+        _gameUIHandler = Instantiate((Resources.Load(Glob.UIPrefab) as GameObject).GetComponent<UIHandler>());
         _allCities = new City[Glob.AmountOfAICities + 1];
         _playerCity = new GameObject("PlayerCity").AddComponent<City>().Initialize(new PlayerCityManager(), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(0, 0, 0));
         _allCities[0] = _playerCity;
@@ -45,6 +45,21 @@ public class GameInitializer : MonoBehaviour {
     public static City GetCurrentCity()
     {
         return _allCities[_currentCity];
+    }
+    public static City GetNextCity(City pCity)
+    {
+        for (int i = 0; i < _allCities.Length; i++)
+        {
+            if (_allCities[i] == pCity)
+            {
+                if (i+1 >= _allCities.Length)
+                {
+                    return _allCities[0];
+                }
+                return _allCities[i+1];
+            }
+        }
+        return null;
     }
 
     public static void EndTurn()

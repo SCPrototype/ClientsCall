@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class MissileSilo : FunctionBuilding {
 
+    private const int _cost = 100;
+    private const string _description = "If you build this you can launch a missile at the enemy's city! I'm sure they will surrender after being hit three times.";
+
     public MissileSilo()
     {
 
     }
 
-    new public MissileSilo Initialize(int pCost, string pDescription)
+    void Awake()
     {
-        base.Initialize(pCost, pDescription);
+        base.Initialize(_cost, _description);
+    }
+
+    public MissileSilo Initialize()
+    {
+        base.Initialize(_cost, _description);
         return this;
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public override void DoAction()
     {
         //TODO: Launch a missile
+        Debug.Log("Did action.");
+        GetCity().SetCurrentMode(CityManager.CurrentMode.MISSILEAIM);
     }
 }

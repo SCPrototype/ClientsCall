@@ -7,7 +7,7 @@ public abstract class CityManager : MonoBehaviour {
     public enum DirectionKey { LEFT, RIGHT, UP, DOWN };
 
     //This one belongs in the game handler.
-    public enum CurrentMode { SELECTINGTILE, BUILDINGTILE, WAITINGFORTURN, EXAMINEMODE };
+    public enum CurrentMode { SELECTINGTILE, BUILDINGTILE, WAITINGFORTURN, EXAMINEMODE, MISSILEAIM };
     public static CurrentMode currentMode;
 
     // Use this for initialization
@@ -95,5 +95,6 @@ public abstract class CityManager : MonoBehaviour {
     public void SetCurrentMode(CurrentMode pMode)
     {
         currentMode = pMode;
+        Debug.Log("Set current mode to: " + pMode);
     }
 }

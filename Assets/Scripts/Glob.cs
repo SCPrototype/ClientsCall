@@ -21,19 +21,23 @@ public static class Glob {
     //As a percentage.
     public const int ChanceToMineRelic = 50;
 
+    public const int AmountOfMissilesNeededToWin = 3;
+
     public const float CameraCitySwitchTime = 2f;
+    public static Vector3 CameraOffset = new Vector3(3, 31, -10);
 
     public const int TurnAmount = 16;
     public const int EventTurnInterval = 4;
 
     //PREFABS
-    public const string uiPrefab = "UI";
+    public const string UIPrefab = "UI";
 
-    public const string tilePrefab = "Tile";
-    public static Color happyColor = new Color(0.25f, 0.5f, 0f, 1);
-    public static Color unhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
+    public const string TilePrefab = "Tile";
+    public static Color HappyColor = new Color(0.25f, 0.5f, 0f, 1);
+    public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
+    public static Color MissileAimColor = new Color(1, 0, 0, 1);
 
-    public const int buildingCount = 4;
+    public const int buildingCount = 5;
     public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
@@ -45,6 +49,7 @@ public static class Glob {
     public const string factoryPrefab4 = "Factory4";
     public const string parkPrefab0 = "Park0";
     public const string digsitePrefab = "Digsite";
+    public const string missileSiloPrefab = "MissileSilo";
 
 
     public static Building[] GetBuildingPrefabs()
@@ -54,6 +59,7 @@ public static class Glob {
         buildings[1] = Resources.Load<Factory>(factoryPrefab0).Initialize();
         buildings[2] = Resources.Load<Park>(parkPrefab0).Initialize();
         buildings[3] = Resources.Load<Digsite>(digsitePrefab).Initialize();
+        buildings[4] = Resources.Load<MissileSilo>(missileSiloPrefab).Initialize();
         //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
@@ -76,6 +82,7 @@ public static class Glob {
     public const string factoryIcon = "FactoryIcon";
     public const string parkIcon = "ParkIcon";
     public const string digsiteIcon = "DigsiteIcon";
+    public const string missileSiloIcon = "DigsiteIcon";//TODO: Correct icon
 
     public static Sprite[] GetBuildingIcons()
     {
@@ -84,6 +91,7 @@ public static class Glob {
         icons[1] = Resources.Load<Sprite>(factoryIcon);
         icons[2] = Resources.Load<Sprite>(parkIcon);
         icons[3] = Resources.Load<Sprite>(digsiteIcon);
+        icons[4] = Resources.Load<Sprite>(missileSiloIcon);
         return icons;
     }
 

@@ -120,21 +120,19 @@ public class UIHandler : MonoBehaviour
     {
         if (pBuilding is ProductionBuilding)
         {
-            ProductionBuilding prodBuilding = Instantiate(pBuilding) as ProductionBuilding;
+            ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
             int[] values = prodBuilding.GetMoneyHappinessRange();
             _buildInfoText.text = "<b>" +prodBuilding.GetType() + "</b>\nBuilding cost:" + prodBuilding.GetCost() + "\nProvides " + values[0] + " income each turn \nProvides " + values[1] + " happiness each turn\nAnd has a range of " + values[2];
-            Destroy(prodBuilding.gameObject);
         }
         if (pBuilding is CollectionBuilding)
         {
-            CollectionBuilding colBuilding = Instantiate(pBuilding) as CollectionBuilding;
-            _buildInfoText.text = "<b>"+ colBuilding.GetType() + "</b>\nBuilding cost: " + colBuilding.GetCost() + "\nThis building collects resources from nearby buildings.";
-            Destroy(colBuilding.gameObject);
+            CollectionBuilding colBuilding = pBuilding as CollectionBuilding;
+            _buildInfoText.text = "<b>"+ colBuilding.GetType() + "</b>\nBuilding cost: " + colBuilding.GetCost() + "\nThis building collects resources from nearby production buildings.";
         }
         if (pBuilding is FunctionBuilding)
         {
             FunctionBuilding funBuilding = pBuilding as FunctionBuilding;
-            _buildInfoText.text = funBuilding.GetDescription();
+            _buildInfoText.text = "<b>" + funBuilding.GetType() + "</b>\nBuilding cost: " + funBuilding.GetCost() + "\n" + funBuilding.GetDescription();
         }
     }
 
@@ -157,10 +155,15 @@ public class UIHandler : MonoBehaviour
             text += "It produces <b>" + prodBuilding.GetMoneyHappinessRange()[0] + "</b> Income\n It produces <b>" + prodBuilding.GetMoneyHappinessRange()[1] + "</b> happiness\n";
             text += "And has a range of <b>" + prodBuilding.GetMoneyHappinessRange()[2] + "</b>";
         }
-        if(pBuilding is CollectionBuilding)
+        else if(pBuilding is CollectionBuilding)
         {
             CollectionBuilding colBuilding = pBuilding as CollectionBuilding;
-            text += "It collects resources from productionbuildings in range\n";
+            text += "It collects resources from production buildings in range.\n";
+        }
+        else if (pBuilding is FunctionBuilding)
+        {
+            FunctionBuilding funBuilding = pBuilding as FunctionBuilding;
+            text += funBuilding.GetDescription();
         }
         _examineText.text = text;
     }

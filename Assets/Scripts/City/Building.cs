@@ -12,7 +12,7 @@ public abstract class Building : MonoBehaviour
     private Material _material;
 
     private int _buildingCost;
-    public City _myCity;
+    private City _myCity;
     private CustomTile _builtTitle;
 
 

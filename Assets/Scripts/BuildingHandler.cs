@@ -40,7 +40,7 @@ public class BuildingHandler : MonoBehaviour
         currentCity.SetCurrentMode(CityManager.CurrentMode.SELECTINGTILE);
         prevTurn = Time.time;
         readyToBuild = false;
-        GameInitializer.GetCameraManager().MoveCameraTo(pCity.transform.position + new Vector3(3, 31, -10), Glob.CameraCitySwitchTime);
+        GameInitializer.GetCameraManager().MoveCameraTo(pCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime);
     }
     public City GetCurrentCity()
     {
@@ -73,6 +73,11 @@ public class BuildingHandler : MonoBehaviour
             placementBuilding.SetBuildingPhase(Building.BuildingPhase.DONE);
             currentCity.GetSelectedTile().SetBuilding(placementBuilding);
             currentCity.BudgetChange(-placementBuilding.GetCost());
+            if (placementBuilding is MissileSilo)//TODO: Hard coded spaghett
+            {
+                MissileSilo building = placementBuilding as MissileSilo;
+                building.DoAction();
+            }
             DestroyPlacementBuilding();
             return true;
         }

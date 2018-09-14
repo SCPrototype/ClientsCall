@@ -11,13 +11,14 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget = 75;
-    private float _happiness = 75;
+    private float _budget = 10;
+    private float _happiness = 100;
     private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
     private int _amountOfRelics;
+    private int _missilesLaunched;
 
     private int _currentTurn = 1;
 
@@ -29,7 +30,7 @@ public class City : MonoBehaviour
         Columns = pColumns;
         OffSetBetweenTiles = pOffset;
 
-        TilePrefab = (Resources.Load(Glob.tilePrefab) as GameObject).GetComponent<CustomTile>();
+        TilePrefab = (Resources.Load(Glob.TilePrefab) as GameObject).GetComponent<CustomTile>();
         transform.position = pStartPos;
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
@@ -177,7 +178,14 @@ public class City : MonoBehaviour
         {
             if (_selectedTile != null)
             {
-                _selectedTile.InvertColor();
+                if (_myManager.GetCurrentMode() != CityManager.CurrentMode.MISSILEAIM)
+                {
+                    _selectedTile.InvertColor(new Color(0,0,0,0));
+                }
+                else
+                {
+                    _selectedTile.InvertColor(Glob.MissileAimColor);
+                }
             }
         }
     }
@@ -345,7 +353,15 @@ public class City : MonoBehaviour
         _amountOfRelics++;
         if(_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
         {
-            //End game.
+            GameInitializer.EndGame(this);
+        }
+    }
+    public void AddMissileLaunched()
+    {
+        _missilesLaunched++;
+        if (_missilesLaunched >= Glob.AmountOfMissilesNeededToWin)
+        {
+            GameInitializer.EndGame(this);
         }
     }
 

@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerCityManager : CityManager
 {
 
+    private bool _isFocusedOnOwnCity = true;
+
     // Use this for initialization
     void Start()
     {
@@ -20,44 +22,81 @@ public class PlayerCityManager : CityManager
 
     public override void HandleTurn(City pCity)
     {
+        City targetCity = pCity;
+        if (currentMode == CurrentMode.MISSILEAIM && _isFocusedOnOwnCity)
+        {
+            targetCity = GameInitializer.GetNextCity(targetCity);
+            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+            _isFocusedOnOwnCity = false;
+            UIHandler.ShowNotification("BOMBS AWAY!"); //TODO: Placeholder text
+        }
+
         //T is for testing, dat doe je met vrienden. U is voor u en mij.
         if (Input.anyKeyDown)
         {
-            //if (Input.GetKeyDown(KeyCode.T))
-            //{
-            //    pCity.CollectFromAllBuildings();
-            //}
-            if (currentMode == CurrentMode.SELECTINGTILE)
+            if (!_isFocusedOnOwnCity)
+            {
+                targetCity = GameInitializer.GetNextCity(targetCity);
+            }
+            if (Input.GetKeyDown(KeyCode.T) && currentMode == CurrentMode.SELECTINGTILE)
+            {
+                if (_isFocusedOnOwnCity)
+                {
+                    targetCity = GameInitializer.GetNextCity(pCity);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime/2);
+                    _isFocusedOnOwnCity = false;
+                } else
+                {
+                    targetCity = pCity;
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime/2);
+                    _isFocusedOnOwnCity = true;
+                }
+            }
+            if (currentMode == CurrentMode.SELECTINGTILE || currentMode == CurrentMode.MISSILEAIM)
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    pCity.ChangeSelectedTile(DirectionKey.RIGHT);
+                    targetCity.ChangeSelectedTile(DirectionKey.RIGHT);
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    pCity.ChangeSelectedTile(DirectionKey.LEFT);
+                    targetCity.ChangeSelectedTile(DirectionKey.LEFT);
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    pCity.ChangeSelectedTile(DirectionKey.UP);
+                    targetCity.ChangeSelectedTile(DirectionKey.UP);
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    pCity.ChangeSelectedTile(DirectionKey.DOWN);
+                    targetCity.ChangeSelectedTile(DirectionKey.DOWN);
                 }
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    if (pCity.GetSelectedTile().GetBuildingOnTile() == null)
+                    if (currentMode == CurrentMode.MISSILEAIM)
                     {
-                        currentMode = CurrentMode.BUILDINGTILE;
-                        pCity.GetSelectedTile().Reset();
-                        GameInitializer.GetUIHandler().ToggleBuildPanel(true);
+                        //TODO: Launch missile
+                        Destroy(targetCity.GetSelectedTile().GetBuildingOnTile().gameObject);
+                        targetCity.GetSelectedTile().SetBuilding(null);
+                        SetCurrentMode(CurrentMode.SELECTINGTILE);
+                        _isFocusedOnOwnCity = true;
+                        targetCity = pCity;
+                        GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+                        pCity.AddMissileLaunched();
+                    }
+                    else if (targetCity.GetSelectedTile().GetBuildingOnTile() == null)
+                    {
+                        if (_isFocusedOnOwnCity)
+                        {
+                            SetCurrentMode(CurrentMode.BUILDINGTILE);
+                            targetCity.GetSelectedTile().Reset();
+                            GameInitializer.GetUIHandler().ToggleBuildPanel(true);
+                        }
                     }
                     else
                     {
-                        currentMode = CurrentMode.EXAMINEMODE;
-                        GameInitializer.GetUIHandler().SetExamineMode(pCity.GetSelectedTile().GetBuildingOnTile());
-                        pCity.GetSelectedTile().Reset();
+                        SetCurrentMode(CurrentMode.EXAMINEMODE);
+                        GameInitializer.GetUIHandler().SetExamineMode(targetCity.GetSelectedTile().GetBuildingOnTile());
+                        targetCity.GetSelectedTile().Reset();
 
                     }
                 }
@@ -83,7 +122,10 @@ public class PlayerCityManager : CityManager
                     {
                         if (GameInitializer.GetBuildingHandler().StartBuilding())
                         {
-                            currentMode = CurrentMode.SELECTINGTILE;
+                            if (currentMode == CurrentMode.BUILDINGTILE)//If nothing changed the current mode
+                            {
+                                SetCurrentMode(CurrentMode.SELECTINGTILE);
+                            }
                             GameInitializer.GetUIHandler().ToggleBuildPanel(false);
                         }
                         else
@@ -97,7 +139,7 @@ public class PlayerCityManager : CityManager
                     if (Input.GetKeyDown(KeyCode.G))
                     {
                         GameInitializer.GetBuildingHandler().DestroyPlacementBuilding();
-                        currentMode = CurrentMode.SELECTINGTILE;
+                        SetCurrentMode(CurrentMode.SELECTINGTILE);
                         GameInitializer.GetUIHandler().ToggleBuildPanel(false);
                     }
                 }
@@ -112,10 +154,10 @@ public class PlayerCityManager : CityManager
                 if (Input.GetKeyDown(KeyCode.G))
                 {
                     GameInitializer.GetUIHandler().ToggleExaminePanel(false);
-                    currentMode = CurrentMode.SELECTINGTILE;
+                    SetCurrentMode(CurrentMode.SELECTINGTILE);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return) && currentMode != CurrentMode.MISSILEAIM)
             {
                 GameInitializer.EndTurn();
                 //Debug.Log(GameInitializer.GetBuildingHandler().GetCurrentCity());

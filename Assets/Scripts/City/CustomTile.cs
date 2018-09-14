@@ -47,20 +47,23 @@ public class CustomTile : MonoBehaviour
     //Resets the tile, so it doesn't get stuck on the blink.
     public void Reset()
     {
-        _materialClone.color = new Color(_materialClone.color.r, _materialClone.color.g, _materialClone.color.b, 1);
+        _materialClone.color = _newBaseMaterial.color;
         _renderer.material = _materialClone;
     }
 
     //TODO: Change colors instead of enable/disabling it.
-    public void InvertColor()
+    public void InvertColor(Color targetColor)
     {
-        if (_materialClone.color.a < 1)
+        if (_materialClone.color != _newBaseMaterial.color)
         {
-            _materialClone.color = new Color(_newBaseMaterial.color.r, _newBaseMaterial.color.g, _newBaseMaterial.color.b, 1);
+            _materialClone.color = _newBaseMaterial.color;
         }
-        else
+        else if (targetColor == new Color(0, 0, 0, 0))
         {
             _materialClone.color = new Color(_newBaseMaterial.color.r, _newBaseMaterial.color.g, _newBaseMaterial.color.b, 0.3f);
+        } else
+        {
+            _materialClone.color = targetColor;
         }
         _renderer.material = _materialClone;
 
@@ -111,10 +114,10 @@ public class CustomTile : MonoBehaviour
         _isHappy = pHappy;
         if (_isHappy)
         {
-            _newBaseMaterial.color = new Color(Glob.happyColor.r, Glob.happyColor.g, Glob.happyColor.b, 1);
+            _newBaseMaterial.color = new Color(Glob.HappyColor.r, Glob.HappyColor.g, Glob.HappyColor.b, 1);
         } else
         {
-            _newBaseMaterial.color = new Color(Glob.unhappyColor.r, Glob.unhappyColor.g, Glob.unhappyColor.b, 1);
+            _newBaseMaterial.color = new Color(Glob.UnhappyColor.r, Glob.UnhappyColor.g, Glob.UnhappyColor.b, 1);
         }
         _materialClone = new Material(_newBaseMaterial);
         _renderer.material = _materialClone;

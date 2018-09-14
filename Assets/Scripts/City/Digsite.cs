@@ -8,7 +8,7 @@ public class Digsite : FunctionBuilding
 
     private const int _cost = 9;
     public ParticleSystem _particle;
-    private const string _description = "This is a dig-site, use it to dig up relics.";
+    private const string _description = "Building one of these will give you a chance to find a relic at the start of your turn. Fill up a museum with 10 relics, and display dominance through tourism!";
     
     public Digsite()
     {
