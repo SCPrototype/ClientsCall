@@ -6,8 +6,9 @@ public class Factory : ProductionBuilding {
 
     private const int _cost = 18;
     private const int _happinessGain = -2;
-    private const int _moneyGain = 4;
+    private const int _moneyGain = 10;
     private const int _range = 1;
+    public int _currentBoost = 0;
     //private ParticleSystem[] _particles = Glob.GetParticleEffects();
     public ParticleSystem _particle;
     
@@ -33,4 +34,14 @@ public class Factory : ProductionBuilding {
 	void Update () {
 		
 	}
+
+    public void AddBoost(int pBoost)
+    {
+        _currentBoost += pBoost;
+    }
+
+    public int GetBoost()
+    {
+        return _currentBoost;
+    }
 }

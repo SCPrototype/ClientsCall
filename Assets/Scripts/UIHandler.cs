@@ -120,16 +120,16 @@ public class UIHandler : MonoBehaviour
     {
         if (pBuilding is ProductionBuilding)
         {
-            ProductionBuilding prodBuilding = Instantiate(pBuilding) as ProductionBuilding;
+            ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
             int[] values = prodBuilding.GetMoneyHappinessRange();
             _buildInfoText.text = "<b>" +prodBuilding.GetType() + "</b>\nBuilding cost:" + prodBuilding.GetCost() + "\nProvides " + values[0] + " income each turn \nProvides " + values[1] + " happiness each turn\nAnd has a range of " + values[2];
-            Destroy(prodBuilding.gameObject);
+      
         }
         if (pBuilding is CollectionBuilding)
         {
-            CollectionBuilding colBuilding = Instantiate(pBuilding) as CollectionBuilding;
+            CollectionBuilding colBuilding = pBuilding as CollectionBuilding;
             _buildInfoText.text = "<b>"+ colBuilding.GetType() + "</b>\nBuilding cost: " + colBuilding.GetCost() + "\nThis building collects resources from nearby buildings.";
-            Destroy(colBuilding.gameObject);
+           
         }
         if (pBuilding is FunctionBuilding)
         {
