@@ -27,10 +27,10 @@ public abstract class ProductionBuilding : Building
         return this;
     }
 
-    public int[] Produce()
+    public float[] Produce()
     {
-        int[] values = new int[2];
-        Building[] buildingsInRange = GetCity().GetBuildingsAroundTile(_tileAffectRange, this.GetBuildingTile());
+        float[] values = new float[2];
+        Building[] buildingsInRange = _myCity.GetBuildingsAroundTile(_tileAffectRange, this.GetBuildingTile());
         foreach (Building pBuilding in buildingsInRange)
         {
             if (pBuilding is CollectionBuilding)
@@ -38,7 +38,7 @@ public abstract class ProductionBuilding : Building
                 CollectionBuilding prodBuilding = pBuilding as CollectionBuilding;
                 StartCoroutine(PlayParticle());
                 //prodBuilding.Collect(_moneyGain, _happinessGain);
-                values[0] += _moneyGain;
+                values[0] += GetIncomeWithMultiplier();
                 values[1] += _happinessGain;
             }
         }
@@ -79,5 +79,22 @@ public abstract class ProductionBuilding : Building
     public int GetRange()
     {
         return _tileAffectRange;
+    }
+
+    public float GetIncomeWithMultiplier()
+    {
+        float value = 0;
+        if (this is Factory)
+        {
+            Factory factory = this as Factory;
+           
+            value = _moneyGain + (factory.GetBoost() * Glob.FactoryIncreasePerUpgruade);
+            
+        } else
+        {
+
+        }
+        Debug.Log(value);
+        return value;
     }
 }

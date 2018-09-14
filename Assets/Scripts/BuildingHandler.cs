@@ -67,10 +67,11 @@ public class BuildingHandler : MonoBehaviour
             //Place the building.
             //Check for building type if there is another building tile near it. If so, upgruade the building to the amount of buildings.
             //Give the other building an index of +1.
-            
-            //placementBuilding = UpgruadeBuilding(placementBuilding);
-            //Debug.Log(placementBuilding.name);
+            placementBuilding = UpgruadeBuilding(placementBuilding);
+
+            if(placementBuilding is Factory)  placementBuilding = Instantiate(placementBuilding);
             placementBuilding.SetBuildingPhase(Building.BuildingPhase.DONE);
+            placementBuilding.SetBuildingTile(currentCity.GetSelectedTile());
             currentCity.GetSelectedTile().SetBuilding(placementBuilding);
             currentCity.BudgetChange(-placementBuilding.GetCost());
             if (placementBuilding is MissileSilo)//TODO: Hard coded spaghett
@@ -89,31 +90,46 @@ public class BuildingHandler : MonoBehaviour
 
     public Building UpgruadeBuilding(Building pBuilding)
     {
-        Building[] buildingsInRange = currentCity.GetBuildingsAroundTile(1, pBuilding.GetBuildingTile());
-        Building placebuilding = null;
-        Factory[] factoriesPrefabs = Glob.GetFactoriesPrefabs();
-        int amountOfFactories = 0;
-        foreach (Building pBuildingFromList in buildingsInRange)
-        {
-            if (pBuildingFromList is Factory)
-            {
-                amountOfFactories++;
-            }
-        }
         if (pBuilding is Factory)
         {
+            Building[] buildingsInRange = currentCity.GetBuildingsAroundTile(1, pBuilding.GetBuildingTile());
+            Factory[] factoriesPrefabs = Glob.GetFactoriesPrefabs();
+            int amountOfFactories = 0;
+            foreach (Building pBuildingFromList in buildingsInRange)
+            {
+                if (pBuildingFromList is Factory)
+                {
+                    amountOfFactories++;
+                    ReplaceFactory(pBuildingFromList as Factory, 1);
+                }
+            }
+
             Factory factoryToPlace;
-            
             if (amountOfFactories > factoriesPrefabs.Length)
             {
                 amountOfFactories = factoriesPrefabs.Length;
             }
             factoryToPlace = factoriesPrefabs[amountOfFactories];
-            placebuilding = factoryToPlace;
+            factoryToPlace = Instantiate(factoryToPlace);
+            factoryToPlace.AddBoost(amountOfFactories);
+            return factoryToPlace;
         }
+        else
+        {
+            return pBuilding;
+        }
+    }
 
-        DestroyPlacementBuilding();
-        return placebuilding;
+    public void ReplaceFactory(Factory pCurrentFactory, int indexChange)
+    {
+        Factory[] factoriesPrefab = Glob.GetFactoriesPrefabs();
+        int boost = pCurrentFactory.GetBoost();
+        Factory newFactory = Instantiate(factoriesPrefab[boost + indexChange]);
+        newFactory.AddBoost(boost + indexChange);
+        newFactory.SetBuildingPhase(Building.BuildingPhase.DONE);
+        newFactory.SetBuildingTile(pCurrentFactory.GetBuildingTile());
+        pCurrentFactory.GetBuildingTile().SetBuilding(newFactory);
+        Destroy(pCurrentFactory.gameObject);
     }
 
     public Building PlaceBuilding(CustomTile pCustomTile)

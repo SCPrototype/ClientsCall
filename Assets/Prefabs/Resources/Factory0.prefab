@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myCity: {fileID: 0}
+  _currentBoost: 0
   _particle: {fileID: 198507740821959614}
 --- !u!198 &198507740821959614
 ParticleSystem:

@@ -20,6 +20,7 @@ public static class Glob {
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
     public const int ChanceToMineRelic = 50;
+    public const float FactoryIncreasePerUpgruade = 0.5f;
 
     public const int AmountOfMissilesNeededToWin = 3;
 

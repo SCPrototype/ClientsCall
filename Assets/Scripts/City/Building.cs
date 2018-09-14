@@ -70,7 +70,10 @@ public abstract class Building : MonoBehaviour
         }
         if (_currentBuildingPhase == BuildingPhase.DONE)
         {
-            _materialClone.color = _material.color;
+            if (_materialClone != null)
+            {
+                _materialClone.color = _material.color;
+            }
         }
         _renderer.material = _materialClone;
     }
