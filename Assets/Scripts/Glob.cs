@@ -10,14 +10,14 @@ public static class Glob {
     public const int CityLength = 7;
     public const int CitySpacing = 50;
     public const float TileSpacing = 0.2f;
-    public const int RandomHouseAmount = 5;
+    public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
     public const int RandomParkAmount = 1;
     public const int StartingBudget = 10;
     public const int BudgetCap = 500;
 
-    public const float TurnDelay = 2.5f;
-    public const float AIEndTurnDelay = 2f;
+    public const float TurnDelay = 0.5f;
+    public const float AIEndTurnDelay = 0.5f;
     public const float AnimationCollection = 0.2f;
 
     public const int AmountOfRelicsNeededToWin = 10;

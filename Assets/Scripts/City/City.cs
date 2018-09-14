@@ -86,6 +86,10 @@ public class City : MonoBehaviour
         }
     }
 
+    public int GetCurrentTurn()
+    {
+        return _currentTurn;
+    }
 
     public CustomTile[,] GetTileMap()
     {
@@ -135,7 +139,16 @@ public class City : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < Glob.RandomHouseAmount; i++)
+        CustomTile targetTile1 = _tileMap[3, 3];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile1, 0);
+
+        CustomTile targetTile2 = _tileMap[4, 3];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile2, 1);
+
+        CustomTile targetTile3 = _tileMap[3, 4];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile3, 2);
+
+        /*for (int i = 0; i < Glob.RandomHouseAmount; i++)
         {
             CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
             if (targetTile.GetBuildingOnTile() == null)
@@ -169,7 +182,7 @@ public class City : MonoBehaviour
             {
                 i--;
             }
-        }
+        }*/
 
         //Sets first tile to active.
         _selectedTile = GetTileAtPosition(0, 0);
@@ -353,6 +366,11 @@ public class City : MonoBehaviour
             GameInitializer.EndGame(this);
         }
     }
+    public int GetRelicAmount()
+    {
+        return _amountOfRelics;
+    }
+
     public void AddMissileLaunched()
     {
         _missilesLaunched++;
