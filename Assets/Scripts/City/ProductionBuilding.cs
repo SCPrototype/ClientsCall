@@ -10,7 +10,12 @@ public abstract class ProductionBuilding : Building
     private int _moneyGain;
     private int _tileAffectRange;
     private ParticleSystem _particle;
+    private SoundHandler _soundHandler;
 
+    void Start()
+    {
+        _soundHandler = GameInitializer.GetSoundHandler();
+    }
 
     public ProductionBuilding()
     {
@@ -19,6 +24,7 @@ public abstract class ProductionBuilding : Building
 
     public ProductionBuilding Initialize(int pCost, int pHappinessGain, int pMoneyGain, int pRange, ParticleSystem pParticle)
     {
+        
         base.Initialize(pCost);
         _happinessGain = pHappinessGain;
         _moneyGain = pMoneyGain;
@@ -47,6 +53,7 @@ public abstract class ProductionBuilding : Building
 
     public IEnumerator PlayParticle()
     {
+        _soundHandler.PlaySound(SoundHandler.Sounds.MONEY);
         _particle.Play();
         ParticleSystem.EmissionModule em = _particle.emission;
         em.enabled = true;

@@ -7,11 +7,12 @@ public class PlayerCityManager : CityManager
 {
 
     private bool _isFocusedOnOwnCity = true;
+    private SoundHandler _soundHandler;
 
     // Use this for initialization
     void Start()
     {
-
+        _soundHandler = GameInitializer.GetSoundHandler();
     }
 
     // Update is called once per frame
@@ -22,6 +23,10 @@ public class PlayerCityManager : CityManager
 
     public override void HandleTurn(City pCity)
     {
+        if (_soundHandler == null)
+        {
+            _soundHandler = GameInitializer.GetSoundHandler();
+        }
         City targetCity = pCity;
         if (currentMode == CurrentMode.MISSILEAIM && _isFocusedOnOwnCity)
         {
@@ -31,7 +36,6 @@ public class PlayerCityManager : CityManager
             UIHandler.ShowNotification("BOMBS AWAY!"); //TODO: Placeholder text
         }
 
-        //T is for testing, dat doe je met vrienden. U is voor u en mij.
         if (Input.anyKeyDown)
         {
             if (!_isFocusedOnOwnCity)
@@ -76,6 +80,7 @@ public class PlayerCityManager : CityManager
                     {
                         if (_isFocusedOnOwnCity)
                         {
+                            _soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
                             SetCurrentMode(CurrentMode.BUILDINGTILE);
                             targetCity.GetSelectedTile().Reset();
                             GameInitializer.GetUIHandler().ToggleBuildPanel(true);
@@ -84,6 +89,8 @@ public class PlayerCityManager : CityManager
                     else if (currentMode == CurrentMode.MISSILEAIM)
                     {
                         //TODO: Launch missile
+                        
+                        _soundHandler.PlaySound(SoundHandler.Sounds.MISSILEHIT);
                         Destroy(targetCity.GetSelectedTile().GetBuildingOnTile().gameObject);
                         targetCity.GetSelectedTile().SetBuilding(null);
                         SetCurrentMode(CurrentMode.SELECTINGTILE);
@@ -109,11 +116,13 @@ public class PlayerCityManager : CityManager
                     if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         //BuildingHandler should probably tell UIHandler what to do.
+                        _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(1);
                         GameInitializer.GetUIHandler().SetActiveBuildingImage(1);
                     }
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
+                        _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(-1);
                         GameInitializer.GetUIHandler().SetActiveBuildingImage(-1);
                     }
@@ -132,6 +141,7 @@ public class PlayerCityManager : CityManager
                         {
                             //TODO
                             //Error, not enough funds.
+                            _soundHandler.PlaySound(SoundHandler.Sounds.ERROR);
                         }
 
                     }

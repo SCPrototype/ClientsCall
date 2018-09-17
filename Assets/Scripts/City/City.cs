@@ -11,20 +11,20 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget;
+    private float _budget = 500;
+    private float _happiness = 100;
     private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
     private int _amountOfRelics;
     private int _missilesLaunched;
+    private SoundHandler _soundHandler;
 
     private int _currentTurn = 1;
 
     public City Initialize(CityManager pManager, int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
-        _budget = Glob.StartingBudget;
-
         _myManager = pManager;
 
         Rows = pRows;
@@ -36,6 +36,7 @@ public class City : MonoBehaviour
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
+        _soundHandler = GameInitializer.GetSoundHandler();
  
         DrawMap(pStartPos);
         return this;
@@ -46,6 +47,7 @@ public class City : MonoBehaviour
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
         _uiHandler.SetResourcesBars((int)_budget);
+        
     }
 
     void Update()
@@ -72,6 +74,7 @@ public class City : MonoBehaviour
                     _collectedThisTurn = true;
                     if (_currentTurn % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager)
                     {
+                        _soundHandler.PlaySound(SoundHandler.Sounds.POPUP);
                         _eventManager.EnableRandomEvent();
                     }
                     _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
@@ -101,6 +104,7 @@ public class City : MonoBehaviour
     }
     public void ChangeSelectedTile(CityManager.DirectionKey pDirection)
     {
+        _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
         _selectedTile.Reset();
         int[] Position = GetTilePosition(_selectedTile);
         switch (pDirection)
@@ -307,6 +311,10 @@ public class City : MonoBehaviour
     {
         return _budget;
     }
+    public float GetHappiness()
+    {
+        return _happiness;
+    }
 
     public void HandleHappiness(CustomTile pTile, bool pHappy)
     {
@@ -370,7 +378,7 @@ public class City : MonoBehaviour
     public float GetScore()
     {
         float score = 0;
-        score += _budget;
+        score += _budget * (1 + (_happiness/25));
         float tileScore = 0;
         Debug.Log("Budget and Happiness score: " + score);
         foreach (CustomTile tile in _tileMap)
