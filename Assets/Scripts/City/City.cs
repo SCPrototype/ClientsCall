@@ -11,20 +11,21 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget = 500;
-    private float _happiness = 100;
+    private float _budget;
     private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
     private int _amountOfRelics;
     private int _missilesLaunched;
-    private SoundHandler _soundHandler;
+    private int _bridgesBuilt;
 
     private int _currentTurn = 1;
 
     public City Initialize(CityManager pManager, int pRows, int pColumns, float pOffset, Vector3 pStartPos)
     {
+        _budget = Glob.StartingBudget;
+
         _myManager = pManager;
 
         Rows = pRows;
@@ -36,7 +37,6 @@ public class City : MonoBehaviour
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
-        _soundHandler = GameInitializer.GetSoundHandler();
  
         DrawMap(pStartPos);
         return this;
@@ -47,7 +47,6 @@ public class City : MonoBehaviour
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
         _uiHandler.SetResourcesBars((int)_budget);
-        
     }
 
     void Update()
@@ -74,7 +73,6 @@ public class City : MonoBehaviour
                     _collectedThisTurn = true;
                     if (_currentTurn % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager)
                     {
-                        _soundHandler.PlaySound(SoundHandler.Sounds.POPUP);
                         _eventManager.EnableRandomEvent();
                     }
                     _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
@@ -89,6 +87,10 @@ public class City : MonoBehaviour
         }
     }
 
+    public int GetCurrentTurn()
+    {
+        return _currentTurn;
+    }
 
     public CustomTile[,] GetTileMap()
     {
@@ -104,7 +106,6 @@ public class City : MonoBehaviour
     }
     public void ChangeSelectedTile(CityManager.DirectionKey pDirection)
     {
-        _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
         _selectedTile.Reset();
         int[] Position = GetTilePosition(_selectedTile);
         switch (pDirection)
@@ -139,7 +140,16 @@ public class City : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < Glob.RandomHouseAmount; i++)
+        CustomTile targetTile1 = _tileMap[3, 3];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile1, 0);
+
+        CustomTile targetTile2 = _tileMap[4, 3];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile2, 1);
+
+        CustomTile targetTile3 = _tileMap[3, 4];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile3, 2);
+
+        /*for (int i = 0; i < Glob.RandomHouseAmount; i++)
         {
             CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
             if (targetTile.GetBuildingOnTile() == null)
@@ -173,7 +183,7 @@ public class City : MonoBehaviour
             {
                 i--;
             }
-        }
+        }*/
 
         //Sets first tile to active.
         _selectedTile = GetTileAtPosition(0, 0);
@@ -311,10 +321,6 @@ public class City : MonoBehaviour
     {
         return _budget;
     }
-    public float GetHappiness()
-    {
-        return _happiness;
-    }
 
     public void HandleHappiness(CustomTile pTile, bool pHappy)
     {
@@ -361,6 +367,11 @@ public class City : MonoBehaviour
             GameInitializer.EndGame(this);
         }
     }
+    public int GetRelicAmount()
+    {
+        return _amountOfRelics;
+    }
+
     public void AddMissileLaunched()
     {
         _missilesLaunched++;
@@ -375,10 +386,24 @@ public class City : MonoBehaviour
         }
     }
 
+    public void AddBridgeBuilt()
+    {
+        _bridgesBuilt++;
+
+        if (_bridgesBuilt >= Glob.AmountOfBridgesNeededToWin)
+        {
+            GameInitializer.EndGame(this);
+        }
+    }
+    public int GetBridgesBuilt()
+    {
+        return _bridgesBuilt;
+    }
+
     public float GetScore()
     {
         float score = 0;
-        score += _budget * (1 + (_happiness/25));
+        score += _budget;
         float tileScore = 0;
         Debug.Log("Budget and Happiness score: " + score);
         foreach (CustomTile tile in _tileMap)

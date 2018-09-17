@@ -9,6 +9,10 @@ public class AICityManager : CityManager {
     private bool _turnEnded = false;
     private float _turnEndTime;
 
+    private bool _isFocusedOnOwnCity = true;
+
+    private float _prevBuild = 0;
+
     private int _minimalHappiness = 0;
     private int _animosity; //High animosity = aggressive
     //99-85 animosity = missiles
@@ -45,6 +49,7 @@ public class AICityManager : CityManager {
         {
             _initialFocus = AIFocus.Digsites;
             _myFocus = AIFocus.Missiles;
+            _animosity = 99;
         }
         Debug.Log(_animosity);
     }
@@ -77,25 +82,48 @@ public class AICityManager : CityManager {
     {
         if (!_turnEnded)
         {
-            if (_buildings == null)
+            if (Time.time - _prevBuild >= Glob.AIBuildDelay)
             {
-                _buildings = Glob.GetBuildingPrefabs();
-            }
+                if (_buildings == null)
+                {
+                    _buildings = Glob.GetBuildingPrefabs();
+                }
 
-            Move myMove = getMove(pCity);
+                City targetCity = pCity;
+                _prevBuild = Time.time;
 
-            pCity.SetSelectedTile(myMove._tile);
+                if (currentMode == CurrentMode.MISSILEAIM)
+                {
+                    targetCity = GameInitializer.GetNextCity(pCity);
+                    launchMissile(getBestFactory(targetCity));
+                    targetCity = pCity;
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+                    pCity.AddMissileLaunched();
+                    return;
+                }
+                Move myMove = getMove(pCity, 50, pCity.GetCurrentTurn());
 
-            //Select the tile
-            pCity.GetSelectedTile().Reset();
+                pCity.SetSelectedTile(myMove._tile);
 
-            GameInitializer.GetBuildingHandler().ChangeBuildingSelection(myMove._building);
+                //Select the tile
+                pCity.GetSelectedTile().Reset();
 
-            GameInitializer.GetBuildingHandler().StartBuilding();
-            if (pCity.GetBudget() < 20)
-            {
-                _turnEnded = true;
-                _turnEndTime = Time.time;
+                GameInitializer.GetBuildingHandler().ChangeBuildingSelection(myMove._building);
+
+                GameInitializer.GetBuildingHandler().StartBuilding();
+                if (pCity.GetBudget() < 20 && currentMode != CurrentMode.MISSILEAIM)
+                {
+                    _turnEnded = true;
+                    _turnEndTime = Time.time;
+                }
+                else if (currentMode == CurrentMode.MISSILEAIM)
+                {
+                    targetCity = GameInitializer.GetNextCity(pCity);
+
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+                    targetCity.SetSelectedTile(getBestFactory(targetCity));
+                    _prevBuild = Time.time + Glob.AIMissileDelay;
+                }
             }
         }
         else if (Time.time - _turnEndTime >= Glob.AIEndTurnDelay)
@@ -123,7 +151,49 @@ public class AICityManager : CityManager {
         }
     }
 
-    private Move getMove(City pCity, int optimalChance = 75, int subOptimalDiff = 2)
+    private CustomTile getBestFactory(City pCity)
+    {
+        _isFocusedOnOwnCity = false;
+        UIHandler.ShowNotification("BOMBS AWAY!"); //TODO: Placeholder text
+        CustomTile[,] enemyCity = pCity.GetTileMap();
+        float bestMoveValue = -50;
+        int bestMoveX = -1;
+        int bestMoveY = -1;
+        for (int x = 0; x < enemyCity.GetLength(0); x++)
+        {
+            for (int y = 0; y < enemyCity.GetLength(1); y++)
+            {
+                if (enemyCity[x, y].GetBuildingOnTile() is Factory)
+                {
+                    float moveValue = GetTileValue(enemyCity[x, y]);
+                    Debug.Log(moveValue);
+                    if (moveValue >= bestMoveValue)
+                    {
+                        bestMoveValue = moveValue;
+                        bestMoveX = x;
+                        bestMoveY = y;
+                    }
+                }
+            }
+        }
+
+        return enemyCity[bestMoveX, bestMoveY];
+    }
+
+    private void launchMissile(CustomTile pTarget)
+    {
+        City targetCity = pTarget.GetCity();
+        
+
+        Destroy(pTarget.GetBuildingOnTile().gameObject);
+        Debug.Log("Destroyed the building");
+        pTarget.SetBuilding(null);
+
+        SetCurrentMode(CurrentMode.SELECTINGTILE);
+        _isFocusedOnOwnCity = true;
+    }
+
+    private Move getMove(City pCity, int optimalChance = 65, int subOptimalDiff = 1)
     {
         CustomTile[,] grid = pCity.GetTileMap();
         Move optimalMove = new Move(grid[0,0], _buildings[0], -50);
@@ -142,19 +212,84 @@ public class AICityManager : CityManager {
                         if (_buildings[k].GetCost() <= pCity.GetBudget())
                         {
                             currentMove._building = _buildings[k];
-                            if (_buildings[k] is MissileSilo && _myFocus == AIFocus.Missiles)
+                            if (_myFocus == AIFocus.Bridge)
                             {
-                                currentMove._value = 50; //TODO: Balance this value
+                                //TODO: Build bridge.
                             }
-                            else if (_buildings[k] is Digsite && _myFocus == AIFocus.Digsites)
+                            else if (currentMove._building is MissileSilo && _myFocus == AIFocus.Missiles)
                             {
-                                currentMove._value = 50;//TODO: Balance this value
+                                currentMove._value = 150; //TODO: Balance this value
                             }
-                            else if (_buildings[k] is Park && _myFocus == AIFocus.Wonder)
+                            else if (currentMove._building is Digsite && _myFocus == AIFocus.Digsites)
                             {
-                                currentMove._value = 50;//TODO: Check for multiple bordering houses.
+                                currentMove._value = -currentMove._building.GetCost() + pCity.GetBudget()/5;
+                                Building[] closeBuildings = pCity.GetBuildingsAroundTile(1, currentMove._tile);
+                                for (int l = 0; l < closeBuildings.Length; l++)
+                                {
+                                    if (closeBuildings[l] is House)
+                                    {
+                                        currentMove._value += 0.01f;
+                                    }
+                                    else if (closeBuildings[l] is Digsite)
+                                    {
+                                        currentMove._value += 0.02f;
+                                    }
+                                }
+                                currentMove._value += pCity.GetRelicAmount() * 5;
                             }
-                            currentMove._value = getMoveValue(currentMove._tile, currentMove._building);
+                            else if (_myFocus == AIFocus.Wonder && (currentMove._building is Park || currentMove._building is House || currentMove._building is Wonder))
+                            {
+                                Building[] closeBuildings = pCity.GetBuildingsAroundTile(1, currentMove._tile);
+                                if (currentMove._building is Park)
+                                {
+                                    currentMove._value = -currentMove._building.GetCost() + pCity.GetBudget() / 10;
+                                    foreach (Building building in closeBuildings)
+                                    {
+                                        if (building is House)
+                                        {
+                                            currentMove._value += 25;
+                                            Building[] closeToHouse = pCity.GetBuildingsAroundTile(1, building.GetBuildingTile());
+                                            for (int l = 0; l < closeToHouse.Length; l++)
+                                            {
+                                                if (closeToHouse[l] is Park)
+                                                {
+                                                    currentMove._value -= 25;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (currentMove._building is House)
+                                {
+                                    currentMove._value = getMoveValue(currentMove._tile, currentMove._building);
+                                    foreach (Building building in closeBuildings)
+                                    {
+                                        if (building is Park)
+                                        {
+                                            currentMove._value += 5;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (currentMove._building is Wonder)
+                                {
+                                    if (pCity.GetHappyHouseAmount() >= Glob.WonderHappyHouseReq)
+                                    {
+                                        currentMove._value = 100000;
+                                    }
+                                    else
+                                    {
+                                        currentMove._value = -50;
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                currentMove._value = getMoveValue(currentMove._tile, currentMove._building);
+                            }
+
                             if (currentMove._value > subOptimalMove._value && currentMove._value < optimalMove._value - subOptimalDiff)
                             {
                                 subOptimalMove._tile = currentMove._tile; //Overwrite the sub-optimal move with the current one.
@@ -174,11 +309,12 @@ public class AICityManager : CityManager {
         }
 
         int rnd = UnityEngine.Random.Range(0, 100);
-        if (rnd < optimalChance || subOptimalMove._value < 0)
+        if (rnd < optimalChance || subOptimalMove._value < 0 || optimalMove._value >= 50000)
         {
             return optimalMove;
         } else
         {
+            Debug.Log("SUB-OPTIMAL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return subOptimalMove;
         }
     }
@@ -199,6 +335,11 @@ public class AICityManager : CityManager {
             happinessValue += prodBuilding.GetHappinessGain();
             moneyValue += prodBuilding.GetMoneyGain();
             collectionValue = 0;
+        }
+
+        if (pBuilding is FunctionBuilding)
+        {
+            return -50;
         }
 
         Building[] buildingsInRange = tileCity.GetBuildingsAroundTile(1, pTile);
