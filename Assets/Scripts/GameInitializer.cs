@@ -12,7 +12,7 @@ public class GameInitializer : MonoBehaviour {
     private static CameraManager _cameraManager;
     private static SoundHandler _soundHandler;
 
-    private static bool _hardModeEnabled = false;
+    public static bool HardModeEnabled = false;
 
     private static bool _isPaused = false;
 
@@ -33,7 +33,7 @@ public class GameInitializer : MonoBehaviour {
         _allCities[0] = _playerCity;
         for (int i = 1; i < Glob.AmountOfAICities+1; i++)
         {
-            if (_hardModeEnabled)
+            if (HardModeEnabled)
             {
                 _allCities[i] = new GameObject("AICity" + i).AddComponent<City>().Initialize(new AICityManager(Glob.HardAIDifficulty), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(Glob.CitySpacing * i, 0, 0));
             }
@@ -43,6 +43,8 @@ public class GameInitializer : MonoBehaviour {
             }
         }
         _buildHandler.SetCurrentCity(_allCities[0]);
+
+        Tutorial _tut = new GameObject("Tutorial").AddComponent<Tutorial>();
     }
 	
 	// Update is called once per frame

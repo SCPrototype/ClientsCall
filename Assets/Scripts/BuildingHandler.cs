@@ -76,9 +76,9 @@ public class BuildingHandler : MonoBehaviour
                 }
             }
             //Place the building.
-            //Check for building type if there is another building tile near it. If so, upgruade the building to the amount of buildings.
+            //Check for building type if there is another building tile near it. If so, upgrade the building to the amount of buildings.
             //Give the other building an index of +1.
-            placementBuilding = UpgruadeBuilding(placementBuilding);
+            placementBuilding = UpgradeBuilding(placementBuilding);
 
             if(placementBuilding is Factory)  placementBuilding = Instantiate(placementBuilding);
             placementBuilding.SetBuildingPhase(Building.BuildingPhase.DONE);
@@ -101,7 +101,7 @@ public class BuildingHandler : MonoBehaviour
         }
     }
 
-    public Building UpgruadeBuilding(Building pBuilding)
+    public Building UpgradeBuilding(Building pBuilding)
     {
         if (pBuilding is Factory)
         {

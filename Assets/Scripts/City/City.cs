@@ -87,6 +87,10 @@ public class City : MonoBehaviour
             _collectedThisTurn = false;
             _currentTurn++;
         }
+        else if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && !GameInitializer.GetBuildingHandler().IsReadyToBuild())
+        {
+            _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
+        }
     }
 
     public int GetCurrentTurn()
@@ -143,50 +147,20 @@ public class City : MonoBehaviour
             }
         }
 
-        CustomTile targetTile1 = _tileMap[3, 3];
-        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile1, 0);
-
-        CustomTile targetTile2 = _tileMap[4, 3];
-        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile2, 1);
-
-        CustomTile targetTile3 = _tileMap[3, 4];
-        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile3, 2);
-
-        /*for (int i = 0; i < Glob.RandomHouseAmount; i++)
+        if (_myManager is AICityManager)
         {
-            CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
-            if (targetTile.GetBuildingOnTile() == null)
-            {
-                GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 0);
-            } else
-            {
-                i--;
-            }
+            CustomTile targetTile1 = _tileMap[3, 4];
+            GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile1, 0);
+
+            CustomTile targetTile2 = _tileMap[3, 3];
+            GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile2, 1);
+
+            CustomTile targetTile3 = _tileMap[4, 4];
+            GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile3, 2);
+
+            _budget = 10;
         }
-        for (int i = 0; i < Glob.RandomFactoryAmount; i++)
-        {
-            CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
-            if (targetTile.GetBuildingOnTile() == null)
-            {
-                GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 1);
-            }
-            else
-            {
-                i--;
-            }
-        }
-        for (int i = 0; i < Glob.RandomParkAmount; i++)
-        {
-            CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
-            if (targetTile.GetBuildingOnTile() == null)
-            {
-                GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile, 2);
-            }
-            else
-            {
-                i--;
-            }
-        }*/
+
 
         //Sets first tile to active.
         _selectedTile = GetTileAtPosition(0, 0);
@@ -426,5 +400,11 @@ public class City : MonoBehaviour
     public CityManager GetManager()
     {
         return _myManager;
+    }
+
+    public void HighlightTile(int pX, int pY)
+    {
+        //TODO: Highlight tile
+        //_tileMap[pX,pY].SetHighlighted();
     }
 }

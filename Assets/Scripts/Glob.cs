@@ -13,18 +13,21 @@ public static class Glob {
     public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
     public const int RandomParkAmount = 1;
-    public const int StartingBudget = 10;
+    public const int StartingBudget = 140;
     public const int BudgetCap = 500;
     public const float FactoryProductionMultiplier = 0.05f;
 
     public const int EasyAIDifficulty = 50;
     public const int HardAIDifficulty = 85;
 
-    public const float TurnDelay = 0.5f;
+    public const float TurnDelay = 2.5f;
     public const float AIEndTurnDelay = 0.5f;
     public const float AIBuildDelay = 0.5f;
     public const float AIMissileDelay = 1.5f;
     public const float AnimationCollection = 0.2f;
+
+    public const float CameraCitySwitchTime = 2f;
+    public static Vector3 CameraOffset = new Vector3(3, 31, -10);
 
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
@@ -38,9 +41,6 @@ public static class Glob {
     public const int WonderHappyHouseReq = 17;
 
     public const int AmountOfBridgesNeededToWin = 1;
-
-    public const float CameraCitySwitchTime = 2f;
-    public static Vector3 CameraOffset = new Vector3(3, 31, -10);
 
     public const int TurnAmount = 16;
     public const int EventTurnInterval = 4;
