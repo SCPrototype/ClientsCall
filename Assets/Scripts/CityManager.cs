@@ -60,21 +60,21 @@ public abstract class CityManager : MonoBehaviour {
                 {
                     //If this move places a collection building next to a production building, add value to the move.
                     ProductionBuilding prodBuilding = b as ProductionBuilding;
-                    happinessValue += prodBuilding.GetHappinessGain(); //TODO: Make sure the 5% multipliers for neighbouring production buildings is included here.
+                    happinessValue += prodBuilding.GetHappinessGain();
                     moneyValue += prodBuilding.GetMoneyGain();
                 }
                 else if (pBuilding.GetType() == b.GetType())
                 {
                     ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
-                    happinessValue += prodBuilding.GetHappinessGain() * 0.05f; //TODO: Store this multiplier value in the glob.
-                    moneyValue += prodBuilding.GetMoneyGain() * 0.05f; //If a production building is placed next to a production building of the same type, add value to the move.
+                    happinessValue += prodBuilding.GetHappinessGain() * Glob.FactoryProductionMultiplier;
+                    moneyValue += prodBuilding.GetMoneyGain() * Glob.FactoryProductionMultiplier; //If a production building is placed next to a production building of the same type, add value to the move.
                 }
                 else
                 {
                     //If a production building is placed next to a production building of a different type, subtract value from the move.
                     ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
-                    happinessValue -= prodBuilding.GetHappinessGain() * 0.05f; //TODO: Store this multiplier value in the glob.
-                    moneyValue -= prodBuilding.GetMoneyGain() * 0.05f;
+                    happinessValue -= prodBuilding.GetHappinessGain() * Glob.FactoryProductionMultiplier;
+                    moneyValue -= prodBuilding.GetMoneyGain() * Glob.FactoryProductionMultiplier;
                 }
             }
         }

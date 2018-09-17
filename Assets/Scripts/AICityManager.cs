@@ -9,11 +9,12 @@ public class AICityManager : CityManager {
     private bool _turnEnded = false;
     private float _turnEndTime;
 
+    private int _difficulty;
+
     private bool _isFocusedOnOwnCity = true;
 
     private float _prevBuild = 0;
 
-    private int _minimalHappiness = 0;
     private int _animosity; //High animosity = aggressive
     //99-85 animosity = missiles
     //84-55 animosity = digsites
@@ -30,22 +31,27 @@ public class AICityManager : CityManager {
     private AIFocus _initialFocus = AIFocus.Wonder;
     private AIFocus _myFocus = AIFocus.Wonder;
 
-    public AICityManager (int pMinHappiness)
+    public AICityManager (int pDifficulty = 50, int pAnimosity = 0)
     {
-        _minimalHappiness = pMinHappiness;
-        _animosity = UnityEngine.Random.Range(25, 90); //Starting animosity decides wether the AI will focus on digsites, a wonder, or missiles. Will only change to a bridge if affected by player. Chances for each option: 30, 30, 5 = ~(46.25%, 46.25%, 7.5%)
+        _difficulty = pDifficulty;
+
+        if (pAnimosity == 0)
+        {
+            pAnimosity = UnityEngine.Random.Range(43, 55);
+        }
+        _animosity = pAnimosity; //Starting animosity decides wether the AI will focus on digsites, a wonder, or missiles. Will only change to a bridge if affected by player. Chances for each option: 6, 6, 1 = ~(46.25%, 46.25%, 7.5%)
         //If animosity drops below missiles range, change focus to digsites or wonder (whichever is cheapest).
-        if (_animosity < 55)
+        if (_animosity < 49)
         {
             _initialFocus = AIFocus.Wonder;
             _myFocus = AIFocus.Wonder;
         }
-        else if (_animosity < 85)
+        else if (_animosity < 54)
         {
             _initialFocus = AIFocus.Digsites;
             _myFocus = AIFocus.Digsites;
         }
-        else if (_animosity < 90)
+        else if (_animosity < 55)
         {
             _initialFocus = AIFocus.Digsites;
             _myFocus = AIFocus.Missiles;
@@ -101,7 +107,7 @@ public class AICityManager : CityManager {
                     pCity.AddMissileLaunched();
                     return;
                 }
-                Move myMove = getMove(pCity, 50, pCity.GetCurrentTurn());
+                Move myMove = getMove(pCity, _difficulty, pCity.GetCurrentTurn());
 
                 pCity.SetSelectedTile(myMove._tile);
 
@@ -133,15 +139,15 @@ public class AICityManager : CityManager {
         }
     }
 
-    public void ChangeAnimosity(int pAnimo)
+    public void ChangeAnimosity(int pAnimo, City pCity)
     {
         _animosity = Mathf.Clamp(_animosity + pAnimo, 0, 100);
         Debug.Log("New animosity: " + _animosity);
-        if (_animosity <= 0)
+        if (_animosity <= 0 && pCity.GetBridgesBuilt() < Glob.AmountOfBridgesNeededToWin)
         {
             _myFocus = AIFocus.Bridge;
         }
-        else if (_animosity < 85)
+        else if (_animosity < 56)
         {
             _myFocus = _initialFocus;
         }
@@ -212,9 +218,10 @@ public class AICityManager : CityManager {
                         if (_buildings[k].GetCost() <= pCity.GetBudget())
                         {
                             currentMove._building = _buildings[k];
-                            if (_myFocus == AIFocus.Bridge)
+                            if (currentMove._building is Bridge && _myFocus == AIFocus.Bridge && pCity.GetBridgesBuilt() < Glob.AmountOfBridgesNeededToWin)
                             {
-                                //TODO: Build bridge.
+                                currentMove._value = 100000; //After building part of the bridge, switch focus to initial focus, just in case the player doesn't finish the bridge.
+                                _myFocus = _initialFocus;
                             }
                             else if (currentMove._building is MissileSilo && _myFocus == AIFocus.Missiles)
                             {
@@ -309,6 +316,7 @@ public class AICityManager : CityManager {
         }
 
         int rnd = UnityEngine.Random.Range(0, 100);
+        Debug.Log(optimalMove._value + " _ " + subOptimalMove._value);
         if (rnd < optimalChance || subOptimalMove._value < 0 || optimalMove._value >= 50000)
         {
             return optimalMove;
@@ -356,20 +364,20 @@ public class AICityManager : CityManager {
                 {
                     //If this move places a collection building next to a production building, add value to the move.
                     ProductionBuilding prodBuilding = b as ProductionBuilding;
-                    happinessValue += prodBuilding.GetHappinessGain(); //TODO: Make sure the 5% multipliers for neighbouring production buildings is included here.
+                    happinessValue += prodBuilding.GetHappinessGain();
                     moneyValue += prodBuilding.GetMoneyGain();
                 }
                 else if (pBuilding.GetType() == b.GetType())
                 {
                     ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
-                    happinessValue += prodBuilding.GetHappinessGain() * 0.05f; //TODO: Store this multiplier value in the glob.
-                    moneyValue += prodBuilding.GetMoneyGain() * 0.05f; //If a production building is placed next to a production building of the same type, add value to the move.
+                    happinessValue += prodBuilding.GetHappinessGain() * Glob.FactoryProductionMultiplier;
+                    moneyValue += prodBuilding.GetMoneyGain() * Glob.FactoryProductionMultiplier; //If a production building is placed next to a production building of the same type, add value to the move.
                 } else
                 {
                     //If a production building is placed next to a production building of a different type, subtract value from the move.
                     ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
-                    happinessValue -= prodBuilding.GetHappinessGain() * 0.05f; //TODO: Store this multiplier value in the glob.
-                    moneyValue -= prodBuilding.GetMoneyGain() * 0.05f;
+                    happinessValue -= prodBuilding.GetHappinessGain() * Glob.FactoryProductionMultiplier;
+                    moneyValue -= prodBuilding.GetMoneyGain() * Glob.FactoryProductionMultiplier;
                 }
             }
         }

@@ -94,7 +94,7 @@ public abstract class ProductionBuilding : Building
         {
             Factory factory = this as Factory;
            
-            value = _moneyGain + (factory.GetBoost() * Glob.FactoryIncreasePerUpgruade);
+            value = _moneyGain + (factory.GetBoost() * Glob.FactoryProductionMultiplier);
             
         } else
         {

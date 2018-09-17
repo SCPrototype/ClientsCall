@@ -71,7 +71,6 @@ public class BuildingHandler : MonoBehaviour
             {
                 if (currentCity.GetHappyHouseAmount() < Glob.WonderHappyHouseReq)
                 {
-                    //TODO: Give player info about needing more happy houses.
                     UIHandler.ShowNotification("The inhabitants are preventing your workers from building this. They don't want you 'wasting' money on this, instead of making them happy. Try building some parks next to houses first.");
                     return false;
                 }
@@ -86,7 +85,7 @@ public class BuildingHandler : MonoBehaviour
             placementBuilding.SetBuildingTile(currentCity.GetSelectedTile());
             currentCity.GetSelectedTile().SetBuilding(placementBuilding);
             currentCity.BudgetChange(-placementBuilding.GetCost());
-            if (placementBuilding is MissileSilo || placementBuilding is Wonder)//TODO: Hard coded spaghett
+            if (placementBuilding is MissileSilo || placementBuilding is Wonder || placementBuilding is Bridge)
             {
                 FunctionBuilding building = placementBuilding as FunctionBuilding;
                 building.DoAction();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bridge : FunctionBuilding {
 
-    private const int _cost = 50;
+    private const int _cost = 150;
     private const string _description = "These workers will build a bridge across the river, but the enemy won't allow us to build on their side. Try to convince the enemy by increasing the happiness of your city.";
 
     public Bridge()
@@ -25,6 +25,7 @@ public class Bridge : FunctionBuilding {
 
     public override void DoAction()
     {
+        GetCity().AddBridgeBuilt();
         //TODO: Build a bridge.
     }
 }

@@ -15,6 +15,10 @@ public static class Glob {
     public const int RandomParkAmount = 1;
     public const int StartingBudget = 10;
     public const int BudgetCap = 500;
+    public const float FactoryProductionMultiplier = 0.05f;
+
+    public const int EasyAIDifficulty = 50;
+    public const int HardAIDifficulty = 85;
 
     public const float TurnDelay = 0.5f;
     public const float AIEndTurnDelay = 0.5f;
@@ -25,16 +29,15 @@ public static class Glob {
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
     public const int ChanceToMineRelic = 50;
-    public const float FactoryIncreasePerUpgruade = 0.5f;
 
     public const int AmountOfMissilesNeededToWin = 3;
     public const int MissileAnimosityChange = 75; //out of 100
 
-    public const float HappyHouseAnimosityChange = 1; //out of 100
+    public const float HappyHouseAnimosityChange = 2f; //out of 100
 
-    public const int WonderHappyHouseReq = 11;
+    public const int WonderHappyHouseReq = 17;
 
-    public const int AmountOfBridgesNeededToWin = 3;
+    public const int AmountOfBridgesNeededToWin = 1;
 
     public const float CameraCitySwitchTime = 2f;
     public static Vector3 CameraOffset = new Vector3(3, 31, -10);
