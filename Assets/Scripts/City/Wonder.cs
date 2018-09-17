@@ -26,6 +26,6 @@ public class Wonder : FunctionBuilding {
 
     public override void DoAction()
     {
-        GameInitializer.EndGame(GetCity());
+        GameInitializer.EndGame(false, GetCity());
     }
 }

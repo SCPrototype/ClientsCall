@@ -70,7 +70,7 @@ public class City : MonoBehaviour
                     if (_myManager is PlayerCityManager)
                     {
                         AICityManager AICity = GameInitializer.GetNextCity(this).GetManager() as AICityManager;
-                        AICity.ChangeAnimosity(-Mathf.RoundToInt(GetHappyHouseAmount() * Glob.HappyHouseAnimosityChange));
+                        AICity.ChangeAnimosity(-Mathf.RoundToInt(GetHappyHouseAmount() * Glob.HappyHouseAnimosityChange), GameInitializer.GetNextCity(this));
                     }
                     _collectedThisTurn = true;
                     if (_currentTurn % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager)
@@ -296,7 +296,7 @@ public class City : MonoBehaviour
     public void BudgetChange(int pChange)
     {
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
-        _budget += pChange;
+        _budget = Mathf.Clamp(_budget + pChange, 0, Glob.BudgetCap);
         //softcap for now.
 
         _uiHandler.SetResourcesBars((int)_budget);
@@ -367,7 +367,7 @@ public class City : MonoBehaviour
         _amountOfRelics++;
         if(_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
         {
-            GameInitializer.EndGame(this);
+            GameInitializer.EndGame(false, this);
         }
     }
     public int GetRelicAmount()
@@ -381,11 +381,11 @@ public class City : MonoBehaviour
         if (_myManager is PlayerCityManager)
         {
             AICityManager AICity = GameInitializer.GetNextCity(this).GetManager() as AICityManager;
-            AICity.ChangeAnimosity(50);
+            AICity.ChangeAnimosity(50, GameInitializer.GetNextCity(this));
         }
         if (_missilesLaunched >= Glob.AmountOfMissilesNeededToWin)
         {
-            GameInitializer.EndGame(this);
+            GameInitializer.EndGame(false, this);
         }
     }
 
@@ -395,7 +395,10 @@ public class City : MonoBehaviour
 
         if (_bridgesBuilt >= Glob.AmountOfBridgesNeededToWin)
         {
-            GameInitializer.EndGame(this);
+            if (GameInitializer.GetNextCity(this).GetBridgesBuilt() >= Glob.AmountOfBridgesNeededToWin)
+            {
+                GameInitializer.EndGame(true); //TODO: Make both cities win.
+            }
         }
     }
     public int GetBridgesBuilt()

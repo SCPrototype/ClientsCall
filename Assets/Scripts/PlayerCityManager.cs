@@ -88,8 +88,6 @@ public class PlayerCityManager : CityManager
                     }
                     else if (currentMode == CurrentMode.MISSILEAIM)
                     {
-                        //TODO: Launch missile
-                        
                         _soundHandler.PlaySound(SoundHandler.Sounds.MISSILEHIT);
                         Destroy(targetCity.GetSelectedTile().GetBuildingOnTile().gameObject);
                         targetCity.GetSelectedTile().SetBuilding(null);
@@ -139,8 +137,6 @@ public class PlayerCityManager : CityManager
                         }
                         else
                         {
-                            //TODO
-                            //Error, not enough funds.
                             _soundHandler.PlaySound(SoundHandler.Sounds.ERROR);
                         }
 

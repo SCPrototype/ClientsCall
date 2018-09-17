@@ -12,6 +12,8 @@ public class GameInitializer : MonoBehaviour {
     private static CameraManager _cameraManager;
     private static SoundHandler _soundHandler;
 
+    private static bool _hardModeEnabled = false;
+
     private static bool _isPaused = false;
 
     public static void ResetGame()
@@ -31,7 +33,14 @@ public class GameInitializer : MonoBehaviour {
         _allCities[0] = _playerCity;
         for (int i = 1; i < Glob.AmountOfAICities+1; i++)
         {
-            _allCities[i] = new GameObject("AICity" + i).AddComponent<City>().Initialize(new AICityManager(Random.Range(0, 100)), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(Glob.CitySpacing * i, 0, 0));
+            if (_hardModeEnabled)
+            {
+                _allCities[i] = new GameObject("AICity" + i).AddComponent<City>().Initialize(new AICityManager(Glob.HardAIDifficulty), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(Glob.CitySpacing * i, 0, 0));
+            }
+            else
+            {
+                _allCities[i] = new GameObject("AICity" + i).AddComponent<City>().Initialize(new AICityManager(Glob.EasyAIDifficulty), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(Glob.CitySpacing * i, 0, 0));
+            }
         }
         _buildHandler.SetCurrentCity(_allCities[0]);
     }
@@ -83,23 +92,30 @@ public class GameInitializer : MonoBehaviour {
         _gameUIHandler.ToggleExaminePanel(false);
     }
 
-    public static void EndGame(City pWinner = null)
+    public static void EndGame(bool pBothWin = false, City pWinner = null)
     {
         _isPaused = true;
-        if (pWinner == null)
+        if (pWinner == null && !pBothWin)
         {
             pWinner = calculateWinner();
         }
-        if (pWinner == _allCities[0])
+
+        if (pBothWin)
+        {
+            _soundHandler.PlaySound(SoundHandler.Sounds.WIN);
+            UIHandler.ShowNotification("Through the combined effort on building the bridge, both cities win!");
+            return;
+        }
+        else if (pWinner == _allCities[0])
         {
             _soundHandler.PlaySound(SoundHandler.Sounds.WIN);
         }
-        else
+        else if (pWinner == _allCities[1])
         {
             _soundHandler.PlaySound(SoundHandler.Sounds.LOSE);
         }
 
-        UIHandler.ShowNotification("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!");
+        UIHandler.ShowNotification("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!"); //TODO: Correct win message.
         Debug.Log("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!");
     }
 
