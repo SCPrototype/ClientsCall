@@ -10,6 +10,7 @@ public class GameInitializer : MonoBehaviour {
     private static BuildingHandler _buildHandler;
     private static UIHandler _gameUIHandler;
     private static CameraManager _cameraManager;
+    private static SoundHandler _soundHandler;
 
     private static bool _isPaused = false;
 
@@ -24,6 +25,7 @@ public class GameInitializer : MonoBehaviour {
         _cameraManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
         _buildHandler = new GameObject("BuildingHandler").AddComponent<BuildingHandler>();
         _gameUIHandler = Instantiate((Resources.Load(Glob.UIPrefab) as GameObject).GetComponent<UIHandler>());
+        _soundHandler = new GameObject("SoundHandler").AddComponent<SoundHandler>();
         _allCities = new City[Glob.AmountOfAICities + 1];
         _playerCity = new GameObject("PlayerCity").AddComponent<City>().Initialize(new PlayerCityManager(), Glob.CityWidth, Glob.CityLength, Glob.TileSpacing, new Vector3(0, 0, 0));
         _allCities[0] = _playerCity;
@@ -62,8 +64,14 @@ public class GameInitializer : MonoBehaviour {
         return null;
     }
 
+    public static SoundHandler GetSoundHandler()
+    {
+        return _soundHandler;
+    }
+
     public static void EndTurn()
     {
+        _soundHandler.PlaySound(SoundHandler.Sounds.ENDTURN);
         _currentCity++;
         if (_currentCity >= _allCities.Length)
         {
@@ -81,6 +89,14 @@ public class GameInitializer : MonoBehaviour {
         if (pWinner == null)
         {
             pWinner = calculateWinner();
+        }
+        if (pWinner == _allCities[0])
+        {
+            _soundHandler.PlaySound(SoundHandler.Sounds.WIN);
+        }
+        else
+        {
+            _soundHandler.PlaySound(SoundHandler.Sounds.LOSE);
         }
 
         UIHandler.ShowNotification("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!");

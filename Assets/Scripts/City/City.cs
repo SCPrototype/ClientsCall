@@ -11,7 +11,7 @@ public class City : MonoBehaviour
     private int Columns;
     private float OffSetBetweenTiles;
     private EventManager _eventManager;
-    private float _budget = 10;
+    private float _budget = 500;
     private float _happiness = 100;
     private bool _collectedThisTurn = false;
     private CustomTile[,] _tileMap;
@@ -19,6 +19,7 @@ public class City : MonoBehaviour
     private UIHandler _uiHandler;
     private int _amountOfRelics;
     private int _missilesLaunched;
+    private SoundHandler _soundHandler;
 
     private int _currentTurn = 1;
 
@@ -35,6 +36,7 @@ public class City : MonoBehaviour
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
+        _soundHandler = GameInitializer.GetSoundHandler();
  
         DrawMap(pStartPos);
         return this;
@@ -45,6 +47,7 @@ public class City : MonoBehaviour
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
         _uiHandler.SetResourcesBars((int)_budget);
+        
     }
 
     void Update()
@@ -71,6 +74,7 @@ public class City : MonoBehaviour
                     _collectedThisTurn = true;
                     if (_currentTurn % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager)
                     {
+                        _soundHandler.PlaySound(SoundHandler.Sounds.POPUP);
                         _eventManager.EnableRandomEvent();
                     }
                     _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
@@ -100,6 +104,7 @@ public class City : MonoBehaviour
     }
     public void ChangeSelectedTile(CityManager.DirectionKey pDirection)
     {
+        _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
         _selectedTile.Reset();
         int[] Position = GetTilePosition(_selectedTile);
         switch (pDirection)

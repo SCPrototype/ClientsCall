@@ -59,6 +59,19 @@ public static class Glob {
     public const string missileSiloPrefab = "MissileSilo";
     public const string wonderPrefab = "Wonder";
 
+    //Sounds
+    public const int amountOfSounds = 10;
+    public const string confirmSound = "Sounds/Confirm";
+    public const string endTurnSound = "Sounds/EndTurn";
+    public const string errorSound = "Sounds/Error";
+    public const string loseSound = "Sounds/Lose";
+    public const string missileHitSound = "Sounds/MissileHit";
+    public const string missileLaunchSound = "Sounds/MissileLaunch";
+    public const string moneySound = "Sounds/Money";
+    public const string moveSound = "Sounds/Move";
+    public const string popUpSound = "Sounds/PopUp";
+    public const string winSound = "Sounds/Win";
+
 
     public static Building[] GetBuildingPrefabs()
     {
@@ -105,6 +118,23 @@ public static class Glob {
         icons[5] = Resources.Load<Sprite>(wonderIcon);
         return icons;
     }
+
+    public static AudioClip[] GetAudioClips()
+    {
+        AudioClip[] audioClips = new AudioClip[amountOfSounds];
+        audioClips[0] = Resources.Load<AudioClip>(confirmSound);
+        audioClips[1] = Resources.Load<AudioClip>(endTurnSound);
+        audioClips[2] = Resources.Load<AudioClip>(errorSound);
+        audioClips[3] = Resources.Load<AudioClip>(loseSound);
+        audioClips[4] = Resources.Load<AudioClip>(missileHitSound);
+        audioClips[5] = Resources.Load<AudioClip>(missileHitSound);
+        audioClips[6] = Resources.Load<AudioClip>(moneySound);
+        audioClips[7] = Resources.Load<AudioClip>(moveSound);
+        audioClips[8] = Resources.Load<AudioClip>(popUpSound);
+        audioClips[9] = Resources.Load<AudioClip>(winSound);
+        return audioClips;
+    }
+
 
    
 }

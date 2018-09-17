@@ -23,6 +23,7 @@ public class EventManager : MonoBehaviour
     public Slider HappinessSlider;
     public Text BudgetText;
     public Text HappinessText;
+    private SoundHandler _soundHandler;
 
     // Use this for initialization
     void Start()
@@ -30,7 +31,7 @@ public class EventManager : MonoBehaviour
         TMX_Parser parser = new TMX_Parser();
         parser.Parse("Assets/XML/RandomEvents.txt", out _allEvents);
         Debug.Log(_allEvents);
-
+        _soundHandler = GameInitializer.GetSoundHandler();
         EventMenu.SetActive(false);
     }
 
@@ -38,6 +39,11 @@ public class EventManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void PlayConfirmSound()
+    {
+        _soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
     }
 
     public void EnableRandomEvent()

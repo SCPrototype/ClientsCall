@@ -11,10 +11,12 @@ public class BuildingHandler : MonoBehaviour
     private City currentCity;
     private bool readyToBuild = true;
     private float prevTurn;
+    private SoundHandler _soundHandler;
 
     // Use this for initialization
     void Start()
     {
+        _soundHandler = GameInitializer.GetSoundHandler();
         buildings = Glob.GetBuildingPrefabs();
     }
 
@@ -64,6 +66,7 @@ public class BuildingHandler : MonoBehaviour
         //Can the building get placed.
         if (currentCity.CanBuild(placementBuilding.GetCost()))
         {
+            _soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
             if (placementBuilding is Wonder)
             {
                 if (currentCity.GetHappyHouseAmount() < Glob.WonderHappyHouseReq)
@@ -98,6 +101,7 @@ public class BuildingHandler : MonoBehaviour
         }
         else
         {
+            _soundHandler.PlaySound(SoundHandler.Sounds.ERROR);
             UIHandler.ShowNotification("You don't have enough money to build that.");
             return false;
         }
