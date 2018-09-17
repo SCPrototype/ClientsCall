@@ -19,6 +19,7 @@ public class City : MonoBehaviour
     private int _amountOfRelics;
     private int _missilesLaunched;
     private int _bridgesBuilt;
+    private SoundHandler _soundHandler;
 
     private int _currentTurn = 1;
 
@@ -37,6 +38,7 @@ public class City : MonoBehaviour
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
+        _soundHandler = GameInitializer.GetSoundHandler();
  
         DrawMap(pStartPos);
         return this;
@@ -106,6 +108,7 @@ public class City : MonoBehaviour
     }
     public void ChangeSelectedTile(CityManager.DirectionKey pDirection)
     {
+        _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
         _selectedTile.Reset();
         int[] Position = GetTilePosition(_selectedTile);
         switch (pDirection)

@@ -19,6 +19,7 @@ public class SoundHandler : MonoBehaviour
             audioSources[index].clip = audioClips[index];
             audioSources[index].playOnAwake = false;
         }
+        audioSources[0].volume = 0.5f;
     }
     // Use this for initialization
     void Start()
