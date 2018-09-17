@@ -18,6 +18,7 @@ public class City : MonoBehaviour
     private UIHandler _uiHandler;
     private int _amountOfRelics;
     private int _missilesLaunched;
+    private int _bridgesBuilt;
 
     private int _currentTurn = 1;
 
@@ -383,6 +384,20 @@ public class City : MonoBehaviour
         {
             GameInitializer.EndGame(this);
         }
+    }
+
+    public void AddBridgeBuilt()
+    {
+        _bridgesBuilt++;
+
+        if (_bridgesBuilt >= Glob.AmountOfBridgesNeededToWin)
+        {
+            GameInitializer.EndGame(this);
+        }
+    }
+    public int GetBridgesBuilt()
+    {
+        return _bridgesBuilt;
     }
 
     public float GetScore()

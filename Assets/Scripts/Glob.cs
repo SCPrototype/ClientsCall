@@ -6,9 +6,9 @@ public static class Glob {
 
     //GAME VALUES
     public const int AmountOfAICities = 1; //Dont change this value, it will break the game. (Spaghetti code caused by time restraints.)
-    public const int CityWidth = 7;
-    public const int CityLength = 7;
-    public const int CitySpacing = 50;
+    public const int CityWidth = 10;
+    public const int CityLength = 10;
+    public const int CitySpacing = 75;
     public const float TileSpacing = 0.2f;
     public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
@@ -18,6 +18,8 @@ public static class Glob {
 
     public const float TurnDelay = 0.5f;
     public const float AIEndTurnDelay = 0.5f;
+    public const float AIBuildDelay = 0.5f;
+    public const float AIMissileDelay = 1.5f;
     public const float AnimationCollection = 0.2f;
 
     public const int AmountOfRelicsNeededToWin = 10;
@@ -31,6 +33,8 @@ public static class Glob {
     public const float HappyHouseAnimosityChange = 1; //out of 100
 
     public const int WonderHappyHouseReq = 11;
+
+    public const int AmountOfBridgesNeededToWin = 3;
 
     public const float CameraCitySwitchTime = 2f;
     public static Vector3 CameraOffset = new Vector3(3, 31, -10);
@@ -46,7 +50,7 @@ public static class Glob {
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
     public static Color MissileAimColor = new Color(1, 0, 0, 1);
 
-    public const int buildingCount = 6;
+    public const int buildingCount = 7;
     public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
@@ -60,6 +64,7 @@ public static class Glob {
     public const string digsitePrefab = "Digsite";
     public const string missileSiloPrefab = "MissileSilo";
     public const string wonderPrefab = "Wonder";
+    public const string bridgePrefab = "Bridge Construction Site";
 
 
     public static Building[] GetBuildingPrefabs()
@@ -71,6 +76,7 @@ public static class Glob {
         buildings[3] = Resources.Load<Digsite>(digsitePrefab).Initialize();
         buildings[4] = Resources.Load<MissileSilo>(missileSiloPrefab).Initialize();
         buildings[5] = Resources.Load<Wonder>(wonderPrefab).Initialize();
+        buildings[6] = Resources.Load<Bridge>(bridgePrefab).Initialize();
         //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
@@ -95,6 +101,7 @@ public static class Glob {
     public const string digsiteIcon = "DigsiteIcon";
     public const string missileSiloIcon = "DigsiteIcon";//TODO: Correct icon
     public const string wonderIcon = "DigsiteIcon";//TODO: Correct icon
+    public const string bridgeIcon = "DigsiteIcon";//TODO: Correct icon
 
     public static Sprite[] GetBuildingIcons()
     {
@@ -105,6 +112,7 @@ public static class Glob {
         icons[3] = Resources.Load<Sprite>(digsiteIcon);
         icons[4] = Resources.Load<Sprite>(missileSiloIcon);
         icons[5] = Resources.Load<Sprite>(wonderIcon);
+        icons[6] = Resources.Load<Sprite>(bridgeIcon);
         return icons;
     }
 

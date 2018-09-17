@@ -83,14 +83,9 @@ public class BuildingHandler : MonoBehaviour
             placementBuilding.SetBuildingTile(currentCity.GetSelectedTile());
             currentCity.GetSelectedTile().SetBuilding(placementBuilding);
             currentCity.BudgetChange(-placementBuilding.GetCost());
-            if (placementBuilding is MissileSilo)//TODO: Hard coded spaghett
+            if (placementBuilding is MissileSilo || placementBuilding is Wonder)//TODO: Hard coded spaghett
             {
-                MissileSilo building = placementBuilding as MissileSilo;
-                building.DoAction();
-            }
-            else if (placementBuilding is Wonder)
-            {
-                Wonder building = placementBuilding as Wonder;
+                FunctionBuilding building = placementBuilding as FunctionBuilding;
                 building.DoAction();
             }
             DestroyPlacementBuilding();
