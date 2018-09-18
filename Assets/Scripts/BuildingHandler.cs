@@ -164,6 +164,8 @@ public class BuildingHandler : MonoBehaviour
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.PLACEMENT);
         pCustomTile.ReSetColor();
 
+        ShowParticlesNearbyBuildings(buildingToPlace);
+
         return buildingToPlace;
     }
 
@@ -172,7 +174,34 @@ public class BuildingHandler : MonoBehaviour
         Building[] buildingsInRange = currentCity.GetBuildingsAroundTile(1, pBuilding.GetBuildingTile());
         foreach(Building pBuildingInRange in buildingsInRange)
         {
-            pBuildingInRange.GetBuildingTile().PlayParticle();
+            if (pBuilding is House)
+            {
+                if (pBuildingInRange is Factory || pBuildingInRange is Park)
+                {
+                    pBuildingInRange.GetBuildingTile().PlayParticle();
+                }
+            }
+            else if (pBuilding is Factory)
+            {
+                if (pBuildingInRange is Factory || pBuildingInRange is House)
+                {
+                    pBuildingInRange.GetBuildingTile().PlayParticle();
+                }
+            }
+            else if (pBuilding is Park)
+            {
+                if (pBuildingInRange is House)
+                {
+                    pBuildingInRange.GetBuildingTile().PlayParticle();
+                }
+            }
+        }
+    }
+    public void ResetTileParticles()
+    {
+        foreach (CustomTile tile in currentCity.GetTileMap())
+        {
+            tile.StopParticle();
         }
     }
 
@@ -199,6 +228,7 @@ public class BuildingHandler : MonoBehaviour
             currentBuildingSelection = index;
         }
         placementBuilding = PlaceBuilding(currentCity.GetSelectedTile());
+        ShowParticlesNearbyBuildings(placementBuilding);
     }
     public void ChangeBuildingSelection(Building pBuilding)
     {
@@ -212,6 +242,7 @@ public class BuildingHandler : MonoBehaviour
             }
         }
         placementBuilding = PlaceBuilding(currentCity.GetSelectedTile());
+        ShowParticlesNearbyBuildings(placementBuilding);
     }
 
     public void DestroyPlacementBuilding()
@@ -226,6 +257,7 @@ public class BuildingHandler : MonoBehaviour
             }
         }
         placementBuilding = null;
+        ResetTileParticles();
     }
 
     public bool PlacementBuildingActive()

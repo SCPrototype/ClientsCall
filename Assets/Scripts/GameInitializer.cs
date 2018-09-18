@@ -82,6 +82,7 @@ public class GameInitializer : MonoBehaviour {
     public static void EndTurn()
     {
         _soundHandler.PlaySound(SoundHandler.Sounds.ENDTURN);
+        _buildHandler.DestroyPlacementBuilding();
         _currentCity++;
         if (_currentCity >= _allCities.Length)
         {

@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 198671887169271854}
   - component: {fileID: 199064966687483956}
   m_Layer: 0
-  m_Name: DigSite
+  m_Name: Digsite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

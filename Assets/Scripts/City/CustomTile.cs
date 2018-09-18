@@ -165,7 +165,11 @@ public class CustomTile : MonoBehaviour
 
     public void PlayParticle()
     {
-        ParticleSystem childParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+        ParticleSystem childParticle = null;
+        if (transform.childCount > 0)
+        {
+            childParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+        }
         _particle.Play();
         if (childParticle != null)
         {
@@ -173,5 +177,11 @@ public class CustomTile : MonoBehaviour
         }
         ParticleSystem.EmissionModule em = _particle.emission;
         em.enabled = true;
+    }
+
+    public void StopParticle()
+    {
+        ParticleSystem.EmissionModule em = _particle.emission;
+        em.enabled = false;
     }
 }

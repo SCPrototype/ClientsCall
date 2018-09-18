@@ -13,7 +13,7 @@ public static class Glob {
     public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
     public const int RandomParkAmount = 1;
-    public const int StartingBudget = 140;
+    public const int StartingBudget = 140; //Is actually 10, but player gets forced to spend for the tutorial.
     public const int BudgetCap = 500;
     public const float FactoryProductionMultiplier = 0.05f;
 

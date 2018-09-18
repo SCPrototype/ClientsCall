@@ -148,7 +148,7 @@ public class City : MonoBehaviour
             }
         }
 
-        CustomTile targetTile4 = _tileMap[4, 3];
+        CustomTile targetTile4 = _tileMap[5, 4];
         GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile4, 7);
 
         if (_myManager is AICityManager)
@@ -416,9 +416,14 @@ public class City : MonoBehaviour
         return _myManager;
     }
 
-    public void HighlightTile(int pX, int pY)
+    public void HighlightTile(int pX, int pY, bool pToggle)
     {
-        //TODO: Highlight tile
-        //_tileMap[pX,pY].SetHighlighted();
+        if (pToggle)
+        {
+            _tileMap[pX, pY].PlayParticle();
+        } else
+        {
+            _tileMap[pX, pY].StopParticle();
+        }
     }
 }

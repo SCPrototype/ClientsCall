@@ -105,10 +105,11 @@ public class Tutorial : MonoBehaviour {
 
                 if (_currentText == 1)
                 {
-                    _myCity.HighlightTile(_tileSelectedX, _tileSelectedY); //TODO: Remove highlight after action.
+                    _myCity.HighlightTile(_tileSelectedX, _tileSelectedY, true); //TODO: Remove highlight after action.
                 }
                 else if (_currentText == 2)
                 {
+                    _myCity.HighlightTile(_tileSelectedX, _tileSelectedY, false);
                     GameInitializer.GetUIHandler().ToggleBuildPanel(true);
                     GameInitializer.GetBuildingHandler().ChangeBuildingSelection(1, false);
                     GameInitializer.GetUIHandler().SetActiveBuildingImage(1, false);
@@ -119,19 +120,21 @@ public class Tutorial : MonoBehaviour {
                     GameInitializer.GetBuildingHandler().StartBuilding();
                     GameInitializer.GetUIHandler().ToggleBuildPanel(false);
 
-                    _myCity.HighlightTile(_houseBuiltX, _houseBuiltY);
+                    _myCity.HighlightTile(_houseBuiltX, _houseBuiltY, true);
                 }
                 else if (_currentText == 4)
                 {
+                    _myCity.HighlightTile(_houseBuiltX, _houseBuiltY, false);
                     GameInitializer.GetBuildingHandler().StartBuilding();
                     GameInitializer.GetUIHandler().ToggleBuildPanel(false);
                 }
                 else if (_currentText == 6)
                 {
-                    _myCity.HighlightTile(_parkBuiltX, _parkBuiltY);
+                    _myCity.HighlightTile(_parkBuiltX, _parkBuiltY, true);
                 }
                 else if (_currentText == 7)
                 {
+                    _myCity.HighlightTile(_parkBuiltX, _parkBuiltY, false);
                     GameInitializer.GetBuildingHandler().StartBuilding();
                     GameInitializer.GetUIHandler().ToggleBuildPanel(false);
 
