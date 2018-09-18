@@ -80,7 +80,7 @@ public class PlayerCityManager : CityManager
                     {
                         if (_isFocusedOnOwnCity)
                         {
-                            _soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
+                            //_soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
                             SetCurrentMode(CurrentMode.BUILDINGTILE);
                             targetCity.GetSelectedTile().Reset();
                             GameInitializer.GetUIHandler().ToggleBuildPanel(true);

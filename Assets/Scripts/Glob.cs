@@ -20,13 +20,13 @@ public static class Glob {
     public const int EasyAIDifficulty = 50;
     public const int HardAIDifficulty = 85;
 
-    public const float TurnDelay = 2.5f;
+    public const float TurnDelay = 3f;
     public const float AIEndTurnDelay = 0.5f;
     public const float AIBuildDelay = 0.5f;
     public const float AIMissileDelay = 1.5f;
     public const float AnimationCollection = 0.2f;
 
-    public const float CameraCitySwitchTime = 2f;
+    public const float CameraCitySwitchTime = 2.5f;
     public static Vector3 CameraOffset = new Vector3(3, 31, -10);
 
     public const int AmountOfRelicsNeededToWin = 10;
