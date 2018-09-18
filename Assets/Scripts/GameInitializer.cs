@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GameInitializer : MonoBehaviour {
 
+    private static Glob.PlayerTypes _playerType = Glob.PlayerTypes.Achiever;
+    private static int _achieverScore = 0;
+    private static int _explorerScore = 0;
+    private static int _killerScore = 0;
+    private static int _socializerScore = 0;
+
     private City _playerCity;
     private static City[] _allCities;
     private static int _currentCity = 0;
@@ -16,6 +22,9 @@ public class GameInitializer : MonoBehaviour {
 
     private static bool _isPaused = false;
 
+    private float _lastAction = 0;
+    private float _resetButtonPressTime = 0;
+
     public static void ResetGame()
     {
         FadeToBlack.DoFade(1, true, 0);
@@ -23,6 +32,13 @@ public class GameInitializer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        _lastAction = Time.time;
+
+        _achieverScore = 0;
+        _explorerScore = 0;
+        _killerScore = 0;
+        _socializerScore = 0;
+
         _cameraManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
         _buildHandler = new GameObject("BuildingHandler").AddComponent<BuildingHandler>();
         _gameUIHandler = Instantiate((Resources.Load(Glob.UIPrefab) as GameObject).GetComponent<UIHandler>());
@@ -48,10 +64,25 @@ public class GameInitializer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.G))
         {
+            _resetButtonPressTime = Time.time;
+        }
+        if (Time.time - _lastAction >= Glob.GameTimeOut || (Time.time - _resetButtonPressTime >= Glob.ResetButtonTime && Input.GetKey(KeyCode.G)))
+        {
+            _resetButtonPressTime = Time.time;
+            UpdateActionTime();
             ResetGame();
         }
+        else if (Input.anyKeyDown)
+        {
+            UpdateActionTime();
+        }
+    }
+
+    private void UpdateActionTime()
+    {
+        _lastAction = Time.time;
     }
 
     public static City GetCurrentCity()
@@ -97,6 +128,7 @@ public class GameInitializer : MonoBehaviour {
     public static void EndGame(bool pBothWin = false, City pWinner = null)
     {
         _isPaused = true;
+        _gameUIHandler.EnableResolutionScreen(_playerType);
         if (pWinner == null && !pBothWin)
         {
             pWinner = calculateWinner();
@@ -119,6 +151,64 @@ public class GameInitializer : MonoBehaviour {
 
         UIHandler.ShowNotification("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!"); //TODO: Correct win message.
         Debug.Log("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!");
+    }
+
+    public static void AddAchieverScore(int pScore)
+    {
+        _achieverScore += pScore;
+        calculatePlayerType();
+    }
+    public static void AddExplorerScore(int pScore)
+    {
+        _explorerScore += pScore;
+        calculatePlayerType();
+    }
+    public static void AddKillerScore(int pScore)
+    {
+        _killerScore += pScore;
+        calculatePlayerType();
+    }
+    public static void AddSocializerScore(int pScore)
+    {
+        _socializerScore += pScore;
+        calculatePlayerType();
+    }
+    public static int GetAchieverScore()
+    {
+        return _achieverScore;
+    }
+    public static int GetExplorerScore()
+    {
+        return _explorerScore;
+    }
+    public static int GetKillerScore()
+    {
+        return _killerScore;
+    }
+    public static int GetSocializerScore()
+    {
+        return _socializerScore;
+    }
+
+    private static void calculatePlayerType()
+    {
+        Debug.Log(_achieverScore + " _ " + _explorerScore + " _ " + _killerScore + " _ " + _socializerScore);
+        if (_achieverScore > _explorerScore && _achieverScore > _killerScore && _achieverScore > _socializerScore)
+        {
+            _playerType = Glob.PlayerTypes.Achiever;
+        }
+        else if (_explorerScore > _achieverScore && _explorerScore > _killerScore && _explorerScore > _socializerScore)
+        {
+            _playerType = Glob.PlayerTypes.Explorer;
+        }
+        else if (_killerScore > _achieverScore && _killerScore > _explorerScore && _killerScore > _socializerScore)
+        {
+            _playerType = Glob.PlayerTypes.Killer;
+        }
+        else if (_socializerScore > _achieverScore && _socializerScore > _explorerScore && _socializerScore > _killerScore)
+        {
+            _playerType = Glob.PlayerTypes.Socializer;
+        }
     }
 
     private static City calculateWinner()

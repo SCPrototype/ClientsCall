@@ -111,14 +111,14 @@ public class PlayerCityManager : CityManager
                 //Places a building in placement mode, can switch between buildings.
                 if (GameInitializer.GetBuildingHandler().PlacementBuildingActive())
                 {
-                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         //BuildingHandler should probably tell UIHandler what to do.
                         _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(1);
                         GameInitializer.GetUIHandler().SetActiveBuildingImage(1);
                     }
-                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(-1);

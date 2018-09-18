@@ -80,6 +80,10 @@ public class BuildingHandler : MonoBehaviour
                     UIHandler.ShowNotification("The inhabitants are preventing your workers from building this. They don't want you 'wasting' money on this, instead of making them happy. Try building some parks next to houses first.");
                     return false;
                 }
+                else if (currentCity.GetManager() is PlayerCityManager)
+                {
+                    GameInitializer.AddAchieverScore(30);
+                }
             }
             _soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
 
@@ -97,6 +101,13 @@ public class BuildingHandler : MonoBehaviour
             {
                 FunctionBuilding building = placementBuilding as FunctionBuilding;
                 building.DoAction();
+            }
+            if (placementBuilding is House)
+            {
+                if (placementBuilding.GetBuildingTile().GetIsHappy())
+                {
+                    GameInitializer.AddSocializerScore(2);
+                }
             }
             DestroyPlacementBuilding();
             return true;
