@@ -38,9 +38,9 @@ public class UIHandler : MonoBehaviour
 
     private void InitializeBuildPanel()
     {
-        _buildingImages = new Image[Glob.buildingCount];
+        _buildingImages = new Image[Glob.buildingCount -1];
         GameObject layoutGroup = _buildPanel.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
-        for (int i = 0; i < Glob.buildingCount; i++)
+        for (int i = 0; i < _buildingImages.Length; i++)
         {
             _buildingImages[i] = GameObject.Instantiate((Resources.Load(Glob.buildingImagePrefab) as GameObject), layoutGroup.transform).GetComponent<Image>();
             _buildingImages[i].sprite = Glob.GetBuildingIcons()[i];
@@ -84,13 +84,13 @@ public class UIHandler : MonoBehaviour
             for (int i = 0; i != index; i += (index / Mathf.Abs(index)))
             {
                 _currentBuildingSelection += (index / Mathf.Abs(index));
-                if (_currentBuildingSelection >= Glob.buildingCount)
+                if (_currentBuildingSelection >= Glob.buildingCount -1)
                 {
                     _currentBuildingSelection = 0;
                 }
                 else if (_currentBuildingSelection < 0)
                 {
-                    _currentBuildingSelection = Glob.buildingCount - 1;
+                    _currentBuildingSelection = Glob.buildingCount - 2;
                 }
             }
         }

@@ -47,12 +47,13 @@ public class PlayerCityManager : CityManager
                 if (_isFocusedOnOwnCity)
                 {
                     targetCity = GameInitializer.GetNextCity(pCity);
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime/2);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
                     _isFocusedOnOwnCity = false;
-                } else
+                }
+                else
                 {
                     targetCity = pCity;
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime/2);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
                     _isFocusedOnOwnCity = true;
                 }
             }
@@ -89,7 +90,7 @@ public class PlayerCityManager : CityManager
                     else if (currentMode == CurrentMode.MISSILEAIM)
                     {
                         //TODO: Launch missile
-                        
+
                         _soundHandler.PlaySound(SoundHandler.Sounds.MISSILEHIT);
                         Destroy(targetCity.GetSelectedTile().GetBuildingOnTile().gameObject);
                         targetCity.GetSelectedTile().SetBuilding(null);
@@ -110,18 +111,21 @@ public class PlayerCityManager : CityManager
             }
             if (currentMode == CurrentMode.BUILDINGTILE)
             {
+                //GameInitializer.GetCurrentCity().HandleBuildInfluenceTiles(GameInitializer.GetCurrentCity().GetSelectedTile(), GameInitializer.GetBuildingHandler().GetCurrentSelectedBuilding());
                 //Places a building in placement mode, can switch between buildings.
                 if (GameInitializer.GetBuildingHandler().PlacementBuildingActive())
                 {
                     if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         //BuildingHandler should probably tell UIHandler what to do.
+                        GameInitializer.GetBuildingHandler().ShowParticlesNearbyBuildings(GameInitializer.GetBuildingHandler().GetCurrentSelectedBuilding());
                         _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(1);
                         GameInitializer.GetUIHandler().SetActiveBuildingImage(1);
                     }
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
+                        GameInitializer.GetBuildingHandler().ShowParticlesNearbyBuildings(GameInitializer.GetBuildingHandler().GetCurrentSelectedBuilding());
                         _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(-1);
                         GameInitializer.GetUIHandler().SetActiveBuildingImage(-1);
@@ -148,6 +152,7 @@ public class PlayerCityManager : CityManager
 
                     if (Input.GetKeyDown(KeyCode.G))
                     {
+                        // GameInitializer.GetCurrentCity().RedrawSquare(GameInitializer.GetCurrentCity().GetSelectedTile());
                         GameInitializer.GetBuildingHandler().DestroyPlacementBuilding();
                         SetCurrentMode(CurrentMode.SELECTINGTILE);
                         GameInitializer.GetUIHandler().ToggleBuildPanel(false);
@@ -163,6 +168,7 @@ public class PlayerCityManager : CityManager
             {
                 if (Input.GetKeyDown(KeyCode.G))
                 {
+                    GameInitializer.GetCurrentCity().HandleHappiness(GameInitializer.GetCurrentCity().GetSelectedTile(), false);
                     GameInitializer.GetUIHandler().ToggleExaminePanel(false);
                     SetCurrentMode(CurrentMode.SELECTINGTILE);
                 }

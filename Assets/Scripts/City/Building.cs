@@ -31,8 +31,11 @@ public abstract class Building : MonoBehaviour
     {
         _renderer = gameObject.GetComponent<Renderer>();
         _currentBuildingPhase = BuildingPhase.PLACEMENT;
-        _material = _renderer.material;
-        _materialClone = new Material(_material);
+        if (_renderer != null)
+        {
+            _material = _renderer.material;
+            _materialClone = new Material(_material);
+        }
     }
 
     public BuildingPhase GetBuildingPhase()
@@ -66,16 +69,19 @@ public abstract class Building : MonoBehaviour
         _currentBuildingPhase = pBuildingPhase;
         if (_currentBuildingPhase == BuildingPhase.PLACEMENT)
         {
-            _materialClone.color = new Color(_materialClone.color.r, _materialClone.color.g, _materialClone.color.b, 0.5f);
+           // _materialClone.color = new Color(_materialClone.color.r, _materialClone.color.g, _materialClone.color.b, 0.5f);
         }
         if (_currentBuildingPhase == BuildingPhase.DONE)
         {
-            if (_materialClone != null)
-            {
-                _materialClone.color = _material.color;
-            }
+            //if (_materialClone != null)
+            //{
+            //    _materialClone.color = _material.color;
+            //}
         }
-        _renderer.material = _materialClone;
+        if (_renderer != null)
+        {
+            _renderer.material = _materialClone;
+        }
     }
 
     public int GetCost()

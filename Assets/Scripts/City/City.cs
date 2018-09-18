@@ -20,6 +20,7 @@ public class City : MonoBehaviour
     private int _missilesLaunched;
     private int _bridgesBuilt;
     private SoundHandler _soundHandler;
+    private MayorOffice _mayorOffice;
 
     private int _currentTurn = 1;
 
@@ -39,7 +40,7 @@ public class City : MonoBehaviour
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
         _soundHandler = GameInitializer.GetSoundHandler();
- 
+
         DrawMap(pStartPos);
         return this;
     }
@@ -48,6 +49,7 @@ public class City : MonoBehaviour
     void Start()
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
+        _mayorOffice.UpdateHatPosition(_budget);
         _uiHandler.SetResourcesBars((int)_budget);
     }
 
@@ -55,7 +57,8 @@ public class City : MonoBehaviour
     {
         if (GameInitializer.GetBuildingHandler().GetCurrentCity() == this && GameInitializer.GetBuildingHandler().IsReadyToBuild())
         {
-            if (!GameInitializer.GetPaused()) {
+            if (!GameInitializer.GetPaused())
+            {
                 if (_currentTurn > Glob.TurnAmount)
                 {
                     GameInitializer.EndGame();
@@ -77,6 +80,7 @@ public class City : MonoBehaviour
                     {
                         _eventManager.EnableRandomEvent();
                     }
+                    _mayorOffice.UpdateHatPosition(_budget);
                     _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
                 }
                 _myManager.HandleTurn(this);
@@ -152,6 +156,11 @@ public class City : MonoBehaviour
         CustomTile targetTile3 = _tileMap[3, 4];
         GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile3, 2);
 
+        CustomTile targetTile4 = _tileMap[4, 4];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile4, 7);
+
+
+
         /*for (int i = 0; i < Glob.RandomHouseAmount; i++)
         {
             CustomTile targetTile = _tileMap[Random.Range(0, Rows), Random.Range(0, Columns)];
@@ -199,7 +208,7 @@ public class City : MonoBehaviour
             {
                 if (_myManager.GetCurrentMode() != CityManager.CurrentMode.MISSILEAIM)
                 {
-                    _selectedTile.InvertColor(new Color(0,0,0,0));
+                    _selectedTile.InvertColor(new Color(0, 0, 0, 0));
                 }
                 else
                 {
@@ -298,18 +307,19 @@ public class City : MonoBehaviour
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget += pChange;
         //softcap for now.
-
+        _mayorOffice.UpdateHatPosition(_budget);
         _uiHandler.SetResourcesBars((int)_budget);
     }
 
-   
+
 
     public bool CanBuild(int pBuildingCost, int happyHouses = 0)
     {
-        if(_budget - pBuildingCost < 0 || GetHappyHouseAmount() < happyHouses)
+        if (_budget - pBuildingCost < 0 || GetHappyHouseAmount() < happyHouses)
         {
             return false;
-        } else
+        }
+        else
         {
             return true;
         }
@@ -343,6 +353,7 @@ public class City : MonoBehaviour
             }
         }
     }
+
     public int GetHappyHouseAmount()
     {
         int happyHouses = 0;
@@ -350,9 +361,9 @@ public class City : MonoBehaviour
         {
             for (int y = 0; y < _tileMap.GetLength(1); y++)
             {
-                if (_tileMap[x,y].GetIsHappy())
+                if (_tileMap[x, y].GetIsHappy())
                 {
-                    if (_tileMap[x,y].GetBuildingOnTile() is House)
+                    if (_tileMap[x, y].GetBuildingOnTile() is House)
                     {
                         happyHouses++;
                     }
@@ -365,7 +376,7 @@ public class City : MonoBehaviour
     public void AddRelic()
     {
         _amountOfRelics++;
-        if(_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
+        if (_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
         {
             GameInitializer.EndGame(this);
         }
@@ -408,12 +419,12 @@ public class City : MonoBehaviour
         float score = 0;
         score += _budget;
         float tileScore = 0;
-        Debug.Log("Budget and Happiness score: " + score);
+        // Debug.Log("Budget and Happiness score: " + score);
         foreach (CustomTile tile in _tileMap)
         {
             tileScore += _myManager.GetTileValue(tile);
         }
-        Debug.Log("City tiles score: " + tileScore);
+        //Debug.Log("City tiles score: " + tileScore);
 
         score += tileScore / 10;
 
@@ -424,4 +435,51 @@ public class City : MonoBehaviour
     {
         return _myManager;
     }
+
+    public MayorOffice GetMayorOffice()
+    {
+        return _mayorOffice;
+    }
+
+    public void SetMayorOffice(MayorOffice pMayor)
+    {
+        _mayorOffice = pMayor;
+    }
+
+    public void HandleBuildInfluenceTiles(CustomTile pTile, Building pInfluenceBuilding)
+    {
+        int[] tilePos = GetTilePosition(pTile);
+        for (int x = 0; x < 3; x++)//Check all bordering tiles
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                int xCoordinate = tilePos[0] - 1 + x;
+                int yCoordinate = tilePos[1] - 1 + y;
+                if ((xCoordinate < 0 || xCoordinate >= _tileMap.GetLength(0)) || (yCoordinate < 0 || yCoordinate >= _tileMap.GetLength(1))) continue;
+                CustomTile borderingTile = _tileMap[xCoordinate, yCoordinate];
+                Building buildingUnderInfluence = borderingTile.GetBuildingOnTile();
+
+                borderingTile.SetInfluenceColor(pInfluenceBuilding, buildingUnderInfluence);
+            }
+        }
+    }
+
+    public void RedrawSquare(CustomTile pCustomTile)
+    {
+        int[] tilePos = GetTilePosition(pCustomTile);
+        for (int x = 0; x < 3; x++)//Check all bordering tiles
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                int xCoordinate = tilePos[0] - 1 + x;
+                int yCoordinate = tilePos[1] - 1 + y;
+                if ((xCoordinate < 0 || xCoordinate >= _tileMap.GetLength(0)) || (yCoordinate < 0 || yCoordinate >= _tileMap.GetLength(1))) continue;
+                CustomTile borderingTile = _tileMap[xCoordinate, yCoordinate];
+
+                borderingTile.ReSetColor();
+            }
+        }
+    }
+
+   
 }
