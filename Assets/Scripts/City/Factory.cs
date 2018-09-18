@@ -10,7 +10,7 @@ public class Factory : ProductionBuilding {
     private const int _range = 1;
     public int _currentBoost = 0;
     //private ParticleSystem[] _particles = Glob.GetParticleEffects();
-    public ParticleSystem _particle;
+    private ParticleSystem _particle;
     
     public Factory()
     {
@@ -20,6 +20,7 @@ public class Factory : ProductionBuilding {
     // Use this for initialization
     void Awake () {
         //_particle = _particles[0];
+        _particle = this.transform.GetComponent<ParticleSystem>();
         base.Initialize(_cost, _happinessGain, _moneyGain, _range, _particle);
     }
 

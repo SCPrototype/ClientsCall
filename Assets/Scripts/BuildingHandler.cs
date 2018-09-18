@@ -12,6 +12,7 @@ public class BuildingHandler : MonoBehaviour
     private bool readyToBuild = true;
     private float prevTurn;
     private SoundHandler _soundHandler;
+    private MayorOffice _mayerOffice;
 
     // Use this for initialization
     void Start()
@@ -58,6 +59,11 @@ public class BuildingHandler : MonoBehaviour
         Building buildingToPlace = Instantiate(buildings[pBuildingIndex]);
         buildingToPlace.SetBuildingTile(pCustomTile);
         pCustomTile.SetBuilding(buildingToPlace);
+        //The prefab center is scuffed.
+        if(buildingToPlace is MayorOffice)
+        {
+            pCity.SetMayorOffice(buildingToPlace as MayorOffice);
+        }
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.DONE);
     }
 
@@ -139,7 +145,7 @@ public class BuildingHandler : MonoBehaviour
         int boost = pCurrentFactory.GetBoost();
         int index = boost + pIndexChange;
         if (index >= factoriesPrefab.Length) index = factoriesPrefab.Length - 1;
-        Debug.Log("Index is " + index + " array length is " + factoriesPrefab.Length);
+       // Debug.Log("Index is " + index + " array length is " + factoriesPrefab.Length);
         Factory newFactory = Instantiate(factoriesPrefab[index]);
         newFactory.AddBoost(boost + pIndexChange);
         newFactory.SetBuildingPhase(Building.BuildingPhase.DONE);
@@ -154,8 +160,18 @@ public class BuildingHandler : MonoBehaviour
         //Makes a building which is into placement mode.
         buildingToPlace.SetBuildingTile(pCustomTile);
         buildingToPlace.SetBuildingPhase(Building.BuildingPhase.PLACEMENT);
+        pCustomTile.ReSetColor();
 
         return buildingToPlace;
+    }
+
+    public void ShowParticlesNearbyBuildings(Building pBuilding)
+    {
+        Building[] buildingsInRange = currentCity.GetBuildingsAroundTile(1, pBuilding.GetBuildingTile());
+        foreach(Building pBuildingInRange in buildingsInRange)
+        {
+            pBuildingInRange.GetBuildingTile().PlayParticle();
+        }
     }
 
     public void ChangeBuildingSelection(int index, bool addToCurrent = true)
@@ -166,13 +182,13 @@ public class BuildingHandler : MonoBehaviour
             for (int i = 0; i != index; i += (index / Mathf.Abs(index)))
             {
                 currentBuildingSelection += (index / Mathf.Abs(index));
-                if (currentBuildingSelection >= Glob.buildingCount)
+                if (currentBuildingSelection >= Glob.buildingCount -1)
                 {
                     currentBuildingSelection = 0;
                 }
                 else if (currentBuildingSelection < 0)
                 {
-                    currentBuildingSelection = Glob.buildingCount - 1;
+                    currentBuildingSelection = Glob.buildingCount - 2;
                 }
             }
         }
@@ -218,5 +234,10 @@ public class BuildingHandler : MonoBehaviour
     public bool IsReadyToBuild()
     {
         return readyToBuild;
+    }
+
+    public Building GetCurrentSelectedBuilding()
+    {
+        return placementBuilding;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CustomTile : MonoBehaviour
 {
     private City _myCity;
-    
+
     private Renderer _meshRenderer;
 
     private Renderer _renderer;
@@ -19,10 +19,12 @@ public class CustomTile : MonoBehaviour
     private TileState _tileState;
 
     private bool _isHappy = false;
+    private ParticleSystem _particle;
 
     // Use this for initialization
     void Start()
     {
+        _particle = this.transform.GetComponent<ParticleSystem>();
         _renderer = GetComponent<Renderer>();
         _baseMaterial = _renderer.material;
         _newBaseMaterial = new Material(_baseMaterial);
@@ -61,7 +63,8 @@ public class CustomTile : MonoBehaviour
         else if (targetColor == new Color(0, 0, 0, 0))
         {
             _materialClone.color = new Color(_newBaseMaterial.color.r, _newBaseMaterial.color.g, _newBaseMaterial.color.b, 0.3f);
-        } else
+        }
+        else
         {
             _materialClone.color = targetColor;
         }
@@ -90,7 +93,8 @@ public class CustomTile : MonoBehaviour
         else if (pBuilding is Factory)
         {
             shouldSetHappy = false;
-        } else
+        }
+        else
         {
             return;
         }
@@ -115,7 +119,8 @@ public class CustomTile : MonoBehaviour
         if (_isHappy)
         {
             _newBaseMaterial.color = new Color(Glob.HappyColor.r, Glob.HappyColor.g, Glob.HappyColor.b, 1);
-        } else
+        }
+        else
         {
             _newBaseMaterial.color = new Color(Glob.UnhappyColor.r, Glob.UnhappyColor.g, Glob.UnhappyColor.b, 1);
         }
@@ -125,5 +130,48 @@ public class CustomTile : MonoBehaviour
     public bool GetIsHappy()
     {
         return _isHappy;
+    }
+
+    public void SetInfluenceColor(Building pInfluenceBuilding, Building pBuildingUnderInfluence)
+    {
+        //Handle all different interaction between buildings.
+        _newBaseMaterial.color = new Color(Glob.HappyColor.r, Glob.HappyColor.g, Glob.HappyColor.b, 1);
+        _materialClone = new Material(_newBaseMaterial);
+        _renderer.material = _materialClone;
+        //Debug.Log("Influence color set.");
+    }
+
+    public void ReSetColor()
+    {
+        //Default should be 93AC58FF.
+        //if (_colorHasChanged)
+
+        if (_isHappy)
+        {
+            _newBaseMaterial.color = new Color(Glob.HappyColor.r, Glob.HappyColor.g, Glob.HappyColor.b, 1);
+        }
+        else
+        {
+            _newBaseMaterial.color = new Color(Glob.UnhappyColor.r, Glob.UnhappyColor.g, Glob.UnhappyColor.b, 1);
+        }
+        // }
+        //else
+        //{
+        //    _newBaseMaterial.color = new Color(Glob.NeutralColor.r, Glob.NeutralColor.g, Glob.NeutralColor.b, 1);
+        //}
+        _materialClone = new Material(_newBaseMaterial);
+        _renderer.material = _materialClone;
+    }
+
+    public void PlayParticle()
+    {
+        ParticleSystem childParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+        _particle.Play();
+        if (childParticle != null)
+        {
+            childParticle.Stop();
+        }
+        ParticleSystem.EmissionModule em = _particle.emission;
+        em.enabled = true;
     }
 }

@@ -24,7 +24,10 @@ public class SoundHandler : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        audioSources[10].volume = 0.3f;
+        audioSources[10].Play();
+        audioSources[10].loop = true;
+        
     }
 
     // Update is called once per frame

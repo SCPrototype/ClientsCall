@@ -13,34 +13,31 @@ public static class Glob {
     public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
     public const int RandomParkAmount = 1;
-    public const int StartingBudget = 140;
+    public const int StartingBudget = 500;
     public const int BudgetCap = 500;
-    public const float FactoryProductionMultiplier = 0.05f;
 
-    public const int EasyAIDifficulty = 50;
-    public const int HardAIDifficulty = 85;
-
-    public const float TurnDelay = 2.5f;
+    public const float TurnDelay = 0.5f;
     public const float AIEndTurnDelay = 0.5f;
     public const float AIBuildDelay = 0.5f;
     public const float AIMissileDelay = 1.5f;
     public const float AnimationCollection = 0.2f;
 
-    public const float CameraCitySwitchTime = 2f;
-    public static Vector3 CameraOffset = new Vector3(3, 31, -10);
-
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
     public const int ChanceToMineRelic = 50;
+    public const float FactoryIncreasePerUpgruade = 0.5f;
 
     public const int AmountOfMissilesNeededToWin = 3;
     public const int MissileAnimosityChange = 75; //out of 100
 
-    public const float HappyHouseAnimosityChange = 2f; //out of 100
+    public const float HappyHouseAnimosityChange = 1; //out of 100
 
-    public const int WonderHappyHouseReq = 17;
+    public const int WonderHappyHouseReq = 11;
 
-    public const int AmountOfBridgesNeededToWin = 1;
+    public const int AmountOfBridgesNeededToWin = 3;
+
+    public const float CameraCitySwitchTime = 2f;
+    public static Vector3 CameraOffset = new Vector3(3, 31, -10);
 
     public const int TurnAmount = 16;
     public const int EventTurnInterval = 4;
@@ -52,11 +49,13 @@ public static class Glob {
     public static Color HappyColor = new Color(0.25f, 0.5f, 0f, 1);
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
     public static Color MissileAimColor = new Color(1, 0, 0, 1);
+    public static Color NeutralColor = new Color(0.58f, 0.68f, 0.35f, 1);
 
-    public const int buildingCount = 7;
+    public const int buildingCount = 8;
     public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
+    public const string mayorOfficePrefab = "MayorOffice";
     public const string housePrefab = "House";
     public const string factoryPrefab0 = "Factory0";
     public const string factoryPrefab1 = "Factory1";
@@ -70,7 +69,7 @@ public static class Glob {
     public const string bridgePrefab = "Bridge Construction Site";
 
     //Sounds
-    public const int amountOfSounds = 10;
+    public const int amountOfSounds = 11;
     public const string confirmSound = "Sounds/Confirm";
     public const string endTurnSound = "Sounds/EndTurn";
     public const string errorSound = "Sounds/Error";
@@ -81,6 +80,7 @@ public static class Glob {
     public const string moveSound = "Sounds/Move";
     public const string popUpSound = "Sounds/PopUp";
     public const string winSound = "Sounds/Win";
+    public const string backGroundSound = "Sounds/BackgroundSounds";
 
 
     public static Building[] GetBuildingPrefabs()
@@ -93,10 +93,16 @@ public static class Glob {
         buildings[4] = Resources.Load<MissileSilo>(missileSiloPrefab).Initialize();
         buildings[5] = Resources.Load<Wonder>(wonderPrefab).Initialize();
         buildings[6] = Resources.Load<Bridge>(bridgePrefab).Initialize();
+        buildings[7] = Resources.Load<MayorOffice>(mayorOfficePrefab);
         //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
         return buildings;
+    }
+
+    public static Building GetMayorOfficePrefab()
+    {
+        return Resources.Load<MayorOffice>(mayorOfficePrefab);
     }
 
     public static Factory[] GetFactoriesPrefabs()
@@ -121,7 +127,8 @@ public static class Glob {
 
     public static Sprite[] GetBuildingIcons()
     {
-        Sprite[] icons = new Sprite[buildingCount];
+        //Minus one due to mayor office, is a building but doesn't need an icon.
+        Sprite[] icons = new Sprite[buildingCount -1];
         icons[0] = Resources.Load<Sprite>(houseIcon);
         icons[1] = Resources.Load<Sprite>(factoryIcon);
         icons[2] = Resources.Load<Sprite>(parkIcon);
@@ -145,6 +152,7 @@ public static class Glob {
         audioClips[7] = Resources.Load<AudioClip>(moveSound);
         audioClips[8] = Resources.Load<AudioClip>(popUpSound);
         audioClips[9] = Resources.Load<AudioClip>(winSound);
+        audioClips[10] = Resources.Load<AudioClip>(backGroundSound);
         return audioClips;
     }
 
