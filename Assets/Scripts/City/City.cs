@@ -20,6 +20,7 @@ public class City : MonoBehaviour
     private int _missilesLaunched;
     private int _bridgesBuilt;
     private SoundHandler _soundHandler;
+    private MayorOffice _mayorOffice;
 
     private int _currentTurn = 1;
 
@@ -181,6 +182,16 @@ public class City : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetMayorOffice(MayorOffice pMayorOffice)
+    {
+        _mayorOffice = pMayorOffice;
+    }
+
+    public MayorOffice GetMayorOffice()
+    {
+        return _mayorOffice;
     }
 
     //Gets the Tile position on the tilemap as X and Y coordinate.
