@@ -12,6 +12,7 @@ public class CustomTile : MonoBehaviour
     private Material _materialClone;
     private Material _newBaseMaterial;
     private Material _baseMaterial;
+    private bool _colorHasChanged = false;
 
     private Building _building;
 
@@ -126,6 +127,7 @@ public class CustomTile : MonoBehaviour
         }
         _materialClone = new Material(_newBaseMaterial);
         _renderer.material = _materialClone;
+        _colorHasChanged = true;
     }
     public bool GetIsHappy()
     {
@@ -144,21 +146,21 @@ public class CustomTile : MonoBehaviour
     public void ReSetColor()
     {
         //Default should be 93AC58FF.
-        //if (_colorHasChanged)
-
-        if (_isHappy)
+        if (_colorHasChanged)
         {
-            _newBaseMaterial.color = new Color(Glob.HappyColor.r, Glob.HappyColor.g, Glob.HappyColor.b, 1);
+            if (_isHappy)
+            {
+                _newBaseMaterial.color = new Color(Glob.HappyColor.r, Glob.HappyColor.g, Glob.HappyColor.b, 1);
+            }
+            else
+            {
+                _newBaseMaterial.color = new Color(Glob.UnhappyColor.r, Glob.UnhappyColor.g, Glob.UnhappyColor.b, 1);
+            }
         }
         else
         {
-            _newBaseMaterial.color = new Color(Glob.UnhappyColor.r, Glob.UnhappyColor.g, Glob.UnhappyColor.b, 1);
+            _newBaseMaterial.color = new Color(Glob.NeutralColor.r, Glob.NeutralColor.g, Glob.NeutralColor.b, 1);
         }
-        // }
-        //else
-        //{
-        //    _newBaseMaterial.color = new Color(Glob.NeutralColor.r, Glob.NeutralColor.g, Glob.NeutralColor.b, 1);
-        //}
         _materialClone = new Material(_newBaseMaterial);
         _renderer.material = _materialClone;
     }

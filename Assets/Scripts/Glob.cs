@@ -8,7 +8,7 @@ public static class Glob {
     public const int AmountOfAICities = 1; //Dont change this value, it will break the game. (Spaghetti code caused by time restraints.)
     public const int CityWidth = 10;
     public const int CityLength = 10;
-    public const int CitySpacing = 58;
+    public const int CitySpacing = 62;
     public const float TileSpacing = 0.2f;
     public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
@@ -27,7 +27,7 @@ public static class Glob {
     public const float AnimationCollection = 0.2f;
 
     public const float CameraCitySwitchTime = 2.5f;
-    public static Vector3 CameraOffset = new Vector3(3, 31, -10);
+    public static Vector3 CameraOffset = new Vector3(13, 32, -16);
 
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
@@ -51,24 +51,25 @@ public static class Glob {
     public const string TilePrefab = "Tile";
     public static Color HappyColor = new Color(0.25f, 0.5f, 0f, 1);
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
+    public static Color NeutralColor = new Color(0.58f, 0.68f, 0.35f);
     public static Color MissileAimColor = new Color(1, 0, 0, 1);
 
     public const int buildingCount = 8;
     public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
-    public const string housePrefab = "House";
-    public const string factoryPrefab0 = "Factory0";
-    public const string factoryPrefab1 = "Factory1";
-    public const string factoryPrefab2 = "Factory2";
-    public const string factoryPrefab3 = "Factory3";
-    public const string factoryPrefab4 = "Factory4";
-    public const string parkPrefab0 = "Park0";
-    public const string digsitePrefab = "Digsite";
-    public const string missileSiloPrefab = "MissileSilo";
-    public const string wonderPrefab = "Wonder";
-    public const string bridgePrefab = "Bridge Construction Site";
-    public const string mayorOfficePrefab = "MayorOffice";
+    public const string housePrefab = "Buildings/House";
+    public const string factoryPrefab0 = "Buildings/Factory0";
+    public const string factoryPrefab1 = "Buildings/Factory1";
+    public const string factoryPrefab2 = "Buildings/Factory2";
+    public const string factoryPrefab3 = "Buildings/Factory3";
+    public const string factoryPrefab4 = "Buildings/Factory4";
+    public const string parkPrefab0 = "Buildings/Park0";
+    public const string digsitePrefab = "Buildings/Digsite";
+    public const string missileSiloPrefab = "Buildings/MissileSilo";
+    public const string wonderPrefab = "Buildings/Wonder";
+    public const string bridgePrefab = "Buildings/Bridge Construction Site";
+    public const string mayorOfficePrefab = "Buildings/MayorOffice";
     public const string missilePrefab = "Missile";
 
     //Sounds
@@ -119,14 +120,16 @@ public static class Glob {
         return factories;
     }
 
-    public const string buildingImagePrefab = "BuildingIcon";
-    public const string houseIcon = "HouseIcon";
-    public const string factoryIcon = "FactoryIcon";
-    public const string parkIcon = "ParkIcon";
-    public const string digsiteIcon = "DigsiteIcon";
-    public const string missileSiloIcon = "DigsiteIcon";//TODO: Correct icon
-    public const string wonderIcon = "DigsiteIcon";//TODO: Correct icon
-    public const string bridgeIcon = "DigsiteIcon";//TODO: Correct icon
+    public const string buildingImagePrefab = "Icons/BuildingIcon";
+    public const string houseIcon = "Icons/HouseIcon";
+    public const string factoryIcon = "Icons/FactoryIcon";
+    public const string parkIcon = "Icons/ParkIcon";
+    public const string digsiteIcon = "Icons/DigsiteIcon";
+    public const string missileSiloIcon = "Icons/MissileSiloIcon";//TODO: Correct icon
+    public const string wonderIcon = "Icons/DigsiteIcon";//TODO: Correct icon
+    public const string bridgeIcon = "Icons/DigsiteIcon";//TODO: Correct icon
+
+
 
     public static Sprite[] GetBuildingIcons()
     {
