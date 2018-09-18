@@ -148,6 +148,9 @@ public class City : MonoBehaviour
             }
         }
 
+        CustomTile targetTile4 = _tileMap[4, 3];
+        GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile4, 7);
+
         if (_myManager is AICityManager)
         {
             CustomTile targetTile1 = _tileMap[3, 4];

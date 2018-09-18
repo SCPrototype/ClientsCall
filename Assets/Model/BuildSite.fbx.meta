@@ -1,14 +1,21 @@
 fileFormatVersion: 2
-guid: 64494141178371f438bb60506698f30c
+guid: eae8bdb00f952d546830fcca109d08ea
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: semi_transparent
+    100004: solid
     400000: //RootNode
+    400002: semi_transparent
+    400004: solid
     2100000: lambert1
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: House
+    2300000: semi_transparent
+    2300002: solid
+    3300000: semi_transparent
+    3300002: solid
+    4300000: semi_transparent
+    4300002: solid
     9500000: //RootNode
   externalObjects: {}
   materials:

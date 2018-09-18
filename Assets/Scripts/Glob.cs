@@ -53,7 +53,7 @@ public static class Glob {
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
     public static Color MissileAimColor = new Color(1, 0, 0, 1);
 
-    public const int buildingCount = 7;
+    public const int buildingCount = 8;
     public const int particleCount = 2;
     public const int factoriesVariations = 5;
 
@@ -68,6 +68,7 @@ public static class Glob {
     public const string missileSiloPrefab = "MissileSilo";
     public const string wonderPrefab = "Wonder";
     public const string bridgePrefab = "Bridge Construction Site";
+    public const string mayorOfficePrefab = "MayorOffice";
 
     //Sounds
     public const int amountOfSounds = 11;
@@ -94,6 +95,7 @@ public static class Glob {
         buildings[4] = Resources.Load<MissileSilo>(missileSiloPrefab).Initialize();
         buildings[5] = Resources.Load<Wonder>(wonderPrefab).Initialize();
         buildings[6] = Resources.Load<Bridge>(bridgePrefab).Initialize();
+        buildings[7] = Resources.Load<MayorOffice>(mayorOfficePrefab).Initialize();
         //buildings[2] = Resources.Load<Factory>(factoryPrefab1);
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
