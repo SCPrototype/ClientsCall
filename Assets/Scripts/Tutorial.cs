@@ -183,6 +183,7 @@ public class Tutorial : MonoBehaviour {
                     //GameInitializer.GetUIHandler().ToggleBuildPanel(false);
                     GameInitializer.SetPaused(false);
                     _tutorialActive = false;
+                    return;
                 }
 
                 UIHandler.ShowNotification(_allText[_currentText]);//Display the new information.

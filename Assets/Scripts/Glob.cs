@@ -70,7 +70,7 @@ public static class Glob {
     public const string bridgePrefab = "Bridge Construction Site";
 
     //Sounds
-    public const int amountOfSounds = 10;
+    public const int amountOfSounds = 11;
     public const string confirmSound = "Sounds/Confirm";
     public const string endTurnSound = "Sounds/EndTurn";
     public const string errorSound = "Sounds/Error";
@@ -81,6 +81,7 @@ public static class Glob {
     public const string moveSound = "Sounds/Move";
     public const string popUpSound = "Sounds/PopUp";
     public const string winSound = "Sounds/Win";
+    public const string backgroundMusic = "Sounds/BackgroundSounds";
 
 
     public static Building[] GetBuildingPrefabs()
@@ -140,11 +141,12 @@ public static class Glob {
         audioClips[2] = Resources.Load<AudioClip>(errorSound);
         audioClips[3] = Resources.Load<AudioClip>(loseSound);
         audioClips[4] = Resources.Load<AudioClip>(missileHitSound);
-        audioClips[5] = Resources.Load<AudioClip>(missileHitSound);
+        audioClips[5] = Resources.Load<AudioClip>(missileLaunchSound);
         audioClips[6] = Resources.Load<AudioClip>(moneySound);
         audioClips[7] = Resources.Load<AudioClip>(moveSound);
         audioClips[8] = Resources.Load<AudioClip>(popUpSound);
         audioClips[9] = Resources.Load<AudioClip>(winSound);
+        audioClips[10] = Resources.Load<AudioClip>(backgroundMusic);
         return audioClips;
     }
 
