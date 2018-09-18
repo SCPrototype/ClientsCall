@@ -50,6 +50,7 @@ public class City : MonoBehaviour
     {
         InvokeRepeating("Blink", 0.5f, 0.5f);
         _uiHandler.SetResourcesBars((int)_budget);
+        _mayorOffice.UpdateHatPosition(_budget);
     }
 
     void Update()
@@ -78,6 +79,7 @@ public class City : MonoBehaviour
                     {
                         _eventManager.EnableRandomEvent();
                     }
+                    _mayorOffice.UpdateHatPosition(_budget);
                     _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
                 }
                 _myManager.HandleTurn(this);
@@ -286,7 +288,7 @@ public class City : MonoBehaviour
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
         _budget = Mathf.Clamp(_budget + pChange, 0, Glob.BudgetCap);
         //softcap for now.
-
+        _mayorOffice.UpdateHatPosition(_budget);
         _uiHandler.SetResourcesBars((int)_budget);
     }
 

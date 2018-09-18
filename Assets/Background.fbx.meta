@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: 6f3fabffd8f2d434495b948c2a92291d
+timeCreated: 1537265140
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: background1
+    100004: Bridge
+    100006: Bridge1
+    100008: fome
+    100010: fome1
+    100012: fome10
+    100014: fome11
+    100016: fome2
+    100018: fome3
+    100020: fome4
+    100022: fome5
+    100024: fome6
+    100026: fome7
+    100028: fome8
+    100030: fome9
+    100032: opjects
+    100034: prop
+    100036: prop1
+    100038: prop2
+    100040: prop3
+    100042: prop4
+    100044: prop5
+    100046: water
+    400000: //RootNode
+    400002: background1
+    400004: Bridge
+    400006: Bridge1
+    400008: fome
+    400010: fome1
+    400012: fome10
+    400014: fome11
+    400016: fome2
+    400018: fome3
+    400020: fome4
+    400022: fome5
+    400024: fome6
+    400026: fome7
+    400028: fome8
+    400030: fome9
+    400032: opjects
+    400034: prop
+    400036: prop1
+    400038: prop2
+    400040: prop3
+    400042: prop4
+    400044: prop5
+    400046: water
+    2100000: lambert1
+    2300000: background1
+    2300002: Bridge
+    2300004: Bridge1
+    2300006: fome
+    2300008: fome1
+    2300010: fome10
+    2300012: fome11
+    2300014: fome2
+    2300016: fome3
+    2300018: fome4
+    2300020: fome5
+    2300022: fome6
+    2300024: fome7
+    2300026: fome8
+    2300028: fome9
+    2300030: opjects
+    2300032: prop
+    2300034: prop1
+    2300036: prop2
+    2300038: prop3
+    2300040: prop4
+    2300042: prop5
+    2300044: water
+    3300000: background1
+    3300002: Bridge
+    3300004: Bridge1
+    3300006: fome
+    3300008: fome1
+    3300010: fome10
+    3300012: fome11
+    3300014: fome2
+    3300016: fome3
+    3300018: fome4
+    3300020: fome5
+    3300022: fome6
+    3300024: fome7
+    3300026: fome8
+    3300028: fome9
+    3300030: opjects
+    3300032: prop
+    3300034: prop1
+    3300036: prop2
+    3300038: prop3
+    3300040: prop4
+    3300042: prop5
+    3300044: water
+    4300000: prop
+    4300002: prop1
+    4300004: prop2
+    4300006: prop3
+    4300008: prop4
+    4300010: prop5
+    4300012: Bridge
+    4300014: opjects
+    4300016: background1
+    4300018: Bridge1
+    4300020: water
+    4300022: fome
+    4300024: fome1
+    4300026: fome2
+    4300028: fome3
+    4300030: fome4
+    4300032: fome5
+    4300034: fome6
+    4300036: fome7
+    4300038: fome8
+    4300040: fome9
+    4300042: fome10
+    4300044: fome11
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

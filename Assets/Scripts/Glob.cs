@@ -8,12 +8,12 @@ public static class Glob {
     public const int AmountOfAICities = 1; //Dont change this value, it will break the game. (Spaghetti code caused by time restraints.)
     public const int CityWidth = 10;
     public const int CityLength = 10;
-    public const int CitySpacing = 75;
+    public const int CitySpacing = 58;
     public const float TileSpacing = 0.2f;
     public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
     public const int RandomParkAmount = 1;
-    public const int StartingBudget = 140;
+    public const int StartingBudget = 500;
     public const int BudgetCap = 500;
     public const float FactoryProductionMultiplier = 0.05f;
 
@@ -69,6 +69,7 @@ public static class Glob {
     public const string wonderPrefab = "Wonder";
     public const string bridgePrefab = "Bridge Construction Site";
     public const string mayorOfficePrefab = "MayorOffice";
+    public const string missilePrefab = "Missile";
 
     //Sounds
     public const int amountOfSounds = 11;
@@ -100,6 +101,11 @@ public static class Glob {
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
         return buildings;
+    }
+
+    public static Missile GetMissile()
+    {
+        return Resources.Load<Missile>(missilePrefab).Initialize();
     }
 
     public static Factory[] GetFactoriesPrefabs()

@@ -141,6 +141,7 @@ public class UIHandler : MonoBehaviour
         //pBudget = Mathf.Clamp(pBudget, 0, 100);
         _budgetText.text = "Budget: " + pBudget ;
         _budgetSlider.value = (float)pBudget / (float)Glob.BudgetCap;
+        
     }
     public void SetExamineMode(Building pBuilding)
     {

@@ -139,7 +139,7 @@ public class Tutorial : MonoBehaviour {
                 else if (_currentText == 10)
                 {
                     _myCity.CollectFromAllBuildings();
-                    _myCity.ChangeSelectedTile(CityManager.DirectionKey.DOWN);
+                    _myCity.ChangeSelectedTile(CityManager.DirectionKey.RIGHT);
 
                     GameInitializer.GetUIHandler().SetResourcesBars((int)_myCity.GetBudget());
 

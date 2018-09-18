@@ -39,5 +39,4 @@ public class MayorOffice : FunctionBuilding
         float totalHeight = _moveAbleHat.transform.lossyScale.y;
         _moveAbleHat.transform.localPosition = new Vector3(0,(totalHeight * percentage) * 3.5f,1.7f);
     }
-
 }

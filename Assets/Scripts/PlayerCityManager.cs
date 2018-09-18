@@ -31,7 +31,7 @@ public class PlayerCityManager : CityManager
         if (currentMode == CurrentMode.MISSILEAIM && _isFocusedOnOwnCity)
         {
             targetCity = GameInitializer.GetNextCity(targetCity);
-            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
             _isFocusedOnOwnCity = false;
             UIHandler.ShowNotification("BOMBS AWAY!"); //TODO: Placeholder text
         }
@@ -47,12 +47,13 @@ public class PlayerCityManager : CityManager
                 if (_isFocusedOnOwnCity)
                 {
                     targetCity = GameInitializer.GetNextCity(pCity);
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime/2);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
                     _isFocusedOnOwnCity = false;
-                } else
+                }
+                else
                 {
                     targetCity = pCity;
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime/2);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
                     _isFocusedOnOwnCity = true;
                 }
             }
@@ -88,14 +89,23 @@ public class PlayerCityManager : CityManager
                     }
                     else if (currentMode == CurrentMode.MISSILEAIM)
                     {
-                        _soundHandler.PlaySound(SoundHandler.Sounds.MISSILEHIT);
-                        Destroy(targetCity.GetSelectedTile().GetBuildingOnTile().gameObject);
-                        targetCity.GetSelectedTile().SetBuilding(null);
-                        SetCurrentMode(CurrentMode.SELECTINGTILE);
-                        _isFocusedOnOwnCity = true;
-                        targetCity = pCity;
-                        GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
-                        pCity.AddMissileLaunched();
+                        Debug.Log(GameInitializer.GetCameraManager().isAnimationDone());
+                        if (GameInitializer.GetCameraManager().isAnimationDone())
+                        {
+                            Missile missile = Instantiate(Glob.GetMissile());
+                            missile.SetMissileTile(targetCity.GetSelectedTile());
+                            Destroy(targetCity.GetSelectedTile().GetBuildingOnTile().gameObject);
+                            targetCity.GetSelectedTile().SetBuilding(null);
+                            SetCurrentMode(CurrentMode.SELECTINGTILE);
+                            _isFocusedOnOwnCity = true;
+                            targetCity = pCity;
+                            //AddMissile with sound.
+                            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
+                            pCity.AddMissileLaunched();
+                        }
+                        else
+                        { Debug.Log("nawh"); }
+
                     }
                     else
                     {
