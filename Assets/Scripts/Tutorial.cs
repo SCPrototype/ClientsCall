@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tutorial : MonoBehaviour {
+public class Tutorial : MonoBehaviour
+{
 
     private const string _welcome = "Hey, my name is Atlantropa. I'm here to help you get the hang of it. \nWelcome to your city.Right now it’s rather… what's the word for it? Quaint. But soon it could be a powerful beast. Let's get you started. Press the first button if you're ready to continue.";
     private const string _tileSelect = "With that joystick in front of you, you can move around. Then when you found your perfect patch of green, you can select it by pressing the first button.";
@@ -42,7 +43,8 @@ public class Tutorial : MonoBehaviour {
     private bool _tutorialActive = true;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         _myCity = GameInitializer.GetCurrentCity();
 
         _allText[0] = _welcome;
@@ -67,9 +69,10 @@ public class Tutorial : MonoBehaviour {
         GameInitializer.SetPaused(true);
         UIHandler.ShowNotification(_allText[_currentText]);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (_tutorialActive)
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -142,7 +145,7 @@ public class Tutorial : MonoBehaviour {
                 else if (_currentText == 10)
                 {
                     _myCity.CollectFromAllBuildings();
-                    _myCity.ChangeSelectedTile(CityManager.DirectionKey.RIGHT);
+                    _myCity.ChangeSelectedTile(CityManager.DirectionKey.DOWN);
 
                     GameInitializer.GetUIHandler().SetResourcesBars((int)_myCity.GetBudget());
 
@@ -200,23 +203,25 @@ public class Tutorial : MonoBehaviour {
 
     private void handleInput()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (_currentText != 8)
         {
-            _myCity.ChangeSelectedTile(CityManager.DirectionKey.RIGHT);
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.RIGHT);
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.LEFT);
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.UP);
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                _myCity.ChangeSelectedTile(CityManager.DirectionKey.DOWN);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            _myCity.ChangeSelectedTile(CityManager.DirectionKey.LEFT);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            _myCity.ChangeSelectedTile(CityManager.DirectionKey.UP);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            _myCity.ChangeSelectedTile(CityManager.DirectionKey.DOWN);
-        }
-
         int[] currentTile = _myCity.GetTilePosition(_myCity.GetSelectedTile());
         if (_currentText == 1)
         {
