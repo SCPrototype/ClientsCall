@@ -70,26 +70,30 @@ public class Choice
     [XmlAttribute("cost")]
     public int cost;
 
-    [XmlAttribute("happinessValue")]
-    public int happinessValue;
+    [XmlAttribute("achieverValue")]
+    public int achieverValue;
+
+    [XmlAttribute("explorerValue")]
+    public int explorerValue;
+
+    [XmlAttribute("killerValue")]
+    public int killerValue;
+
+    [XmlAttribute("socializerValue")]
+    public int socializerValue;
 
     [XmlElement("repercussion")]
     public Repercussion[] repercussions { get; set; }
 
     public override string ToString()
     {
-        string output = "\tChoice: " + string.Format("\tDescription: {0}\t Cost: {1}\n\t\tHappiness: {2}\n", description, cost, happinessValue);
+        string output = "\tChoice: " + string.Format("\tDescription: {0}\t Cost: {1}\n\t\tAchiever: {2}, Explorer: {3}, Killer: {4}, Socializer: {5}.\n", description, cost, achieverValue, explorerValue, killerValue, socializerValue);
         output += "\n";
         foreach (Repercussion repercussion in repercussions)
         {
             output += repercussion;
         }
         return output;
-    }
-
-    public int GetHappiness()
-    {
-        return happinessValue;
     }
 }
 
@@ -102,17 +106,21 @@ public class Repercussion
     [XmlAttribute("cost")]
     public int cost;
 
-    [XmlAttribute("happinessValue")]
-    public int happinessValue;
+    [XmlAttribute("achieverValue")]
+    public int achieverValue;
+
+    [XmlAttribute("explorerValue")]
+    public int explorerValue;
+
+    [XmlAttribute("killerValue")]
+    public int killerValue;
+
+    [XmlAttribute("socializerValue")]
+    public int socializerValue;
 
     public override string ToString()
     {
-        string output = "\t\tEffect: " + string.Format("\tDescription: {0}\n Cost: {1}\n\t\t\tHappiness: {2}\n", description, cost, happinessValue);
+        string output = "\t\tEffect: " + string.Format("\tDescription: {0}\t Cost: {1}\n\t\t\tAchiever: {2}, Explorer: {3}, Killer: {4}, Socializer: {5}.\n", description, cost, achieverValue, explorerValue, killerValue, socializerValue);
         return output;
-    }
-
-    public int GetHappiness()
-    {
-        return happinessValue;
     }
 }

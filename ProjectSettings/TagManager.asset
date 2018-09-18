@@ -17,6 +17,7 @@ TagManager:
   - HappinessSlider
   - ExaminePanel
   - TurnCounter
+  - ResolutionScreen
   layers:
   - Default
   - TransparentFX

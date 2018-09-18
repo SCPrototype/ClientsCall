@@ -81,6 +81,26 @@ public class City : MonoBehaviour
                     }
                     _mayorOffice.UpdateHatPosition(_budget);
                     _uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
+                    if (_currentTurn >= 6 && _currentTurn <= 8 && _myManager is PlayerCityManager)
+                    {
+                        switch (_currentTurn)
+                        {
+                            case 6:
+                                int scoreTurn6 = Mathf.Clamp(Glob.OptimalBudgetTurn6 - (int)_budget, 0, 10);
+                                GameInitializer.AddAchieverScore(10 - scoreTurn6);
+                                break;
+                            case 7:
+                                int scoreTurn7 = Mathf.Clamp(Glob.OptimalBudgetTurn7 - (int)_budget, 0, 20) / 2;
+                                GameInitializer.AddAchieverScore(10 - scoreTurn7);
+                                break;
+                            case 8:
+                                int scoreTurn8 = Mathf.Clamp(Glob.OptimalBudgetTurn8 - (int)_budget, 0, 40) / 4;
+                                GameInitializer.AddAchieverScore(10 - scoreTurn8);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
                 _myManager.HandleTurn(this);
             }
@@ -150,7 +170,7 @@ public class City : MonoBehaviour
             }
         }
 
-        CustomTile targetTile4 = _tileMap[4, 3];
+        CustomTile targetTile4 = _tileMap[5, 4];
         GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile4, 7);
 
         if (_myManager is AICityManager)
@@ -329,6 +349,10 @@ public class City : MonoBehaviour
                 if (!borderingTile.GetIsHappy())
                 {
                     borderingTile.SetIsHappy(pHappy);
+                    if (borderingTile.GetBuildingOnTile() is House && _myManager is PlayerCityManager && pHappy)
+                    {
+                        GameInitializer.AddSocializerScore(2);
+                    }
                 }
             }
         }
@@ -355,7 +379,11 @@ public class City : MonoBehaviour
     public void AddRelic()
     {
         _amountOfRelics++;
-        if(_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
+        if (_amountOfRelics <= Glob.AmountOfRelicsNeededToWin && _myManager is PlayerCityManager)
+        {
+            GameInitializer.AddExplorerScore(6);
+        }
+        if (_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
         {
             GameInitializer.EndGame(false, this);
         }
@@ -373,6 +401,10 @@ public class City : MonoBehaviour
             AICityManager AICity = GameInitializer.GetNextCity(this).GetManager() as AICityManager;
             AICity.ChangeAnimosity(50, GameInitializer.GetNextCity(this));
         }
+        if (_myManager is PlayerCityManager)
+        {
+            GameInitializer.AddKillerScore(20);
+        }
         if (_missilesLaunched >= Glob.AmountOfMissilesNeededToWin)
         {
             GameInitializer.EndGame(false, this);
@@ -383,13 +415,18 @@ public class City : MonoBehaviour
     {
         _bridgesBuilt++;
 
+        if (_bridgesBuilt <= Glob.AmountOfBridgesNeededToWin && _myManager is PlayerCityManager)
+        {
+            GameInitializer.AddSocializerScore(30);
+        }
         if (_bridgesBuilt >= Glob.AmountOfBridgesNeededToWin)
         {
             if (GameInitializer.GetNextCity(this).GetBridgesBuilt() >= Glob.AmountOfBridgesNeededToWin)
             {
-                GameInitializer.EndGame(true); //TODO: Make both cities win.
+                GameInitializer.EndGame(true);
             }
         }
+
     }
     public int GetBridgesBuilt()
     {
@@ -418,9 +455,14 @@ public class City : MonoBehaviour
         return _myManager;
     }
 
-    public void HighlightTile(int pX, int pY)
+    public void HighlightTile(int pX, int pY, bool pToggle)
     {
-        //TODO: Highlight tile
-        //_tileMap[pX,pY].SetHighlighted();
+        if (pToggle)
+        {
+            _tileMap[pX, pY].PlayParticle();
+        } else
+        {
+            _tileMap[pX, pY].StopParticle();
+        }
     }
 }

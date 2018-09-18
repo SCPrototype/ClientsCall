@@ -28,6 +28,12 @@ public class UIHandler : MonoBehaviour
     private Text _happinessText;
     private Text _examineText;
 
+    private GameObject _resolutionScreen;
+    private Text _resolutionPlayerType;
+    private Text _resolutionExplanation;
+    private Text _resolutionRecommendation;
+    private Text _resolutionStats;
+
 
     // Use this for initialization
     void Start()
@@ -171,6 +177,39 @@ public class UIHandler : MonoBehaviour
         _turnCounter.text = "Turn: " + pTurn + "/" + Glob.TurnAmount;
     }
 
+    public void EnableResolutionScreen(Glob.PlayerTypes pPlayerType)
+    {
+        switch (pPlayerType)
+        {
+            case Glob.PlayerTypes.Achiever:
+                _resolutionPlayerType.text = Glob.AchieverType;
+                _resolutionExplanation.text = Glob.AchieverExplain;
+                _resolutionRecommendation.text = Glob.AchieverRecommend;
+                break;
+            case Glob.PlayerTypes.Explorer:
+                _resolutionPlayerType.text = Glob.ExplorerType;
+                _resolutionExplanation.text = Glob.ExplorerExplain;
+                _resolutionRecommendation.text = Glob.ExplorerRecommend;
+                break;
+            case Glob.PlayerTypes.Killer:
+                _resolutionPlayerType.text = Glob.KillerType;
+                _resolutionExplanation.text = Glob.KillerExplain;
+                _resolutionRecommendation.text = Glob.KillerRecommend;
+                break;
+            case Glob.PlayerTypes.Socializer:
+                _resolutionPlayerType.text = Glob.SocializerType;
+                _resolutionExplanation.text = Glob.SocializerExplain;
+                _resolutionRecommendation.text = Glob.SocializerRecommend;
+                break;
+            default:
+                break;
+        }
+
+        float totalScore = GameInitializer.GetAchieverScore() + GameInitializer.GetExplorerScore() + GameInitializer.GetKillerScore() + GameInitializer.GetSocializerScore();
+        _resolutionStats.text = "Your stats: \nAchiever: " + (GameInitializer.GetAchieverScore()/totalScore)*100 + "% \nExplorer: " + (GameInitializer.GetExplorerScore()/totalScore) * 100 + "% \nKiller: " + (GameInitializer.GetKillerScore()/totalScore) * 100 + "% \nSocializer: " + (GameInitializer.GetSocializerScore()/totalScore) * 100 + "%";
+        _resolutionScreen.SetActive(true);
+    }
+
     //Do not open /!\ Hazardous /!\
     private void Initialize()
     {
@@ -180,18 +219,31 @@ public class UIHandler : MonoBehaviour
         _buildPanel = GameObject.FindGameObjectWithTag("BuildPanel");
         _buildPanel.SetActive(false);
         _scrollView = _buildPanel.GetComponentInChildren<ScrollRect>();
+
         _bottomBar = GameObject.FindGameObjectWithTag("BottomBar");
+
         _notificationPanel = GameObject.FindGameObjectWithTag("NotificationPanel");
         _notificationPanel.SetActive(false);
         _notificationText = _notificationPanel.GetComponentInChildren<Text>();
+
         _turnCounter = GameObject.FindGameObjectWithTag("TurnCounter").GetComponent<Text>();
+
         _eventMenu = GameObject.FindGameObjectWithTag("EventMenu");
+
         _valuesPanel = GameObject.FindGameObjectWithTag("Values");
         _budgetSlider = GameObject.FindGameObjectWithTag("BudgetSlider").GetComponent<Slider>();
         _budgetText = _budgetSlider.GetComponentInChildren<Text>();
+
         _examinePanel = GameObject.FindGameObjectWithTag("ExaminePanel");
         _examineText = _examinePanel.GetComponentInChildren<Text>();
         _examinePanel.SetActive(false);
+
+        _resolutionScreen = GameObject.FindGameObjectWithTag("ResolutionScreen");
+        _resolutionScreen.SetActive(false);
+        _resolutionPlayerType = _resolutionScreen.GetComponentsInChildren<Text>()[0];
+        _resolutionExplanation = _resolutionScreen.GetComponentsInChildren<Text>()[1];
+        _resolutionRecommendation = _resolutionScreen.GetComponentsInChildren<Text>()[2];
+        _resolutionStats = _resolutionScreen.GetComponentsInChildren<Text>()[3];
 
         _buildings = Glob.GetBuildingPrefabs();
 
