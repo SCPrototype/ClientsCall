@@ -72,15 +72,17 @@ public class BuildingHandler : MonoBehaviour
         //Can the building get placed.
         if (currentCity.CanBuild(placementBuilding.GetCost()))
         {
-            _soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
             if (placementBuilding is Wonder)
             {
                 if (currentCity.GetHappyHouseAmount() < Glob.WonderHappyHouseReq)
                 {
+                    _soundHandler.PlaySound(SoundHandler.Sounds.ERROR);
                     UIHandler.ShowNotification("The inhabitants are preventing your workers from building this. They don't want you 'wasting' money on this, instead of making them happy. Try building some parks next to houses first.");
                     return false;
                 }
             }
+            _soundHandler.PlaySound(SoundHandler.Sounds.CONFIRM);
+
             //Place the building.
             //Check for building type if there is another building tile near it. If so, upgrade the building to the amount of buildings.
             //Give the other building an index of +1.

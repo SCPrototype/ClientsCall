@@ -18,8 +18,7 @@ public class GameInitializer : MonoBehaviour {
 
     public static void ResetGame()
     {
-        Application.LoadLevel(0);
-        
+        FadeToBlack.DoFade(1, true, 0);
     }
 
 	// Use this for initialization

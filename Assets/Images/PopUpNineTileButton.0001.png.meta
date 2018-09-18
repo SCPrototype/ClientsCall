@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7d1b8863f46f5334aaca56fb340a4ecc
-timeCreated: 1536849094
+guid: 612accc8da431f14e96e0eaecf028bd1
+timeCreated: 1537257540
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PopUpButtonNineTile_0
+    21300000: PopUpNineTile.0001_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -91,7 +91,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PopUpButtonNineTile_0
+      name: PopUpNineTile.0001_0
       rect:
         serializedVersion: 2
         x: 0
@@ -100,7 +100,7 @@ TextureImporter:
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 6, y: 6, z: 6, w: 6}
+      border: {x: 9, y: 9, z: 8, w: 9}
       outline: []
       physicsShape: []
       tessellationDetail: 0

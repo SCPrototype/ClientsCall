@@ -14,12 +14,14 @@ public class DifficultyMenu : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             GameInitializer.HardModeEnabled = true;
-            Application.LoadLevel(1);
+            FadeToBlack.DoFade(1, true, 1);
+            //Application.LoadLevel(1);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             GameInitializer.HardModeEnabled = false;
-            Application.LoadLevel(1);
+            FadeToBlack.DoFade(1, true, 1);
+            //Application.LoadLevel(1);
         }
 	}
 }

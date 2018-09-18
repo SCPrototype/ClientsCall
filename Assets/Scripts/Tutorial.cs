@@ -99,8 +99,9 @@ public class Tutorial : MonoBehaviour {
 
                 _tileSelected = false;
 
+
                 _currentText++;
-                UIHandler.ShowNotification(_allText[_currentText]);
+
 
                 if (_currentText == 1)
                 {
@@ -172,9 +173,19 @@ public class Tutorial : MonoBehaviour {
                 else if (_currentText == 17)
                 {
                     GameInitializer.GetBuildingHandler().DestroyPlacementBuilding();
+                    GameInitializer.GetUIHandler().ToggleBuildPanel(false);
+                    //GameInitializer.SetPaused(false);
+                    //_tutorialActive = false;
+                }
+                else if (_currentText >= 18)
+                {
+                    //GameInitializer.GetBuildingHandler().DestroyPlacementBuilding();
+                    //GameInitializer.GetUIHandler().ToggleBuildPanel(false);
                     GameInitializer.SetPaused(false);
                     _tutorialActive = false;
                 }
+
+                UIHandler.ShowNotification(_allText[_currentText]);//Display the new information.
             }
             if (_currentText == 1 || _currentText == 3 && !_houseBuilt || _currentText == 6 && !_parkBuilt || _currentText == 8 && !_turnEnded)
             {
