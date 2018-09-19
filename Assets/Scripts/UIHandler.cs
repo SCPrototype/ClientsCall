@@ -182,22 +182,22 @@ public class UIHandler : MonoBehaviour
         switch (pPlayerType)
         {
             case Glob.PlayerTypes.Achiever:
-                _resolutionPlayerType.text = Glob.AchieverType;
+                _resolutionPlayerType.text = "You are an: " + Glob.AchieverType;
                 _resolutionExplanation.text = Glob.AchieverExplain;
                 _resolutionRecommendation.text = Glob.AchieverRecommend;
                 break;
             case Glob.PlayerTypes.Explorer:
-                _resolutionPlayerType.text = Glob.ExplorerType;
+                _resolutionPlayerType.text = "You are an: " + Glob.ExplorerType;
                 _resolutionExplanation.text = Glob.ExplorerExplain;
                 _resolutionRecommendation.text = Glob.ExplorerRecommend;
                 break;
             case Glob.PlayerTypes.Killer:
-                _resolutionPlayerType.text = Glob.KillerType;
+                _resolutionPlayerType.text = "You are a: " + Glob.KillerType;
                 _resolutionExplanation.text = Glob.KillerExplain;
                 _resolutionRecommendation.text = Glob.KillerRecommend;
                 break;
             case Glob.PlayerTypes.Socializer:
-                _resolutionPlayerType.text = Glob.SocializerType;
+                _resolutionPlayerType.text = "You are a: " + Glob.SocializerType;
                 _resolutionExplanation.text = Glob.SocializerExplain;
                 _resolutionRecommendation.text = Glob.SocializerRecommend;
                 break;

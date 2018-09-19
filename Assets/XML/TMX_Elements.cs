@@ -83,16 +83,13 @@ public class Choice
     public int socializerValue;
 
     [XmlElement("repercussion")]
-    public Repercussion[] repercussions { get; set; }
+    public Repercussion repercussion { get; set; }
 
     public override string ToString()
     {
         string output = "\tChoice: " + string.Format("\tDescription: {0}\t Cost: {1}\n\t\tAchiever: {2}, Explorer: {3}, Killer: {4}, Socializer: {5}.\n", description, cost, achieverValue, explorerValue, killerValue, socializerValue);
         output += "\n";
-        foreach (Repercussion repercussion in repercussions)
-        {
-            output += repercussion;
-        }
+        output += repercussion;
         return output;
     }
 }
@@ -106,21 +103,9 @@ public class Repercussion
     [XmlAttribute("cost")]
     public int cost;
 
-    [XmlAttribute("achieverValue")]
-    public int achieverValue;
-
-    [XmlAttribute("explorerValue")]
-    public int explorerValue;
-
-    [XmlAttribute("killerValue")]
-    public int killerValue;
-
-    [XmlAttribute("socializerValue")]
-    public int socializerValue;
-
     public override string ToString()
     {
-        string output = "\t\tEffect: " + string.Format("\tDescription: {0}\t Cost: {1}\n\t\t\tAchiever: {2}, Explorer: {3}, Killer: {4}, Socializer: {5}.\n", description, cost, achieverValue, explorerValue, killerValue, socializerValue);
+        string output = "\t\tEffect: " + string.Format("\tDescription: {0}\t Cost: {1}\n", description, cost);
         return output;
     }
 }
