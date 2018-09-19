@@ -206,7 +206,7 @@ public class UIHandler : MonoBehaviour
         }
 
         float totalScore = GameInitializer.GetAchieverScore() + GameInitializer.GetExplorerScore() + GameInitializer.GetKillerScore() + GameInitializer.GetSocializerScore();
-        _resolutionStats.text = "Your stats: \nAchiever: " + (GameInitializer.GetAchieverScore()/totalScore)*100 + "% \nExplorer: " + (GameInitializer.GetExplorerScore()/totalScore) * 100 + "% \nKiller: " + (GameInitializer.GetKillerScore()/totalScore) * 100 + "% \nSocializer: " + (GameInitializer.GetSocializerScore()/totalScore) * 100 + "%";
+        _resolutionStats.text = "Your stats: \n\nAchiever: " + Mathf.Round((GameInitializer.GetAchieverScore()/totalScore)*100) + "% \nExplorer: " + Mathf.Round((GameInitializer.GetExplorerScore()/totalScore) * 100) + "% \nKiller: " + Mathf.Round((GameInitializer.GetKillerScore()/totalScore) * 100) + "% \nSocializer: " + Mathf.Round((GameInitializer.GetSocializerScore()/totalScore) * 100) + "%";
         _resolutionScreen.SetActive(true);
     }
 

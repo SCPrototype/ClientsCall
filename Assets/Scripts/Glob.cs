@@ -21,17 +21,17 @@ public static class Glob {
     }
 
     public const string AchieverType = "Achiever";
-    public const string AchieverExplain = "As an Achiever, you truly enjoy...";
-    public const string AchieverRecommend = "Some games you might enjoy as an Achiever are...";
+    public const string AchieverExplain = "These are players who prefer to gain 'points', levels, equipment and other concrete measurements of succeeding in a game. They will go to great lengths to achieve rewards that confer them little or no gameplay benefit simply for the prestige of having it.";
+    public const string AchieverRecommend = "Some games you might enjoy as an Achiever are:\n\n - Factorio\n - Marvel's Spiderman (2018)\n - Five Nights at Freddy's";
     public const string ExplorerType = "Explorer";
-    public const string ExplorerExplain = "As an Explorer, you truly enjoy...";
-    public const string ExplorerRecommend = "Some games you might enjoy as an Explorer are...";
+    public const string ExplorerExplain = "	Explorers are players who prefer discovering areas, creating maps and learning about hidden places. They often feel restricted when a game expects them to move on within a certain time, as that does not allow them to look around at their own pace. They find great joy in discovering an unknown glitch or a hidden easter egg.";
+    public const string ExplorerRecommend = "Some games you might enjoy as an Explorer are:\n\n - The Binding of Isaac\n - Terraria\n - Undertale";
     public const string KillerType = "Killer";
-    public const string KillerExplain = "As a Killer, you truly enjoy...";
-    public const string KillerRecommend = "Some games you might enjoy as an Killer are...";
+    public const string KillerExplain = "Killers thrive on competition with other players, and prefer fighting them to scripted computer-controlled opponents. Killers also tend to enjoy provoking other players, and therefore trolls and hackers are also considered Killers.";
+    public const string KillerRecommend = "Some games you might enjoy as a Killer are:\n\n - Counter-Strike\n - League of Legends\n - Grand Theft Auto";
     public const string SocializerType = "Socializer";
-    public const string SocializerExplain = "As a Socializer, you truly enjoy...";
-    public const string SocializerRecommend = "Some games you might enjoy as an Socializer are...";
+    public const string SocializerExplain = "Socializers gain the most enjoyment from a game by interacting with other players, and on some occasions, computer-controlled characters with personality. The game is merely a tool they use to meet others in-game or outside of it.";
+    public const string SocializerRecommend = "Some games you might enjoy as a Socializer are:\n\n - Stardew Valley\n - Sims\n - Animal Crossing";
 
     public const int OptimalBudgetTurn6 = 120;
     public const int OptimalBudgetTurn7 = 211;
