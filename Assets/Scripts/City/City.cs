@@ -83,7 +83,7 @@ public class City : MonoBehaviour
                         AICity.ChangeAnimosity(-Mathf.RoundToInt(GetHappyHouseAmount() * Glob.HappyHouseAnimosityChange), GameInitializer.GetNextCity(this));
                     }
                     _collectedThisTurn = true;
-                    if (_currentTurn % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager)
+                    if ((_currentTurn - Glob.EventTurnStart) % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager && _currentTurn >= Glob.EventTurnStart && !GameInitializer.GetPaused())
                     {
                         _eventManager.EnableRandomEvent();
                     }

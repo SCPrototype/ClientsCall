@@ -33,9 +33,9 @@ public static class Glob {
     public const string SocializerExplain = "As a Socializer, you truly enjoy...";
     public const string SocializerRecommend = "Some games you might enjoy as an Socializer are...";
 
-    public const int OptimalBudgetTurn6 = 130; //Doesnt work when the player loses money to the turn 4 event, but is assumed that achievers will reset after bad event.
+    public const int OptimalBudgetTurn6 = 120;
     public const int OptimalBudgetTurn7 = 211;
-    public const int OptimalBudgetTurn8 = 373;
+    public const int OptimalBudgetTurn8 = 338;
 
     //GAME VALUES
     public const float GameTimeOut = 120;
@@ -74,12 +74,13 @@ public static class Glob {
 
     public const float HappyHouseAnimosityChange = 2f; //out of 100
 
-    public const int WonderHappyHouseReq = 1;
+    public const int WonderHappyHouseReq = 17;
 
     public const int AmountOfBridgesNeededToWin = 1;
 
     public const int TurnAmount = 16;
-    public const int EventTurnInterval = 4;
+    public const int EventTurnStart = 3;
+    public const int EventTurnInterval = 2;
 
     //PREFABS
     public const string UIPrefab = "UI";

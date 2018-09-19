@@ -7,6 +7,7 @@ public class EventManager : MonoBehaviour
 {
     private AllEvents _allEvents;
     private RandomEvent _currentEvent;
+    private int _eventIndex = 0;
 
     public GameObject EventMenu;
 
@@ -48,7 +49,12 @@ public class EventManager : MonoBehaviour
 
     public void EnableRandomEvent()
     {
-        _currentEvent = _allEvents.events[Random.Range(0, _allEvents.events.Length)];
+        if (_eventIndex >= _allEvents.events.Length)
+        {
+            return;
+        }
+        _currentEvent = _allEvents.events[_eventIndex];
+        _eventIndex++;
         eventText.text = _currentEvent.description;
         choiceText1.text = _currentEvent.choices[0].description + "\nCost: " + _currentEvent.choices[0].cost;
         choiceText2.text = _currentEvent.choices[1].description + "\nCost: " + _currentEvent.choices[1].cost;
@@ -65,10 +71,20 @@ public class EventManager : MonoBehaviour
     {
         Choice chc = _currentEvent.choices[choice];
         effectBox.SetActive(true);
-        Repercussion currentRepercussion = chc.repercussions[Random.Range(0, chc.repercussions.Length)];
-        effectText.text = currentRepercussion.description + "\nCost: " + currentRepercussion.cost;
+        string repercussionCostText = chc.repercussion.cost.ToString();
+        if (chc.repercussion.cost < 0)
+        {
+            repercussionCostText = "+" + (-chc.repercussion.cost);
+        }
+        effectText.text = chc.repercussion.description + "\nCost: " + repercussionCostText;
 
-        GameInitializer.GetBuildingHandler().GetCurrentCity().ReceiveCollection(-(chc.cost + currentRepercussion.cost));
+        GameInitializer.GetBuildingHandler().GetCurrentCity().ReceiveCollection(-(chc.cost + chc.repercussion.cost));
+
+        GameInitializer.AddAchieverScore(chc.achieverValue);
+        GameInitializer.AddExplorerScore(chc.explorerValue);
+        GameInitializer.AddKillerScore(chc.killerValue);
+        GameInitializer.AddSocializerScore(chc.socializerValue);
+
     }
 
     public void EndEvent()
