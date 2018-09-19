@@ -29,7 +29,7 @@ public class Tutorial : MonoBehaviour
     private const string _startOfTurn = "Now at the start of the round, you get the money from the factories, and we can use that to buy the tools to end this rivalry. Let's open the build menu again and see what we got.";
     private const string _digsite = "First up, the dig-sites. After you build one, they will look for hidden treasure deep underground. And sometimes they find something worthy enough to put in a museum. Now, this might sound a bit crazy. But what if we filled our museum to the brim with treasure? It will be great, we can explore the entire region in peace.";
     private const string _wonder = "Not quite your style? How about we build a monument, the greatest achievement of mankind? Certainly, ours will be Greater.";
-    private const string _bridges = "Then there were bridges, this is not my kind of thing. But there are three places to build these if you complete that project. I'm sure that both cities will benefit. However, AIton won't want to merge with a city that treats its people, or it neighbours like garbage.";
+    private const string _bridges = "Then there were bridges, this is not my kind of thing. I'm sure that both cities will benefit from a connection. However, AIton won't want to merge with a city that treats its people, or it neighbours like garbage.";
     private const string _missiles = "Now, this is my yam. 20 tons of pure excitement. Build 3 of these, and I'm sure no-one would ever dare to settle near us again. The valley and all its resources are ours. The people will rejoice. Let's build them right… now… Well, it seems that these are a bit too expensive for us right now we need to expand our city first.";
     private const string _goodluck = "Right, you seem to have everything under control. I’ll hand the reigns over to you. Good luck, and may your city prosper.";
     private const string _exitButton = "Oh yeah, before I forget. If you want to exit a menu just press the second button, and if you want to reset the game, hold down the third button for 5 seconds.";
@@ -151,7 +151,7 @@ public class Tutorial : MonoBehaviour
                     _myCity.BudgetChange(0);
                     //GameInitializer.GetUIHandler().SetResourcesBars((int)_myCity.GetBudget());
 
-                    GameInitializer.GetCameraManager().MoveCameraTo(_myCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime);
+                    GameInitializer.GetCameraManager().MoveCameraTo(_myCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime);
                 }
                 else if (_currentText == 11)
                 {
@@ -266,7 +266,7 @@ public class Tutorial : MonoBehaviour
             }
             else if (Time.time - _cancelKeyPressed >= Glob.EndTurnButtonTime && Input.GetKey(Glob.CancelButton))
             {
-                GameInitializer.GetCameraManager().MoveCameraTo(GameInitializer.GetNextCity(_myCity).transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime);
+                GameInitializer.GetCameraManager().MoveCameraTo(GameInitializer.GetNextCity(_myCity).transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime);
                 _turnEnded = true;
                 _currentText++;
                 UIHandler.ShowNotification(_allText[_currentText]);

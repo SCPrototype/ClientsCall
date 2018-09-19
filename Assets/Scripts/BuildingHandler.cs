@@ -43,7 +43,7 @@ public class BuildingHandler : MonoBehaviour
         currentCity.SetCurrentMode(CityManager.CurrentMode.SELECTINGTILE);
         prevTurn = Time.time;
         readyToBuild = false;
-        GameInitializer.GetCameraManager().MoveCameraTo(pCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime);
+        GameInitializer.GetCameraManager().MoveCameraTo(pCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime);
     }
     public City GetCurrentCity()
     {

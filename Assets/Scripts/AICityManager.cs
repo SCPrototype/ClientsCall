@@ -42,7 +42,6 @@ public class AICityManager : CityManager
         }
         _animosity = pAnimosity; //Starting animosity decides wether the AI will focus on digsites, a wonder, or missiles. Will only change to a bridge if affected by player. Chances for each option: 6, 6, 1 = ~(46.25%, 46.25%, 7.5%)
         //If animosity drops below missiles range, change focus to digsites or wonder (whichever is cheapest).
-        
         if (_animosity < 49)
         {
             _initialFocus = AIFocus.Wonder;
@@ -107,7 +106,7 @@ public class AICityManager : CityManager
                     targetCity = GameInitializer.GetNextCity(pCity);
                     launchMissile(getBestFactory(targetCity));
                     targetCity = pCity;
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime / 2, 4);
                     //pCity.AddMissileLaunched();
                     return;
                 }
@@ -131,7 +130,7 @@ public class AICityManager : CityManager
                 {
                     targetCity = GameInitializer.GetNextCity(pCity);
 
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime / 2, 4);
                     targetCity.SetSelectedTile(getBestFactory(targetCity));
                     _prevBuild = Time.time + Glob.AIMissileDelay;
                 }
@@ -324,7 +323,6 @@ public class AICityManager : CityManager
         }
 
         int rnd = UnityEngine.Random.Range(0, 100);
-        Debug.Log(optimalMove._value + " _ " + subOptimalMove._value);
         if (rnd < optimalChance || subOptimalMove._value < 0 || optimalMove._value >= 50000)
         {
             return optimalMove;

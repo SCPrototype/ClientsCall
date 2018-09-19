@@ -47,10 +47,7 @@ public static class Glob {
     public const int CityLength = 10;
     public const int CitySpacing = 62;
     public const float TileSpacing = 0.2f;
-    public const int RandomHouseAmount = 1;
-    public const int RandomFactoryAmount = 1;
-    public const int RandomParkAmount = 1;
-    public const int StartingBudget = 440; //Is actually 10, but player gets forced to spend for the tutorial.
+    public const int StartingBudget = 140; //Is actually 10, but player gets forced to spend for the tutorial.
     public const int BudgetCap = 500;
     public const float FactoryProductionMultiplier = 0.05f;
 
@@ -64,7 +61,9 @@ public static class Glob {
     public const float AnimationCollection = 0.2f;
 
     public const float CameraCitySwitchTime = 2.5f;
-    public static Vector3 CameraOffset = new Vector3(13, 32, -16);
+    public const float CameraBuildingZoomTime = 2;
+    public static Vector3 CameraCityOffset = new Vector3(13, 32, -16);
+    public static Vector3 CameraBuildingOffset = new Vector3(-1, 7, -6);
 
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
@@ -75,7 +74,7 @@ public static class Glob {
 
     public const float HappyHouseAnimosityChange = 2f; //out of 100
 
-    public const int WonderHappyHouseReq = 17;
+    public const int WonderHappyHouseReq = 1;
 
     public const int AmountOfBridgesNeededToWin = 1;
 
@@ -86,7 +85,7 @@ public static class Glob {
     public const string UIPrefab = "UI";
 
     public const string TilePrefab = "Tile";
-    public const string SignPrefab = "SIGN";
+    public const string WorldSpaceCanvasPrefab = "WorldSpaceCanvas";
     public static Color HappyColor = new Color(0.25f, 0.5f, 0f, 1);
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
     public static Color NeutralColor = new Color(0.58f, 0.68f, 0.35f);
@@ -106,15 +105,9 @@ public static class Glob {
     public const string digsitePrefab = "Buildings/Digsite";
     public const string missileSiloPrefab = "Buildings/MissileSilo";
     public const string wonderPrefab = "Buildings/Wonder";
-    public const string bridgePrefab = "Buildings/Buildsite";
+    public const string bridgePrefab = "Buildings/Bridge Construction Site";
     public const string mayorOfficePrefab = "Buildings/MayorOffice";
     public const string missilePrefab = "Missile";
-
-    public const int amountOfRelics = 4;
-    public const string RelicPrefab1 = "Relics/Relic1Material";
-    public const string RelicPrefab2 = "Relics/Relic2Material";
-    public const string RelicPrefab3 = "Relics/Relic3Material";
-    public const string RelicPrefab4 = "Relics/Relic4Material";
 
     //Sounds
     public const int amountOfSounds = 11;
@@ -148,16 +141,6 @@ public static class Glob {
         return buildings;
     }
 
-    public static Material[] GetRelicsMaterials()
-    {
-        Material[] relics = new Material[amountOfRelics];
-        relics[0] = Resources.Load<Material>(RelicPrefab1);
-        relics[1] = Resources.Load<Material>(RelicPrefab2);
-        relics[2] = Resources.Load<Material>(RelicPrefab3);
-        relics[3] = Resources.Load<Material>(RelicPrefab4);
-        return relics;
-    }
-
     public static Factory[] GetFactoriesPrefabs()
     {
         Factory[] factories = new Factory[factoriesVariations];
@@ -174,9 +157,9 @@ public static class Glob {
     public const string factoryIcon = "Icons/FactoryIcon";
     public const string parkIcon = "Icons/ParkIcon";
     public const string digsiteIcon = "Icons/DigsiteIcon";
-    public const string missileSiloIcon = "Icons/MissileSiloIcon";
+    public const string missileSiloIcon = "Icons/MissileSiloIcon";//TODO: Correct icon
     public const string wonderIcon = "Icons/DigsiteIcon";//TODO: Correct icon
-    public const string bridgeIcon = "Icons/BridgeIcon";
+    public const string bridgeIcon = "Icons/DigsiteIcon";//TODO: Correct icon
 
     public static Sprite[] GetBuildingIcons()
     {

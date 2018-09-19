@@ -168,9 +168,9 @@ public class CustomTile : MonoBehaviour
     public void PlayParticle()
     {
         ParticleSystem childParticle = null;
-        if (transform.childCount > 0)
+        if (transform.childCount > 2)
         {
-            childParticle = transform.GetChild(0).GetComponent<ParticleSystem>();
+            childParticle = transform.GetChild(2).GetComponent<ParticleSystem>();
         }
         _particle.Play();
         if (childParticle != null)
