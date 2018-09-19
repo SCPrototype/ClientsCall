@@ -56,7 +56,7 @@ public class UIHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(Glob.CancelButton) && !GameInitializer.GetPaused())
         {
             _notificationPanel.gameObject.SetActive(false);
         }

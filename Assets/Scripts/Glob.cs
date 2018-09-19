@@ -4,6 +4,14 @@ using UnityEngine;
 
 public static class Glob {
 
+    public const KeyCode ConfirmButton = KeyCode.F;
+    public const KeyCode CancelButton = KeyCode.G;
+    public const KeyCode ExamineButton = KeyCode.H;
+    public const KeyCode UpButton = KeyCode.UpArrow;
+    public const KeyCode DownButton = KeyCode.DownArrow;
+    public const KeyCode LeftButton = KeyCode.LeftArrow;
+    public const KeyCode RightButton = KeyCode.RightArrow;
+
     public enum PlayerTypes
     {
         Achiever,
@@ -31,7 +39,8 @@ public static class Glob {
 
     //GAME VALUES
     public const float GameTimeOut = 120;
-    public const float ResetButtonTime = 3;
+    public const float ResetButtonTime = 5;
+    public const float EndTurnButtonTime = 2;
 
     public const int AmountOfAICities = 1; //Dont change this value, it will break the game. (Spaghetti code caused by time restraints.)
     public const int CityWidth = 10;
