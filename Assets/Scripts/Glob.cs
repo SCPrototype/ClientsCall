@@ -47,9 +47,6 @@ public static class Glob {
     public const int CityLength = 10;
     public const int CitySpacing = 62;
     public const float TileSpacing = 0.2f;
-    public const int RandomHouseAmount = 1;
-    public const int RandomFactoryAmount = 1;
-    public const int RandomParkAmount = 1;
     public const int StartingBudget = 140; //Is actually 10, but player gets forced to spend for the tutorial.
     public const int BudgetCap = 500;
     public const float FactoryProductionMultiplier = 0.05f;
@@ -64,7 +61,9 @@ public static class Glob {
     public const float AnimationCollection = 0.2f;
 
     public const float CameraCitySwitchTime = 2.5f;
-    public static Vector3 CameraOffset = new Vector3(13, 32, -16);
+    public const float CameraBuildingZoomTime = 2;
+    public static Vector3 CameraCityOffset = new Vector3(13, 32, -16);
+    public static Vector3 CameraBuildingOffset = new Vector3(-1, 7, -6);
 
     public const int AmountOfRelicsNeededToWin = 10;
     //As a percentage.
@@ -75,7 +74,7 @@ public static class Glob {
 
     public const float HappyHouseAnimosityChange = 2f; //out of 100
 
-    public const int WonderHappyHouseReq = 17;
+    public const int WonderHappyHouseReq = 1;
 
     public const int AmountOfBridgesNeededToWin = 1;
 

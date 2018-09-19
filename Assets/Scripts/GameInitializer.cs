@@ -21,6 +21,8 @@ public class GameInitializer : MonoBehaviour {
     public static bool HardModeEnabled = false;
 
     private static bool _isPaused = false;
+    private static bool _gameEnded = false;
+    private static float _gameEndedTime = 0;
 
     private float _lastAction = 0;
     private float _resetButtonPressTime = 0;
@@ -64,6 +66,14 @@ public class GameInitializer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (_gameEnded)
+        {
+            if (Input.GetKeyDown(Glob.ConfirmButton))
+            {
+                _gameUIHandler.EnableResolutionScreen(_playerType);
+                _gameEnded = false;
+            }
+        }
         if (Input.GetKeyDown(Glob.ExamineButton))
         {
             _resetButtonPressTime = Time.time;
@@ -128,29 +138,24 @@ public class GameInitializer : MonoBehaviour {
     public static void EndGame(bool pBothWin = false, City pWinner = null)
     {
         _isPaused = true;
-        _gameUIHandler.EnableResolutionScreen(_playerType);
+        _gameEnded = true;
+        _gameEndedTime = Time.time;
         if (pWinner == null && !pBothWin)
         {
             pWinner = calculateWinner();
+            UIHandler.ShowNotification("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!"); //TODO: Correct win message.
         }
 
-        if (pBothWin)
+        if (pBothWin || pWinner == _allCities[0])
         {
             _soundHandler.PlaySound(SoundHandler.Sounds.WIN);
-            UIHandler.ShowNotification("Through the combined effort on building the bridge, both cities win!");
+            //UIHandler.ShowNotification("Through the combined effort on building the bridge, both cities win!");
             return;
-        }
-        else if (pWinner == _allCities[0])
-        {
-            _soundHandler.PlaySound(SoundHandler.Sounds.WIN);
         }
         else if (pWinner == _allCities[1])
         {
             _soundHandler.PlaySound(SoundHandler.Sounds.LOSE);
         }
-
-        UIHandler.ShowNotification("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!"); //TODO: Correct win message.
-        Debug.Log("The winner is: " + pWinner.gameObject.name + ", with a score of " + pWinner.GetScore() + "!");
     }
 
     public static void AddAchieverScore(int pScore)

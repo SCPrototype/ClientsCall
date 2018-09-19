@@ -401,6 +401,24 @@ public class City : MonoBehaviour
         }
         if (_amountOfRelics >= Glob.AmountOfRelicsNeededToWin)
         {
+            CustomTile targetTile = _tileMap[0,0];
+            foreach (CustomTile tile in _tileMap)
+            {
+                if (tile.GetBuildingOnTile() is Digsite)
+                {
+                    targetTile = tile;
+                    break;
+                }
+            }
+            GameInitializer.GetCameraManager().MoveCameraTo(targetTile.transform.position + Glob.CameraBuildingOffset, Glob.CameraBuildingZoomTime); //TODO: Zoom in on a digsite
+            if (_myManager is PlayerCityManager)
+            {
+                UIHandler.ShowNotification("Your city is swarmed with tourists, thanks to the " + _amountOfRelics + " relics you found and put in your museum. AIton's city doesn't stand a chance against this massive economical advantage.");
+            } else
+            {
+                UIHandler.ShowNotification("AIton's city is swarmed with tourists, thanks to the " + _amountOfRelics + " relics he found and put in his museum. Your city doesn't stand a chance against this massive economical advantage, and thus you are forced to surrender.");
+            }
+            
             GameInitializer.EndGame(false, this);
         }
     }
@@ -423,6 +441,23 @@ public class City : MonoBehaviour
         }
         if (_missilesLaunched >= Glob.AmountOfMissilesNeededToWin)
         {
+            CustomTile targetTile = _tileMap[0, 0];
+            foreach (CustomTile tile in _tileMap)
+            {
+                if (tile.GetBuildingOnTile() is MissileSilo)
+                {
+                    targetTile = tile;
+                    break;
+                }
+            }
+            GameInitializer.GetCameraManager().MoveCameraTo(targetTile.transform.position + Glob.CameraBuildingOffset, Glob.CameraBuildingZoomTime); //TODO: Zoom in on a digsite
+            if (_myManager is PlayerCityManager)
+            {
+                UIHandler.ShowNotification("AIton has surrendered! He was too afraid of your firepower and decided to run away, leaving his city and inhabitants behind.");
+            } else
+            {
+                UIHandler.ShowNotification("All of your inhabitants have fled your city after all the bombardments AIton launched at you. You have no choice but to surrender.");
+            }
             GameInitializer.EndGame(false, this);
         }
     }
@@ -439,6 +474,8 @@ public class City : MonoBehaviour
         {
             if (GameInitializer.GetNextCity(this).GetBridgesBuilt() >= Glob.AmountOfBridgesNeededToWin)
             {
+                GameInitializer.GetCameraManager().MoveCameraTo(new Vector3(53, 6, 19), Glob.CameraBuildingZoomTime);
+                UIHandler.ShowNotification("Through combined efforts, a bridge connecting both cities has been built. The cities are now at peace, and are even thinking of merging to improve the quality of life for everyone.");
                 GameInitializer.EndGame(true);
             }
         }

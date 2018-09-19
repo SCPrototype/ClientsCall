@@ -32,7 +32,7 @@ public class PlayerCityManager : CityManager
         if (currentMode == CurrentMode.MISSILEAIM && _isFocusedOnOwnCity)
         {
             targetCity = GameInitializer.GetNextCity(targetCity);
-            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
+            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime / 2, 4);
             _isFocusedOnOwnCity = false;
             UIHandler.ShowNotification("BOMBS AWAY!"); //TODO: Placeholder text
         }
@@ -48,13 +48,13 @@ public class PlayerCityManager : CityManager
                 if (_isFocusedOnOwnCity)
                 {
                     targetCity = GameInitializer.GetNextCity(pCity);
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime / 2);
                     _isFocusedOnOwnCity = false;
                 }
                 else
                 {
                     targetCity = pCity;
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime / 2);
                     _isFocusedOnOwnCity = true;
                 }
             }
@@ -101,7 +101,7 @@ public class PlayerCityManager : CityManager
                             _isFocusedOnOwnCity = true;
                             targetCity = pCity;
                             //AddMissile with sound.
-                            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
+                            GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime / 2, 4);
                             pCity.AddMissileLaunched();
                         }
                         else
@@ -176,7 +176,6 @@ public class PlayerCityManager : CityManager
             }
             if (Input.GetKeyDown(Glob.CancelButton) && currentMode != CurrentMode.MISSILEAIM)
             {
-                Debug.Log("test");
                 _cancelKeyPressed = Time.time;
             }
         }
