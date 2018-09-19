@@ -23,16 +23,16 @@ public class Tutorial : MonoBehaviour
     private int _parkBuiltX = 4;
     private int _parkBuiltY = 4;
     private const string _explainHappiness2 = "Notice that the grass around the park has turned back to a healthy green. Look at that happy little house. You will unlock certain actions when you have enough happy houses.";
-    private const string _endTurn = "That's enough micromanaging for now, let's get the full picture. We are out of money anyway. Hold the second button to end your turn.";
+    private const string _endTurn = "That's enough micromanaging for now, let's get the full picture. We are out of money anyway. Hold down the second button for two seconds to end your turn.";
     private bool _turnEnded = false;
-    private const string _enemy = "That is AIton, the bastards settled just on the other side of the river, and as they grow, they take what we potentially need to surpass them.";
+    private const string _enemy = "That is AIton, the bastards settled just on the other side of the river, and as they grow, they take what we potentially need to surpass them. If you ever want to check in on what he is up to, press the third button.";
     private const string _startOfTurn = "Now at the start of the round, you get the money from the factories, and we can use that to buy the tools to end this rivalry. Let's open the build menu again and see what we got.";
     private const string _digsite = "First up, the dig-sites. After you build one, they will look for hidden treasure deep underground. And sometimes they find something worthy enough to put in a museum. Now, this might sound a bit crazy. But what if we filled our museum to the brim with treasure? It will be great, we can explore the entire region in peace.";
     private const string _wonder = "Not quite your style? How about we build a monument, the greatest achievement of mankind? Certainly, ours will be Greater.";
     private const string _bridges = "Then there were bridges, this is not my kind of thing. But there are three places to build these if you complete that project. I'm sure that both cities will benefit. However, AIton won't want to merge with a city that treats its people, or it neighbours like garbage.";
     private const string _missiles = "Now, this is my yam. 20 tons of pure excitement. Build 3 of these, and I'm sure no-one would ever dare to settle near us again. The valley and all its resources are ours. The people will rejoice. Let's build them right… now… Well, it seems that these are a bit too expensive for us right now we need to expand our city first.";
     private const string _goodluck = "Right, you seem to have everything under control. I’ll hand the reigns over to you. Good luck, and may your city prosper.";
-    private const string _exitButton = "Yeah, before I forget. If you want to exit the build menu just press the second button and if you want to reset, just hold it down. If you ever need me again, you can ring me up with that third button.";
+    private const string _exitButton = "Oh yeah, before I forget. If you want to exit a menu just press the second button, and if you want to reset the game, hold down the third button for 5 seconds.";
     private const string _bye = "Atlantropa out.";
 
     private string[] _allText = new string[18];
@@ -41,6 +41,8 @@ public class Tutorial : MonoBehaviour
     private City _myCity;
 
     private bool _tutorialActive = true;
+
+    private float _cancelKeyPressed = 0;
 
     // Use this for initialization
     void Start()
@@ -75,7 +77,7 @@ public class Tutorial : MonoBehaviour
     {
         if (_tutorialActive)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(Glob.ConfirmButton))
             {
                 if (_currentText == 1 && !_tileSelected || _currentText == 3 && !_tileSelected || _currentText == 6 && !_tileSelected || _currentText == 8 && !_turnEnded) //If the player needs to select the correct tile first.
                 {
@@ -205,19 +207,19 @@ public class Tutorial : MonoBehaviour
     {
         if (_currentText != 8)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(Glob.RightButton))
             {
                 _myCity.ChangeSelectedTile(CityManager.DirectionKey.RIGHT);
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(Glob.LeftButton))
             {
                 _myCity.ChangeSelectedTile(CityManager.DirectionKey.LEFT);
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(Glob.UpButton))
             {
                 _myCity.ChangeSelectedTile(CityManager.DirectionKey.UP);
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(Glob.DownButton))
             {
                 _myCity.ChangeSelectedTile(CityManager.DirectionKey.DOWN);
             }
@@ -258,13 +260,24 @@ public class Tutorial : MonoBehaviour
         }
         else if (_currentText == 8)
         {
-            if (Input.GetKeyDown(KeyCode.Return))//TODO: Correct button
+            if (Input.GetKeyDown(Glob.CancelButton)) //TODO: End turn when Glob.CancelButton is held down 2 sec.
+            {
+                _cancelKeyPressed = Time.time;
+            }
+            else if (Time.time - _cancelKeyPressed >= Glob.EndTurnButtonTime && Input.GetKey(Glob.CancelButton))
             {
                 GameInitializer.GetCameraManager().MoveCameraTo(GameInitializer.GetNextCity(_myCity).transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime);
                 _turnEnded = true;
                 _currentText++;
                 UIHandler.ShowNotification(_allText[_currentText]);
             }
+            /*if (Input.GetKeyDown(KeyCode.Return))//TODO: Correct button
+            {
+                GameInitializer.GetCameraManager().MoveCameraTo(GameInitializer.GetNextCity(_myCity).transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime);
+                _turnEnded = true;
+                _currentText++;
+                UIHandler.ShowNotification(_allText[_currentText]);
+            }*/
         }
     }
 

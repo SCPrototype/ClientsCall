@@ -64,11 +64,11 @@ public class GameInitializer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(Glob.ExamineButton))
         {
             _resetButtonPressTime = Time.time;
         }
-        if (Time.time - _lastAction >= Glob.GameTimeOut || (Time.time - _resetButtonPressTime >= Glob.ResetButtonTime && Input.GetKey(KeyCode.G)))
+        if (Time.time - _lastAction >= Glob.GameTimeOut || (Time.time - _resetButtonPressTime >= Glob.ResetButtonTime && Input.GetKey(Glob.ExamineButton)))
         {
             _resetButtonPressTime = Time.time;
             UpdateActionTime();

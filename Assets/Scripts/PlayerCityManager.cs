@@ -7,6 +7,7 @@ public class PlayerCityManager : CityManager
 {
 
     private bool _isFocusedOnOwnCity = true;
+    private float _cancelKeyPressed = 0;
     private SoundHandler _soundHandler;
 
     // Use this for initialization
@@ -42,7 +43,7 @@ public class PlayerCityManager : CityManager
             {
                 targetCity = GameInitializer.GetNextCity(targetCity);
             }
-            if (Input.GetKeyDown(KeyCode.T) && currentMode == CurrentMode.SELECTINGTILE)
+            if (Input.GetKeyDown(Glob.ExamineButton) && currentMode == CurrentMode.SELECTINGTILE)
             {
                 if (_isFocusedOnOwnCity)
                 {
@@ -59,23 +60,23 @@ public class PlayerCityManager : CityManager
             }
             if (currentMode == CurrentMode.SELECTINGTILE || currentMode == CurrentMode.MISSILEAIM)
             {
-                if (Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(Glob.RightButton))
                 {
                     targetCity.ChangeSelectedTile(DirectionKey.RIGHT);
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetKeyDown(Glob.LeftButton))
                 {
                     targetCity.ChangeSelectedTile(DirectionKey.LEFT);
                 }
-                if (Input.GetKeyDown(KeyCode.UpArrow))
+                if (Input.GetKeyDown(Glob.UpButton))
                 {
                     targetCity.ChangeSelectedTile(DirectionKey.UP);
                 }
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+                if (Input.GetKeyDown(Glob.DownButton))
                 {
                     targetCity.ChangeSelectedTile(DirectionKey.DOWN);
                 }
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(Glob.ConfirmButton))
                 {
                     if (targetCity.GetSelectedTile().GetBuildingOnTile() == null)
                     {
@@ -121,21 +122,21 @@ public class PlayerCityManager : CityManager
                 //Places a building in placement mode, can switch between buildings.
                 if (GameInitializer.GetBuildingHandler().PlacementBuildingActive())
                 {
-                    if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+                    if (Input.GetKeyDown(Glob.DownButton) || Input.GetKeyDown(Glob.RightButton))
                     {
                         //BuildingHandler should probably tell UIHandler what to do.
                         _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(1);
                         GameInitializer.GetUIHandler().SetActiveBuildingImage(1);
                     }
-                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+                    if (Input.GetKeyDown(Glob.UpButton) || Input.GetKeyDown(Glob.LeftButton))
                     {
                         _soundHandler.PlaySound(SoundHandler.Sounds.MOVE);
                         GameInitializer.GetBuildingHandler().ChangeBuildingSelection(-1);
                         GameInitializer.GetUIHandler().SetActiveBuildingImage(-1);
                     }
 
-                    if (Input.GetKeyDown(KeyCode.F))
+                    if (Input.GetKeyDown(Glob.ConfirmButton))
                     {
                         if (GameInitializer.GetBuildingHandler().StartBuilding())
                         {
@@ -152,7 +153,7 @@ public class PlayerCityManager : CityManager
 
                     }
 
-                    if (Input.GetKeyDown(KeyCode.G))
+                    if (Input.GetKeyDown(Glob.CancelButton))
                     {
                         GameInitializer.GetBuildingHandler().DestroyPlacementBuilding();
                         SetCurrentMode(CurrentMode.SELECTINGTILE);
@@ -167,18 +168,23 @@ public class PlayerCityManager : CityManager
             }
             if (currentMode == CurrentMode.EXAMINEMODE)
             {
-                if (Input.GetKeyDown(KeyCode.G))
+                if (Input.GetKeyDown(Glob.CancelButton))
                 {
                     GameInitializer.GetUIHandler().ToggleExaminePanel(false);
                     SetCurrentMode(CurrentMode.SELECTINGTILE);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Return) && currentMode != CurrentMode.MISSILEAIM)
+            if (Input.GetKeyDown(Glob.CancelButton) && currentMode != CurrentMode.MISSILEAIM)
             {
-                GameInitializer.EndTurn();
-                //Debug.Log(GameInitializer.GetBuildingHandler().GetCurrentCity());
-                UIHandler.ShowNotification("Turn has ended");
+                Debug.Log("test");
+                _cancelKeyPressed = Time.time;
             }
+        }
+        if (Time.time - _cancelKeyPressed >= Glob.EndTurnButtonTime && Input.GetKey(Glob.CancelButton))
+        {
+            GameInitializer.EndTurn();
+            //Debug.Log(GameInitializer.GetBuildingHandler().GetCurrentCity());
+            UIHandler.ShowNotification("Turn has ended");
         }
     }
 }

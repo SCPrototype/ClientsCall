@@ -111,7 +111,8 @@ public class AICityManager : CityManager
                     //pCity.AddMissileLaunched();
                     return;
                 }
-                Move myMove = getMove(pCity, _difficulty, pCity.GetCurrentTurn());
+
+                Move myMove = getMove(pCity, _difficulty, pCity.GetCurrentTurn() * 2);
 
                 pCity.SetSelectedTile(myMove._tile);
 
