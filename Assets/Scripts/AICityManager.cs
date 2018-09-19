@@ -107,7 +107,7 @@ public class AICityManager : CityManager
                     launchMissile(getBestFactory(targetCity));
                     targetCity = pCity;
                     GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraCityOffset, Glob.CameraCitySwitchTime / 2, 4);
-                    //pCity.AddMissileLaunched();
+                    pCity.AddMissileLaunched();
                     return;
                 }
 

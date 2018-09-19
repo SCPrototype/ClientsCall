@@ -85,6 +85,7 @@ public static class Glob {
     public const string UIPrefab = "UI";
 
     public const string TilePrefab = "Tile";
+    public const string SignPrefab = "SIGN";
     public const string WorldSpaceCanvasPrefab = "WorldSpaceCanvas";
     public static Color HappyColor = new Color(0.25f, 0.5f, 0f, 1);
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
@@ -108,6 +109,13 @@ public static class Glob {
     public const string bridgePrefab = "Buildings/Bridge Construction Site";
     public const string mayorOfficePrefab = "Buildings/MayorOffice";
     public const string missilePrefab = "Missile";
+
+
+    public const int amountOfRelics = 4;
+    public const string RelicPrefab1 = "Relics/Relic1Material";
+    public const string RelicPrefab2 = "Relics/Relic2Material";
+    public const string RelicPrefab3 = "Relics/Relic3Material";
+    public const string RelicPrefab4 = "Relics/Relic4Material";
 
     //Sounds
     public const int amountOfSounds = 11;
@@ -139,6 +147,16 @@ public static class Glob {
         //buildings[3] = Resources.Load<Factory>(factoryPrefab2);
         //buildings[4] = Resources.Load<Factory>(factoryPrefab3);
         return buildings;
+    }
+
+    public static Material[] GetRelicsMaterials()
+    {
+        Material[] relics = new Material[amountOfRelics];
+        relics[0] = Resources.Load<Material>(RelicPrefab1);
+        relics[1] = Resources.Load<Material>(RelicPrefab2);
+        relics[2] = Resources.Load<Material>(RelicPrefab3);
+        relics[3] = Resources.Load<Material>(RelicPrefab4);
+        return relics;
     }
 
     public static Factory[] GetFactoriesPrefabs()
