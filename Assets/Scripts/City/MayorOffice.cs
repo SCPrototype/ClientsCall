@@ -8,7 +8,7 @@ public class MayorOffice : FunctionBuilding
 {
 
     private const int _cost = 0; //And 11 happy houses
-    private const string _description = "This is your home, you make important decisions from this building.\nIt doesn't really do much nontheless";
+    private const string _description = "This is your home, you make important decisions from this building.\nIt doesn't really do anything else.";
     public GameObject _moveAbleHat;
 
     public MayorOffice()

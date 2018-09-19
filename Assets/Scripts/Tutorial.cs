@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tutorial : MonoBehaviour
-{
+public class Tutorial : MonoBehaviour {
 
-    private const string _welcome = "Hey, my name is Atlantropa. I'm here to help you get the hang of it. \nWelcome to your city. Right now it’s rather… what's the word for it? Quaint. But soon it could be a powerful beast. Let's get you started. Press the first button if you're ready to continue.";
-    private const string _tileSelect = "With that joystick in front of you, you can move around. Then when you found your perfect patch of green, you can select it by pressing the first button.";
+    private const string _welcome = "Hey, my name is Atlantropa. I'm here to help you get the hang of it. \nWelcome to your city. Right now it’s rather… what's the word for it? Quaint. But soon it could be a powerful beast. Let's get you started. Press " + Glob.ConfirmButtonName + " if you're ready to continue.";
+    private const string _tileSelect = "With " + Glob.MovementButtonsName + " in front of you, you can move around. Then when you found your perfect patch of green, you can select it by pressing " + Glob.ConfirmButtonName + ".";
     private bool _tileSelected = false;
     private int _tileSelectedX = 3;
     private int _tileSelectedY = 3;
     private const string _buildFactory = "Now by pressing it again, you build a factory. Factories give “your” people work and yourself a nice paycheck. Speaking of those.";
     private bool _factoryBuilt = false;
-    private const string _buildHouse = "Select the tile next to the factory and press the first button again, now select the second icon in the list and build it.";
+    private const string _buildHouse = "Select the tile next to the factory and press " + Glob.ConfirmButtonName + " again, now select the second icon in the list and build it.";
     private bool _houseBuilt = false;
     private int _houseBuiltX = 3;
     private int _houseBuiltY = 4;
@@ -23,16 +22,16 @@ public class Tutorial : MonoBehaviour
     private int _parkBuiltX = 4;
     private int _parkBuiltY = 4;
     private const string _explainHappiness2 = "Notice that the grass around the park has turned back to a healthy green. Look at that happy little house. You will unlock certain actions when you have enough happy houses.";
-    private const string _endTurn = "That's enough micromanaging for now, let's get the full picture. We are out of money anyway. Hold down the second button for two seconds to end your turn.";
+    private const string _endTurn = "That's enough micromanaging for now, let's get the full picture. We are out of money anyway. Hold down " + Glob.CancelButtonName + " for two seconds to end your turn.";
     private bool _turnEnded = false;
-    private const string _enemy = "That is AIton, the bastards settled just on the other side of the river, and as they grow, they take what we potentially need to surpass them. If you ever want to check in on what he is up to, press the third button.";
+    private const string _enemy = "That is AIton, the bastards settled just on the other side of the river, and as they grow, they take what we potentially need to surpass them. You can press " + Glob.ExamineButtonName + " if you ever want to check in on what he is up to.";
     private const string _startOfTurn = "Now at the start of the round, you get the money from the factories, and we can use that to buy the tools to end this rivalry. Let's open the build menu again and see what we got.";
     private const string _digsite = "First up, the dig-sites. After you build one, they will look for hidden treasure deep underground. And sometimes they find something worthy enough to put in a museum. Now, this might sound a bit crazy. But what if we filled our museum to the brim with treasure? It will be great, we can explore the entire region in peace.";
     private const string _wonder = "Not quite your style? How about we build a monument, the greatest achievement of mankind? Certainly, ours will be Greater.";
     private const string _bridges = "Then there were bridges, this is not my kind of thing. I'm sure that both cities will benefit from a connection. However, AIton won't want to merge with a city that treats its people, or it neighbours like garbage.";
     private const string _missiles = "Now, this is my yam. 20 tons of pure excitement. Build 3 of these, and I'm sure no-one would ever dare to settle near us again. The valley and all its resources are ours. The people will rejoice. Let's build them right… now… Well, it seems that these are a bit too expensive for us right now we need to expand our city first.";
     private const string _goodluck = "Right, you seem to have everything under control. I’ll hand the reigns over to you. Good luck, and may your city prosper.";
-    private const string _exitButton = "Oh yeah, before I forget. If you want to exit a menu just press the second button, and if you want to reset the game, hold down the third button for 5 seconds.";
+    private const string _exitButton = "Oh yeah, before I forget. If you want to exit a menu just press " + Glob.CancelButtonName + ", and if you want to reset the game, hold down " + Glob.ExamineButtonName + " for 5 seconds.";
     private const string _bye = "Atlantropa out.";
 
     private string[] _allText = new string[18];

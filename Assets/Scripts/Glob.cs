@@ -5,12 +5,20 @@ using UnityEngine;
 public static class Glob {
 
     public const KeyCode ConfirmButton = KeyCode.F;
+    public const string ConfirmButtonName = "F";
+    public const string ConfirmButtonNameArcade = "the First button";
     public const KeyCode CancelButton = KeyCode.G;
+    public const string CancelButtonName = "G";
+    public const string CancelButtonNameArcade = "the Second button";
     public const KeyCode ExamineButton = KeyCode.H;
+    public const string ExamineButtonName = "H";
+    public const string ExamineButtonNameArcade = "the Third button";
     public const KeyCode UpButton = KeyCode.UpArrow;
     public const KeyCode DownButton = KeyCode.DownArrow;
     public const KeyCode LeftButton = KeyCode.LeftArrow;
     public const KeyCode RightButton = KeyCode.RightArrow;
+    public const string MovementButtonsName = "the Arrow Keys";
+    public const string MovementButtonsNameArcade = "the Joystick";
 
     public enum PlayerTypes
     {
@@ -45,8 +53,8 @@ public static class Glob {
     public const int AmountOfAICities = 1; //Dont change this value, it will break the game. (Spaghetti code caused by time restraints.)
     public const int CityWidth = 10;
     public const int CityLength = 10;
-    public const int CitySpacing = 62;
-    public const float TileSpacing = 0.2f;
+    public const float CitySpacing = 62.2f;
+    public const float TileSpacing = 0.24f;
     public const int StartingBudget = 140; //Is actually 10, but player gets forced to spend for the tutorial.
     public const int BudgetCap = 500;
     public const float FactoryProductionMultiplier = 0.05f;

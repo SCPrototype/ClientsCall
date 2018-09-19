@@ -104,7 +104,7 @@ public class BuildingHandler : MonoBehaviour
             }
             if (placementBuilding is House)
             {
-                if (placementBuilding.GetBuildingTile().GetIsHappy())
+                if (placementBuilding.GetBuildingTile().GetIsHappy() && placementBuilding.GetBuildingTile().GetCity().GetManager() is PlayerCityManager)
                 {
                     GameInitializer.AddSocializerScore(2);
                 }

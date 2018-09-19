@@ -133,7 +133,7 @@ public class UIHandler : MonoBehaviour
         if (pBuilding is CollectionBuilding)
         {
             CollectionBuilding colBuilding = pBuilding as CollectionBuilding;
-            _buildInfoText.text = "<b>"+ colBuilding.GetType() + "</b>\nBuilding cost: <b>" + colBuilding.GetCost() + "</b>\nThis building collects resources from nearby production buildings.";
+            _buildInfoText.text = "<b>"+ colBuilding.GetType() + "</b>\nBuilding cost: <b>" + colBuilding.GetCost() + "</b>\nThis building collects resources from nearby <b>factories</b>.";
         }
         if (pBuilding is FunctionBuilding)
         {

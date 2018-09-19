@@ -30,7 +30,16 @@ public class EventManager : MonoBehaviour
     void Start()
     {
         TMX_Parser parser = new TMX_Parser();
-        parser.Parse("Assets/XML/RandomEvents.txt", out _allEvents);
+
+        if (Application.isEditor)
+        {
+            parser.Parse("Assets/Prefabs/Resources/XML/RandomEvents.txt", out _allEvents);
+        }
+        else
+        {
+            TextAsset XMLFile = Resources.Load<TextAsset>("XML/RandomEvents");
+            parser.ParseString(XMLFile.text, out _allEvents);
+        }
         Debug.Log(_allEvents);
         _soundHandler = GameInitializer.GetSoundHandler();
         EventMenu.SetActive(false);

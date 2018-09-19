@@ -26,7 +26,7 @@ public class Wonder : FunctionBuilding {
 
     public override void DoAction()
     {
-        GameInitializer.GetCameraManager().MoveCameraTo(transform.position + Glob.CameraBuildingOffset, Glob.CameraBuildingZoomTime);
+        //GameInitializer.GetCameraManager().MoveCameraTo(transform.position + Glob.CameraWonderOffset, Glob.CameraBuildingZoomTime);
         if (GetCity().GetManager() is PlayerCityManager)
         {
             UIHandler.ShowNotification("Your wonder is finished! This massive structure is a symbol of wealth and prosperity, and a huge part of the inhabitants of AIton's city have moved to your city because of it. AIton has thrown in the towel.");
