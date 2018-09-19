@@ -146,8 +146,8 @@ public class Tutorial : MonoBehaviour
                 {
                     _myCity.CollectFromAllBuildings();
                     _myCity.ChangeSelectedTile(CityManager.DirectionKey.DOWN);
-
-                    GameInitializer.GetUIHandler().SetResourcesBars((int)_myCity.GetBudget());
+                    _myCity.BudgetChange(0);
+                    //GameInitializer.GetUIHandler().SetResourcesBars((int)_myCity.GetBudget());
 
                     GameInitializer.GetCameraManager().MoveCameraTo(_myCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime);
                 }

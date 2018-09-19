@@ -36,7 +36,7 @@ public static class Glob {
     public const int AmountOfAICities = 1; //Dont change this value, it will break the game. (Spaghetti code caused by time restraints.)
     public const int CityWidth = 10;
     public const int CityLength = 10;
-    public const int CitySpacing = 61;
+    public const int CitySpacing = 62;
     public const float TileSpacing = 0.2f;
     public const int RandomHouseAmount = 1;
     public const int RandomFactoryAmount = 1;
@@ -77,6 +77,7 @@ public static class Glob {
     public const string UIPrefab = "UI";
 
     public const string TilePrefab = "Tile";
+    public const string WorldSpaceCanvasPrefab = "WorldSpaceCanvas";
     public static Color HappyColor = new Color(0.25f, 0.5f, 0f, 1);
     public static Color UnhappyColor = new Color(0.46f, 0.46f, 0.28f, 1);
     public static Color NeutralColor = new Color(0.58f, 0.68f, 0.35f);

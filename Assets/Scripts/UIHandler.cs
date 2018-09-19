@@ -231,8 +231,8 @@ public class UIHandler : MonoBehaviour
         _eventMenu = GameObject.FindGameObjectWithTag("EventMenu");
 
         _valuesPanel = GameObject.FindGameObjectWithTag("Values");
-        _budgetSlider = GameObject.FindGameObjectWithTag("BudgetSlider").GetComponent<Slider>();
-        _budgetText = _budgetSlider.GetComponentInChildren<Text>();
+        //_budgetSlider = GameObject.FindGameObjectWithTag("BudgetSlider").GetComponent<Slider>();
+        //_budgetText = _budgetSlider.GetComponentInChildren<Text>();
 
         _examinePanel = GameObject.FindGameObjectWithTag("ExaminePanel");
         _examineText = _examinePanel.GetComponentInChildren<Text>();

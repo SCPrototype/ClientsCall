@@ -1,0 +1,254 @@
+fileFormatVersion: 2
+guid: 28b03ae92d9e8d8469945298d6473976
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: background
+    100004: black_sheet
+    100006: black_sheet1
+    100008: Bridge
+    100010: Bridge1
+    100012: fome
+    100014: fome1
+    100016: fome10
+    100018: fome11
+    100020: fome2
+    100022: fome3
+    100024: fome4
+    100026: fome5
+    100028: fome6
+    100030: fome7
+    100032: fome8
+    100034: fome9
+    100036: prop
+    100038: prop1
+    100040: prop2
+    100042: prop3
+    100044: prop4
+    100046: prop5
+    100048: rocks
+    100050: water
+    100052: wind_mills
+    400000: //RootNode
+    400002: background
+    400004: black_sheet
+    400006: black_sheet1
+    400008: Bridge
+    400010: Bridge1
+    400012: fome
+    400014: fome1
+    400016: fome10
+    400018: fome11
+    400020: fome2
+    400022: fome3
+    400024: fome4
+    400026: fome5
+    400028: fome6
+    400030: fome7
+    400032: fome8
+    400034: fome9
+    400036: prop
+    400038: prop1
+    400040: prop2
+    400042: prop3
+    400044: prop4
+    400046: prop5
+    400048: rocks
+    400050: water
+    400052: wind_mills
+    2100000: lambert2
+    2100002: lambert1
+    2100004: lambert3
+    2100006: lambert7
+    2100008: lambert4
+    2100010: lambert5
+    2100012: lambert6
+    2300000: background
+    2300002: black_sheet
+    2300004: black_sheet1
+    2300006: Bridge
+    2300008: Bridge1
+    2300010: fome
+    2300012: fome1
+    2300014: fome10
+    2300016: fome11
+    2300018: fome2
+    2300020: fome3
+    2300022: fome4
+    2300024: fome5
+    2300026: fome6
+    2300028: fome7
+    2300030: fome8
+    2300032: fome9
+    2300034: prop
+    2300036: prop1
+    2300038: prop2
+    2300040: prop3
+    2300042: prop4
+    2300044: prop5
+    2300046: rocks
+    2300048: water
+    2300050: wind_mills
+    3300000: background
+    3300002: black_sheet
+    3300004: black_sheet1
+    3300006: Bridge
+    3300008: Bridge1
+    3300010: fome
+    3300012: fome1
+    3300014: fome10
+    3300016: fome11
+    3300018: fome2
+    3300020: fome3
+    3300022: fome4
+    3300024: fome5
+    3300026: fome6
+    3300028: fome7
+    3300030: fome8
+    3300032: fome9
+    3300034: prop
+    3300036: prop1
+    3300038: prop2
+    3300040: prop3
+    3300042: prop4
+    3300044: prop5
+    3300046: rocks
+    3300048: water
+    3300050: wind_mills
+    4300000: prop
+    4300002: prop1
+    4300004: prop2
+    4300006: prop3
+    4300008: prop4
+    4300010: prop5
+    4300012: Bridge
+    4300014: Bridge1
+    4300016: background
+    4300018: black_sheet
+    4300020: rocks
+    4300022: black_sheet1
+    4300024: water
+    4300026: fome
+    4300028: fome1
+    4300030: fome2
+    4300032: fome3
+    4300034: fome4
+    4300036: fome5
+    4300038: fome6
+    4300040: fome7
+    4300042: fome8
+    4300044: fome9
+    4300046: fome10
+    4300048: fome11
+    4300050: wind_mills
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 180
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

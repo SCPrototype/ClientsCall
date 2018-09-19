@@ -18,6 +18,7 @@ TagManager:
   - ExaminePanel
   - TurnCounter
   - ResolutionScreen
+  - BudgetText
   layers:
   - Default
   - TransparentFX

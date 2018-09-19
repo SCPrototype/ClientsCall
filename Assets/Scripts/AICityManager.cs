@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AICityManager : CityManager {
+public class AICityManager : CityManager
+{
 
     private Building[] _buildings;
     private bool _turnEnded = false;
@@ -31,7 +32,7 @@ public class AICityManager : CityManager {
     private AIFocus _initialFocus = AIFocus.Wonder;
     private AIFocus _myFocus = AIFocus.Wonder;
 
-    public AICityManager (int pDifficulty = 50, int pAnimosity = 0)
+    public AICityManager(int pDifficulty = 50, int pAnimosity = 0)
     {
         _difficulty = pDifficulty;
 
@@ -41,6 +42,7 @@ public class AICityManager : CityManager {
         }
         _animosity = pAnimosity; //Starting animosity decides wether the AI will focus on digsites, a wonder, or missiles. Will only change to a bridge if affected by player. Chances for each option: 6, 6, 1 = ~(46.25%, 46.25%, 7.5%)
         //If animosity drops below missiles range, change focus to digsites or wonder (whichever is cheapest).
+        _animosity = 99;
         if (_animosity < 49)
         {
             _initialFocus = AIFocus.Wonder;
@@ -74,15 +76,17 @@ public class AICityManager : CityManager {
         public float _value;
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         _buildings = Glob.GetBuildingPrefabs();
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public override void HandleTurn(City pCity)
     {
@@ -103,8 +107,8 @@ public class AICityManager : CityManager {
                     targetCity = GameInitializer.GetNextCity(pCity);
                     launchMissile(getBestFactory(targetCity));
                     targetCity = pCity;
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
-                    pCity.AddMissileLaunched();
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
+                    //pCity.AddMissileLaunched();
                     return;
                 }
                 Move myMove = getMove(pCity, _difficulty, pCity.GetCurrentTurn());
@@ -126,7 +130,7 @@ public class AICityManager : CityManager {
                 {
                     targetCity = GameInitializer.GetNextCity(pCity);
 
-                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2);
+                    GameInitializer.GetCameraManager().MoveCameraTo(targetCity.transform.position + Glob.CameraOffset, Glob.CameraCitySwitchTime / 2, 4);
                     targetCity.SetSelectedTile(getBestFactory(targetCity));
                     _prevBuild = Time.time + Glob.AIMissileDelay;
                 }
@@ -188,29 +192,32 @@ public class AICityManager : CityManager {
 
     private void launchMissile(CustomTile pTarget)
     {
+        Missile missile = Instantiate(Glob.GetMissile());
+        missile.WaitWithAnimation(4);
+        missile.SetMissileTile(pTarget);
         City targetCity = pTarget.GetCity();
-        
-
         Destroy(pTarget.GetBuildingOnTile().gameObject);
         Debug.Log("Destroyed the building");
         pTarget.SetBuilding(null);
 
         SetCurrentMode(CurrentMode.SELECTINGTILE);
         _isFocusedOnOwnCity = true;
+
     }
 
     private Move getMove(City pCity, int optimalChance = 65, int subOptimalDiff = 1)
     {
         CustomTile[,] grid = pCity.GetTileMap();
-        Move optimalMove = new Move(grid[0,0], _buildings[0], -50);
-        Move subOptimalMove = new Move(grid[0,0], _buildings[0], -50);
+        Move optimalMove = new Move(grid[0, 0], _buildings[0], -50);
+        Move subOptimalMove = new Move(grid[0, 0], _buildings[0], -50);
         Move currentMove = new Move(grid[0, 0], _buildings[0], 0);
 
         for (int i = 0; i < grid.GetLength(0); i++)
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                if (grid[i,j].GetBuildingOnTile() == null) {
+                if (grid[i, j].GetBuildingOnTile() == null)
+                {
                     currentMove._tile = grid[i, j];//For every tile on the grid
                     currentMove._value = 0;
                     for (int k = 0; k < Glob.buildingCount; k++)//Place every possible building
@@ -229,7 +236,7 @@ public class AICityManager : CityManager {
                             }
                             else if (currentMove._building is Digsite && _myFocus == AIFocus.Digsites)
                             {
-                                currentMove._value = -currentMove._building.GetCost() + pCity.GetBudget()/5;
+                                currentMove._value = -currentMove._building.GetCost() + pCity.GetBudget() / 5;
                                 Building[] closeBuildings = pCity.GetBuildingsAroundTile(1, currentMove._tile);
                                 for (int l = 0; l < closeBuildings.Length; l++)
                                 {
@@ -320,7 +327,8 @@ public class AICityManager : CityManager {
         if (rnd < optimalChance || subOptimalMove._value < 0 || optimalMove._value >= 50000)
         {
             return optimalMove;
-        } else
+        }
+        else
         {
             Debug.Log("SUB-OPTIMAL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return subOptimalMove;
@@ -329,7 +337,7 @@ public class AICityManager : CityManager {
 
     private float getMoveValue(CustomTile pTile, Building pBuilding)
     {
-        float value = -(pBuilding.GetCost()/3); //Remove cost from the value of the move.
+        float value = -(pBuilding.GetCost() / 3); //Remove cost from the value of the move.
         City tileCity = pTile.GetCity();
 
         bool buildingIsProduction = false;
@@ -372,7 +380,8 @@ public class AICityManager : CityManager {
                     ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
                     happinessValue += prodBuilding.GetHappinessGain() * Glob.FactoryProductionMultiplier;
                     moneyValue += prodBuilding.GetMoneyGain() * Glob.FactoryProductionMultiplier; //If a production building is placed next to a production building of the same type, add value to the move.
-                } else
+                }
+                else
                 {
                     //If a production building is placed next to a production building of a different type, subtract value from the move.
                     ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
@@ -385,7 +394,7 @@ public class AICityManager : CityManager {
         {
             moneyValue *= 2;
         }
-       
+
         value += (happinessValue + moneyValue) * collectionValue;
         return value;
     }
