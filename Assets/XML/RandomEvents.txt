@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <allEvents>
  <randomEvent type="0" description="Erika Santana has requested financial support for her broken, infected ankle. She broke her ankle while working in one of the local factories.">
-  <choice description="Give financial support." cost = "5" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="8">
+  <choice description="Give financial support." cost = "5" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="15">
    <repercussion description="Erika Santana's story spread throughout the city over social media, and people worked together to raise money to repay your kindness." cost = "-5"></repercussion>
-  </choice>  
-  <choice description="Don't give financial support." cost = "0" achieverValue="8" explorerValue="0" killerValue="8" socializerValue="0">
+  </choice>
+  <choice description="Don't give financial support." cost = "0" achieverValue="15" explorerValue="0" killerValue="15" socializerValue="0">
    <repercussion description="Erika and her family moved to AIton's city, hoping for better medical care." cost = "0"></repercussion>
   </choice>
-  <choice description="Do a background check on her, and handle accordingly." cost = "10" achieverValue="0" explorerValue="8" killerValue="0" socializerValue="0">
+  <choice description="Do a background check on her, and handle accordingly." cost = "10" achieverValue="0" explorerValue="15" killerValue="0" socializerValue="0">
    <repercussion description="Her story turned out to be made up, and Erika was fined with the repayment of any costs made." cost = "-10"></repercussion> 
-  </choice> 
+  </choice>
  </randomEvent>
 
  <randomEvent type="0" description="You received multiple complaints about disruptive youth hanging around a neighbourhood.">
-  <choice description="Build an entertainment terrain with a skatepark and football field." cost = "10" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="8">
+  <choice description="Build an entertainment terrain with a skatepark and football field." cost = "10" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="15">
    <repercussion description="The entire neighbourhood loves the new terrain. The disruptive youth, however, doesn't like how crowded it is there, and they still hang around the neighbourhood." cost = "0"></repercussion>
-  </choice>  
-  <choice description="Send police to scare off the youth." cost = "5" achieverValue="8" explorerValue="0" killerValue="8" socializerValue="0">
+  </choice>
+  <choice description="Send police to scare off the youth." cost = "5" achieverValue="15" explorerValue="0" killerValue="15" socializerValue="0">
    <repercussion description="The youth dispersed when the police told them to, but they simply returned the day after. They destroyed a few car windows to vent their anger." cost = "5"></repercussion> 
   </choice>
-  <choice description="Install high pitch sound generators in the neighbourhood to push them away." cost = "7" achieverValue="0" explorerValue="8" killerValue="0" socializerValue="0">
+  <choice description="Install high pitch sound generators in the neighbourhood to push them away." cost = "7" achieverValue="0" explorerValue="15" killerValue="0" socializerValue="0">
    <repercussion description="The youth moved to the next neighbourhood, forcing you to install more sound generators." cost = "3"></repercussion>
-  </choice> 
+  </choice>
  </randomEvent>
 
  <randomEvent type="0" description="Civilians are protesting because you don't put enough money into creating job opportunities.">
-  <choice description="Give funds to factories, so they can expand and hire more people." cost = "25" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="8">
+  <choice description="Give funds to factories, so they can expand and hire more people." cost = "25" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="15">
    <repercussion description="The protesters are happy." cost = "0"></repercussion>
   </choice>  
-  <choice description="Ignore them." cost = "0" achieverValue="8" explorerValue="0" killerValue="0" socializerValue="0">
+  <choice description="Ignore them." cost = "0" achieverValue="15" explorerValue="0" killerValue="0" socializerValue="0">
    <repercussion description="The protesters became aggresive, and broke 8 store windows." cost = "15"></repercussion> 
   </choice>
-  <choice description="Send police to disperse the protest." cost = "5" achieverValue="0" explorerValue="8" killerValue="8" socializerValue="0">
+  <choice description="Send police to disperse the protest." cost = "5" achieverValue="0" explorerValue="15" killerValue="15" socializerValue="0">
    <repercussion description="Three civilians have been injured, and 12 protesters got arrested. The city is questioning your decisions." cost = "15"></repercussion>
   </choice> 
  </randomEvent>
 
  <randomEvent type="0" description="You have been receiving multiple alerts about a local apartment building producing strange noises on a stuctural level after a heavy rainstorm.">
-  <choice description="Send a team to go check it out, and repair any instabilities they find." cost = "10" achieverValue="0" explorerValue="8" killerValue="0" socializerValue="0">
+  <choice description="Send a team to go check it out, and repair any instabilities they find." cost = "10" achieverValue="0" explorerValue="15" killerValue="0" socializerValue="0">
    <repercussion description="The team you send found some cracks in some important structural pillars. The repairs are going to take a couple of months, and the inhabitants will have to stay in temporary homes for the time being." cost = "50"></repercussion> 
   </choice>  
-  <choice description="Do nothing." cost = "0" achieverValue="8" explorerValue="0" killerValue="8" socializerValue="0">
+  <choice description="Do nothing." cost = "0" achieverValue="15" explorerValue="0" killerValue="15" socializerValue="0">
    <repercussion description="Part of the building collapsed during the night, killing 2 families. The rest of the inhabitants have demanded temporary shelter until everything is secured." cost = "75"></repercussion>
   </choice>
-  <choice description="Evacuate the building, and give all inhabitants a temporary home until the building has been completely secured." cost = "40" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="8">
+  <choice description="Evacuate the building, and give all inhabitants a temporary home until the building has been completely secured." cost = "40" achieverValue="0" explorerValue="0" killerValue="0" socializerValue="15">
    <repercussion description="The team you send found some cracks in some important structural pillars. The repairs are going to take a couple of months, and the inhabitants will have to stay in their temporary homes for the time being." cost = "10"></repercussion> 
   </choice> 
  </randomEvent>

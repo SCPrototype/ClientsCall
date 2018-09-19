@@ -14,6 +14,7 @@ public class City : MonoBehaviour
     private EventManager _eventManager;
     private float _budget;
     private bool _collectedThisTurn = false;
+    private bool _gotEventThisTurn = false;
     private CustomTile[,] _tileMap;
     private CustomTile _selectedTile;
     private UIHandler _uiHandler;
@@ -73,6 +74,16 @@ public class City : MonoBehaviour
                 }
                 if (!_collectedThisTurn)
                 {
+                    if ((_currentTurn - Glob.EventTurnStart) % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager && _currentTurn >= Glob.EventTurnStart)
+                    {
+                        if (!_gotEventThisTurn)
+                        {
+                            _gotEventThisTurn = true;
+                            _eventManager.EnableRandomEvent();
+                            return;
+                        }
+                    }
+
                     GameInitializer.GetUIHandler().SetTurnText(_currentTurn);
                     UIHandler.ToggleNotificationPanel(false);
 
@@ -83,10 +94,7 @@ public class City : MonoBehaviour
                         AICity.ChangeAnimosity(-Mathf.RoundToInt(GetHappyHouseAmount() * Glob.HappyHouseAnimosityChange), GameInitializer.GetNextCity(this));
                     }
                     _collectedThisTurn = true;
-                    if ((_currentTurn - Glob.EventTurnStart) % Glob.EventTurnInterval == 0 && _myManager is PlayerCityManager && _currentTurn >= Glob.EventTurnStart && !GameInitializer.GetPaused())
-                    {
-                        _eventManager.EnableRandomEvent();
-                    }
+                    _gotEventThisTurn = false;
                     _mayorOffice.UpdateHatPosition(_budget);
                     BudgetChange(0);
                     //_uiHandler.SetResourcesBars((int)_budget); //Just in case no buildings collected anything
@@ -321,7 +329,7 @@ public class City : MonoBehaviour
     public void BudgetChange(int pChange)
     {
         //Debug.Log("Budget + earnings = " + _budget + " + " + pChange + " = " + (_budget + pChange));
-        _budget = Mathf.Clamp(_budget + pChange, 0, Glob.BudgetCap);
+        _budget = Mathf.Clamp(_budget + pChange, -100, Glob.BudgetCap);
         //softcap for now.
         _mayorOffice.UpdateHatPosition(_budget);
         _budgetText.text = "€ " + _budget.ToString();
@@ -395,7 +403,7 @@ public class City : MonoBehaviour
     public void AddRelic()
     {
         _amountOfRelics++;
-        UIHandler.ShowNotification("You currently have <b>" + _amountOfRelics + "</b> relics");
+        UIHandler.ShowNotification("You currently have <b>" + _amountOfRelics + "/" + Glob.AmountOfRelicsNeededToWin + "</b> relics in your museum.");
         if (_amountOfRelics <= Glob.AmountOfRelicsNeededToWin && _myManager is PlayerCityManager)
         {
             GameInitializer.AddExplorerScore(6);
