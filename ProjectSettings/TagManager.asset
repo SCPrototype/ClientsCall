@@ -19,6 +19,7 @@ TagManager:
   - TurnCounter
   - ResolutionScreen
   - BudgetText
+  - Bridge
   layers:
   - Default
   - TransparentFX

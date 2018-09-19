@@ -42,7 +42,7 @@ public class AICityManager : CityManager
         }
         _animosity = pAnimosity; //Starting animosity decides wether the AI will focus on digsites, a wonder, or missiles. Will only change to a bridge if affected by player. Chances for each option: 6, 6, 1 = ~(46.25%, 46.25%, 7.5%)
         //If animosity drops below missiles range, change focus to digsites or wonder (whichever is cheapest).
-        _animosity = 99;
+        
         if (_animosity < 49)
         {
             _initialFocus = AIFocus.Wonder;

@@ -8,6 +8,7 @@ public class Digsite : FunctionBuilding
 
     private const int _cost = 25;
     public ParticleSystem _particle;
+    private ParticleSystemRenderer _particleSystemRenderer;
     private const string _description = "Building one of these will give you a chance to find a relic at the start of your turn. \nFill up a museum with 10 relics, and display dominance through tourism!";
     
     public Digsite()
@@ -17,6 +18,7 @@ public class Digsite : FunctionBuilding
 
     void Awake()
     {
+        _particleSystemRenderer = gameObject.GetComponent<ParticleSystemRenderer>();
         base.Initialize(_cost, _description);
     }
 
@@ -34,6 +36,10 @@ public class Digsite : FunctionBuilding
         int outcome = UnityEngine.Random.Range(0, 100);
         if(outcome < Glob.ChanceToMineRelic)
         {
+            Material[] relicMaterials = Glob.GetRelicsMaterials();
+            _particleSystemRenderer.material = relicMaterials[UnityEngine.Random.Range(0, relicMaterials.Length - 1)];
+
+            _particle.Play();
             this.GetCity().AddRelic();
         }
     }

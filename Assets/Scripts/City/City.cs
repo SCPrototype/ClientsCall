@@ -22,8 +22,8 @@ public class City : MonoBehaviour
     private int _bridgesBuilt;
     private SoundHandler _soundHandler;
     private MayorOffice _mayorOffice;
-    private GameObject _worldSpaceCanvas;
-    private GameObject _worldSpaceCanvasPrefab;
+    private GameObject _sign;
+    private GameObject _signPrefab;
     private Text _budgetText;
 
     private int _currentTurn = 1;
@@ -41,7 +41,7 @@ public class City : MonoBehaviour
         TilePrefab = (Resources.Load(Glob.TilePrefab) as GameObject).GetComponent<CustomTile>();
         transform.position = pStartPos;
 
-        _worldSpaceCanvasPrefab = Resources.Load(Glob.WorldSpaceCanvasPrefab) as GameObject;
+        _signPrefab = Resources.Load(Glob.SignPrefab) as GameObject;
 
         _eventManager = GameObject.FindGameObjectWithTag("EventMenu").GetComponent<EventManager>();
         _uiHandler = GameInitializer.GetUIHandler();
@@ -183,14 +183,14 @@ public class City : MonoBehaviour
         CustomTile targetTile4 = _tileMap[5, 4];
         GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile4, 7);
 
-        _worldSpaceCanvas = Instantiate(_worldSpaceCanvasPrefab);
-        _budgetText = _worldSpaceCanvas.GetComponentInChildren<Text>();
+        _sign = Instantiate(_signPrefab);
+        _budgetText = _sign.GetComponentInChildren<Text>();
         BudgetChange(0);
-        _worldSpaceCanvas.transform.parent = this.transform;
+        _sign.transform.parent = this.transform;
 
         if (_myManager is AICityManager)
         {
-            _worldSpaceCanvas.transform.position = new Vector3(_worldSpaceCanvas.transform.position.x + Glob.CitySpacing, _worldSpaceCanvas.transform.position.y, _worldSpaceCanvas.transform.position.z);
+            _sign.transform.position = new Vector3(_sign.transform.position.x + Glob.CitySpacing, _sign.transform.position.y, _sign.transform.position.z);
             CustomTile targetTile1 = _tileMap[3, 4];
             GameInitializer.GetBuildingHandler().QuickBuildBuilding(this, targetTile1, 0);
 
@@ -430,6 +430,10 @@ public class City : MonoBehaviour
     public void AddBridgeBuilt()
     {
         _bridgesBuilt++;
+        int index = 0;
+        if (_myManager is AICityManager) index = 1;
+        Debug.Log(index);
+        GameInitializer.SetBridgeActive(index);
 
         if (_bridgesBuilt <= Glob.AmountOfBridgesNeededToWin && _myManager is PlayerCityManager)
         {
@@ -442,6 +446,7 @@ public class City : MonoBehaviour
                 GameInitializer.EndGame(true);
             }
         }
+
 
     }
     public int GetBridgesBuilt()

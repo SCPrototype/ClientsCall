@@ -17,6 +17,8 @@ public class GameInitializer : MonoBehaviour {
     private static UIHandler _gameUIHandler;
     private static CameraManager _cameraManager;
     private static SoundHandler _soundHandler;
+    private static GameObject _bridgePlayer;
+    private static GameObject _bridgeAI;
 
     public static bool HardModeEnabled = false;
 
@@ -60,6 +62,10 @@ public class GameInitializer : MonoBehaviour {
         _buildHandler.SetCurrentCity(_allCities[0]);
 
         Tutorial _tut = new GameObject("Tutorial").AddComponent<Tutorial>();
+        _bridgePlayer = GameObject.Find("Bridge1");
+        _bridgeAI = GameObject.Find("Bridge");
+        _bridgeAI.SetActive(false);
+        _bridgePlayer.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -103,6 +109,17 @@ public class GameInitializer : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    public static void SetBridgeActive(int pIndex)
+    {
+        if(pIndex == 0)
+        {
+            _bridgePlayer.SetActive(true);
+        } else
+        {
+            _bridgeAI.SetActive(true);
+        }
     }
 
     public static SoundHandler GetSoundHandler()
