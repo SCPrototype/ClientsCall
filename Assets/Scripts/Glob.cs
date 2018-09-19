@@ -106,7 +106,7 @@ public static class Glob {
     public const string digsitePrefab = "Buildings/Digsite";
     public const string missileSiloPrefab = "Buildings/MissileSilo";
     public const string wonderPrefab = "Buildings/Wonder";
-    public const string bridgePrefab = "Buildings/Bridge Construction Site";
+    public const string bridgePrefab = "Buildings/BuildSite";
     public const string mayorOfficePrefab = "Buildings/MayorOffice";
     public const string missilePrefab = "Missile";
 
@@ -175,9 +175,9 @@ public static class Glob {
     public const string factoryIcon = "Icons/FactoryIcon";
     public const string parkIcon = "Icons/ParkIcon";
     public const string digsiteIcon = "Icons/DigsiteIcon";
-    public const string missileSiloIcon = "Icons/MissileSiloIcon";//TODO: Correct icon
-    public const string wonderIcon = "Icons/DigsiteIcon";//TODO: Correct icon
-    public const string bridgeIcon = "Icons/DigsiteIcon";//TODO: Correct icon
+    public const string missileSiloIcon = "Icons/MissileSiloIcon";
+    public const string wonderIcon = "Icons/WonderIcon";
+    public const string bridgeIcon = "Icons/BridgeIcon";
 
     public static Sprite[] GetBuildingIcons()
     {

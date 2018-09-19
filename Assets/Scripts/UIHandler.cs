@@ -128,17 +128,17 @@ public class UIHandler : MonoBehaviour
         {
             ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
             int[] values = prodBuilding.GetMoneyHappinessRange();
-            _buildInfoText.text = "<b>" +prodBuilding.GetType() + "</b>\nBuilding cost:" + prodBuilding.GetCost() + "\nProvides " + values[0] + " income each turn \nProvides " + values[1] + " happiness each turn\nAnd has a range of " + values[2];
+            _buildInfoText.text = "<b>" +prodBuilding.GetType() + "</b>\nBuilding cost: <b>" + prodBuilding.GetCost() + "</b>\nProvides <b>" + values[0] + "</b> income each turn\nAnd has a range of <b>" + values[2] + "</b>";
         }
         if (pBuilding is CollectionBuilding)
         {
             CollectionBuilding colBuilding = pBuilding as CollectionBuilding;
-            _buildInfoText.text = "<b>"+ colBuilding.GetType() + "</b>\nBuilding cost: " + colBuilding.GetCost() + "\nThis building collects resources from nearby production buildings.";
+            _buildInfoText.text = "<b>"+ colBuilding.GetType() + "</b>\nBuilding cost: <b>" + colBuilding.GetCost() + "</b>\nThis building collects resources from nearby production buildings.";
         }
         if (pBuilding is FunctionBuilding)
         {
             FunctionBuilding funBuilding = pBuilding as FunctionBuilding;
-            _buildInfoText.text = "<b>" + funBuilding.GetType() + "</b>\nBuilding cost: " + funBuilding.GetCost() + "\n" + funBuilding.GetDescription();
+            _buildInfoText.text = "<b>" + funBuilding.GetType() + "</b>\nBuilding cost: <b>" + funBuilding.GetCost() + "</b>\n" + funBuilding.GetDescription();
         }
     }
 
@@ -156,8 +156,8 @@ public class UIHandler : MonoBehaviour
         if (pBuilding is ProductionBuilding)
         {
             ProductionBuilding prodBuilding = pBuilding as ProductionBuilding;
-            text += "It produces <b>" + prodBuilding.GetMoneyHappinessRange()[0] + "</b> Income\n It produces <b>" + prodBuilding.GetMoneyHappinessRange()[1] + "</b> happiness\n";
-            text += "And has a range of <b>" + prodBuilding.GetMoneyHappinessRange()[2] + "</b>";
+            text += "It produces <b>" + prodBuilding.GetMoneyHappinessRange()[0] + "</b> Income\nFor every house in a range of ";
+            text += "<b>" + prodBuilding.GetMoneyHappinessRange()[2] + "</b> tile";
         }
         else if(pBuilding is CollectionBuilding)
         {

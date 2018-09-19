@@ -395,6 +395,7 @@ public class City : MonoBehaviour
     public void AddRelic()
     {
         _amountOfRelics++;
+        UIHandler.ShowNotification("You currently have <b>" + _amountOfRelics + "</b> relics");
         if (_amountOfRelics <= Glob.AmountOfRelicsNeededToWin && _myManager is PlayerCityManager)
         {
             GameInitializer.AddExplorerScore(6);

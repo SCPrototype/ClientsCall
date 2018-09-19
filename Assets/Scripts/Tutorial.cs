@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
 
-    private const string _welcome = "Hey, my name is Atlantropa. I'm here to help you get the hang of it. \nWelcome to your city.Right now it’s rather… what's the word for it? Quaint. But soon it could be a powerful beast. Let's get you started. Press the first button if you're ready to continue.";
+    private const string _welcome = "Hey, my name is Atlantropa. I'm here to help you get the hang of it. \nWelcome to your city. Right now it’s rather… what's the word for it? Quaint. But soon it could be a powerful beast. Let's get you started. Press the first button if you're ready to continue.";
     private const string _tileSelect = "With that joystick in front of you, you can move around. Then when you found your perfect patch of green, you can select it by pressing the first button.";
     private bool _tileSelected = false;
     private int _tileSelectedX = 3;
